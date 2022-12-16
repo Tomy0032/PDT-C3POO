@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/PDT_EJB">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-16">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -18,5 +13,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/gonza/PDT-C3POO/PDT_Cliente/src/recursos/lib/Atxy2k.jar"/>
 	<classpathentry kind="lib" path="C:/Users/gonza/PDT-C3POO/PDT_Cliente/src/recursos/lib/jcalendar-1.4.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/PDT_EJB"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
