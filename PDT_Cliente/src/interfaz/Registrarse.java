@@ -9,9 +9,17 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.awt.Color;
+
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.border.LineBorder;
 
@@ -19,8 +27,17 @@ import Atxy2k.CustomTextField.RestrictedTextField;
 import controladores.Control_longit_min;
 import interfaces.ControlCampo;
 
+import com.entities.Departamento;
+import com.entities.Localidad;
+import com.entities.Pais;
+import com.services.DepartamentoBeanRemote;
+import com.services.LocalidadBeanRemote;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JYearChooser;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class Registrarse extends JFrame {
 	/**
@@ -56,7 +73,12 @@ public class Registrarse extends JFrame {
 	private static LinkedList<ControlCampo> listaCampos;
 	
 
-	public Registrarse() {
+	public Registrarse() throws NamingException {
+		
+		DepartamentoBeanRemote departamentoBean = (DepartamentoBeanRemote) InitialContext.doLookup("PDT_EJB/DepartamentoBean!com.services.DepartamentoBeanRemote"); 
+		LocalidadBeanRemote localidadBean = (LocalidadBeanRemote) InitialContext.doLookup("PDT_EJB/LocalidadBean!com.services.LocalidadBeanRemote"); 
+
+		
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(Registrarse.class.getResource("/recursos/imagenes/09-Isotipo-1.png")));
 		setBounds(new Rectangle(100, 100, 600, 550));
@@ -251,12 +273,67 @@ public class Registrarse extends JFrame {
 		panelFondo.add(departamento_label);
 
 		departam_comboBox = new JComboBox<String>();
+		
+		departam_comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				
+				if (e.getStateChange() == 2) {
+					
+					String nombre = (String) departam_comboBox.getSelectedItem();
+					Long id = 0L;
+					List<Departamento> departamento = departamentoBean.findAll(nombre);
+					
+					for(Departamento d : departamento) {
+						id = d.getIdDepartamento();
+					}
+					
+					List<String> localidadesLista = new ArrayList<>();	
+					try {
+						
+						List<Localidad> listaLocalidades = localidadBean.findAll();						
+						for(Localidad l : listaLocalidades) {
+							if(l.getDepartamento().getIdDepartamento() == id) {
+								localidadesLista.add(l.getNombre());
+							}							
+						}
+						
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+					String[] localidades = localidadesLista.toArray(new String[0]);
+
+					ComboBoxModel<String> modeloLocalidades = new DefaultComboBoxModel<>(localidades);
+					
+					localidad_comboBox.setModel(modeloLocalidades);
+				}
+			}
+		});
+		
 		departam_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
 		departam_comboBox.setToolTipText("Elige el departamento donde resides.");
 		departam_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		departam_comboBox.setBounds(417, 138, 90, 22);
+			
 		panelFondo.add(departam_comboBox);
 
+		List<String> departamentosLista = new ArrayList<>();	
+		try {
+			
+			List<Departamento> listaDepartamentos = departamentoBean.findAll();
+			
+			for(Departamento d : listaDepartamentos) {
+				departamentosLista.add(d.getNombre());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String[] departamentos = departamentosLista.toArray(new String[0]);
+
+		ComboBoxModel<String> modeloDepartamentos = new DefaultComboBoxModel<>(departamentos);
+		
+		departam_comboBox.setModel(modeloDepartamentos);
+		
 		JLabel asterisco_label_7 = new JLabel("*");
 		asterisco_label_7.setForeground(Color.RED);
 		asterisco_label_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -275,6 +352,26 @@ public class Registrarse extends JFrame {
 		localidad_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		localidad_comboBox.setBounds(417, 181, 90, 22);
 		panelFondo.add(localidad_comboBox);
+		
+		List<String> localidadesLista = new ArrayList<>();	
+		try {
+			
+			List<Localidad> listaLocalidades = localidadBean.findAll();
+			
+			for(Localidad l : listaLocalidades) {
+				if(l.getDepartamento().getIdDepartamento() == 4) {
+					localidadesLista.add(l.getNombre());
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String[] localidades = localidadesLista.toArray(new String[0]);
+
+		ComboBoxModel<String> modeloLocalidades = new DefaultComboBoxModel<>(localidades);
+		
+		localidad_comboBox.setModel(modeloLocalidades);
 
 		JLabel localidad_label = new JLabel("Localidad");
 		localidad_label.setHorizontalAlignment(SwingConstants.TRAILING);

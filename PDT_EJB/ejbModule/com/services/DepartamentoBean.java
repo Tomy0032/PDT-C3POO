@@ -86,13 +86,13 @@ public class DepartamentoBean implements DepartamentoBeanRemote {
 
 	@Override
 	public List<Departamento> findAll() {
-		TypedQuery<Departamento> query = em.createQuery("SELECT d FROM Departamento d",Departamento.class); 
+		TypedQuery<Departamento> query = em.createQuery("SELECT d FROM Departamento d order by d.nombre asc",Departamento.class); 
 		return query.getResultList();
 	}
 
 	@Override
 	public List<Departamento> findAll(String filter) {
-		TypedQuery<Departamento> query = em.createQuery("SELECT d FROM Departamento d WHERE m.nombre LIKE :nombre",Departamento.class)
+		TypedQuery<Departamento> query = em.createQuery("SELECT d FROM Departamento d WHERE d.nombre LIKE :nombre",Departamento.class)
 				.setParameter("nombre", filter); 
 		return query.getResultList();
 	}
