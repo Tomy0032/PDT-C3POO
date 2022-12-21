@@ -21,7 +21,7 @@ public class Control_longit_min implements DocumentListener,ControlCampo{
 		
 		this.min = min;
 		this.campo = campo;
-		//activador = new ActivadorBoton(Registrarse.getListaCampos());
+		//
 	}
 	
 	
@@ -52,16 +52,21 @@ public class Control_longit_min implements DocumentListener,ControlCampo{
 
 	@Override
 	public void insertUpdate(DocumentEvent e) {
-		// TODO Auto-generated method stub
+		
+		activador = new ActivadorBoton(Registrarse.getListaCampos());
+		
 		controlCampo();
-		//activador.activarBoton();
+		activador.activarBoton();
 	}
 
 	@Override
 	public void removeUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
+			
+		activador = new ActivadorBoton(Registrarse.getListaCampos());
+		
 		controlCampo();
-		//activador.activarBoton();
+		activador.activarBoton();
 	}
 
 	@Override

@@ -35,10 +35,14 @@ public class ActivadorBoton {
 				campo = (Control_longit_min)campoAVerificar;
 					
 				}
-			if(! campo.isOk()) {
+			if(!campo.isOk()) {
 				
 				Registrarse.getBtn_enviar().setEnabled(false);
 				break;
+			}else {
+				
+				Registrarse.getBtn_enviar().setEnabled(true);
+
 			}
 			
 		}

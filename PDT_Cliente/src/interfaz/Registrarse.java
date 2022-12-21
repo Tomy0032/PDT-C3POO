@@ -373,7 +373,7 @@ public class Registrarse extends JFrame {
 		btn_reg_siguiente.setBackground(new Color(0, 178, 240));
 		btn_reg_siguiente.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btn_reg_siguiente.setBounds(217, 405, 146, 23);
-		
+		btn_reg_siguiente.setEnabled(false);
 		
 		panelFondo.add(btn_reg_siguiente);
 
