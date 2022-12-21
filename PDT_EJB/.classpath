@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Apps/wildfly/modules/system/layers/base/org/hibernate/main/hibernate-core-5.3.24.Final.jar">
+	<classpathentry kind="lib" path="lib/hibernate-core-5.3.24.Final.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

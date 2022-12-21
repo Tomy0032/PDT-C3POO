@@ -53,11 +53,17 @@ public class Main {
 //		departamentoBean.create(depa);
 //		
 //		Localidad local = new Localidad();
+//		local.setNombre("ARTIGAS");
+//		local.setDepartamento(departamentoBean.find(4L));
+//		localidadBean.create(local);
 //		local.setNombre("BELLA UNION");
 //		local.setDepartamento(departamentoBean.find(4L));
 //		localidadBean.create(local);
 //		local.setNombre("DURAZNO");
 //		local.setDepartamento(departamentoBean.find(2L));
+//		localidadBean.create(local);
+//		local.setNombre("PROGRESO");
+//		local.setDepartamento(departamentoBean.find(3L));
 //		localidadBean.create(local);
 		
 		
