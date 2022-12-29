@@ -92,7 +92,7 @@ public class TipoBean implements TipoBeanRemote {
 
    	@Override
    	public List<Tipo> findAll(String filter) {
-   		TypedQuery<Tipo> query = em.createQuery("SELECT t FROM Tipo t WHERE m.nombre LIKE :nombre",Tipo.class)
+   		TypedQuery<Tipo> query = em.createQuery("SELECT t FROM Tipo t WHERE t.nombre LIKE :nombre",Tipo.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
    	}

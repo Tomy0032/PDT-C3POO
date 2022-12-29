@@ -140,7 +140,7 @@ public class UsuarioBean implements UsuarioBeanRemote {
 
 	@Override
 	public List<Usuario> findAll(String filter) {
-		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE m.nombre LIKE :nombre",Usuario.class)
+		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.nombre LIKE :nombre",Usuario.class)
 				.setParameter("nombre", filter); 
 		return query.getResultList();
 	}

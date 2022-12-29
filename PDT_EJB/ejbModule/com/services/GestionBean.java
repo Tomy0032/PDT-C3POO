@@ -68,7 +68,7 @@ public class GestionBean implements GestionBeanRemote {
 
    	@Override
    	public List<Gestion> findAll(String filter) {
-   		TypedQuery<Gestion> query = em.createQuery("SELECT g FROM Gestion g WHERE m.nombre LIKE :nombre",Gestion.class)
+   		TypedQuery<Gestion> query = em.createQuery("SELECT g FROM Gestion g WHERE g.nombre LIKE :nombre",Gestion.class)
       				.setParameter("nombre", filter); 
       		return query.getResultList();
     }

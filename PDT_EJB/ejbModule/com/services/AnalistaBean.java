@@ -140,7 +140,7 @@ public class AnalistaBean implements AnalistaBeanRemote {
 
 	@Override
 	public List<Analista> findAll(String filter) {
-		TypedQuery<Analista> query = em.createQuery("SELECT a FROM Analista a WHERE m.nombre LIKE :nombre",Analista.class)
+		TypedQuery<Analista> query = em.createQuery("SELECT a FROM Analista a WHERE a.nombre LIKE :nombre",Analista.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
 	}

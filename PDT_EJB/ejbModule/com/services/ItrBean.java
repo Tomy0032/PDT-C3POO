@@ -92,7 +92,7 @@ public class ItrBean implements ItrBeanRemote {
 
    	@Override
    	public List<Itr> findAll(String filter) {
-   		TypedQuery<Itr> query = em.createQuery("SELECT i FROM Itr i WHERE m.nombre LIKE :nombre",Itr.class)
+   		TypedQuery<Itr> query = em.createQuery("SELECT i FROM Itr i WHERE i.nombre LIKE :nombre",Itr.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
    	}

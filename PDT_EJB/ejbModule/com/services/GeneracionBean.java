@@ -92,7 +92,7 @@ public class GeneracionBean implements GeneracionBeanRemote {
 
    	@Override
    	public List<Generacion> findAll(String filter) {
-   		TypedQuery<Generacion> query = em.createQuery("SELECT g FROM Generacion g WHERE m.nombre LIKE :nombre",Generacion.class)
+   		TypedQuery<Generacion> query = em.createQuery("SELECT g FROM Generacion g WHERE g.nombre LIKE :nombre",Generacion.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
    	}

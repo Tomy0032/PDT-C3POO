@@ -21,7 +21,7 @@ public class Localidad implements Serializable {
 	@Column(name="ID_LOCALIDAD", unique=true, nullable=false, precision=38)
 	private long idLocalidad;
 
-	@Column(nullable=false, length=16)
+	@Column(nullable=false, length=50)
 	private String nombre;
 
 	//bi-directional many-to-one association to Itr

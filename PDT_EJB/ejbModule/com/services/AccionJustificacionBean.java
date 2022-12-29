@@ -68,7 +68,7 @@ public class AccionJustificacionBean implements AccionJustificacionBeanRemote {
 
    	@Override
    	public List<AccionJustificacion> findAll(String filter) {
-   		TypedQuery<AccionJustificacion> query = em.createQuery("SELECT a FROM AccionJustificacion a WHERE m.nombre LIKE :nombre",AccionJustificacion.class)
+   		TypedQuery<AccionJustificacion> query = em.createQuery("SELECT a FROM AccionJustificacion a WHERE a.nombre LIKE :nombre",AccionJustificacion.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
    	}

@@ -68,7 +68,7 @@ public class AccionConstanciaBean implements AccionConstanciaBeanRemote {
 
    	@Override
    	public List<AccionConstancia> findAll(String filter) {
-   		TypedQuery<AccionConstancia> query = em.createQuery("SELECT a FROM AccionConstancia a WHERE m.nombre LIKE :nombre",AccionConstancia.class)
+   		TypedQuery<AccionConstancia> query = em.createQuery("SELECT a FROM AccionConstancia a WHERE a.nombre LIKE :nombre",AccionConstancia.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
    	}

@@ -94,7 +94,7 @@ public class ConstanciaBean implements ConstanciaBeanRemote {
 
    	@Override
    	public List<Constancia> findAll(String filter) {
-   		TypedQuery<Constancia> query = em.createQuery("SELECT c FROM Constancia c WHERE m.nombre LIKE :nombre",Constancia.class)
+   		TypedQuery<Constancia> query = em.createQuery("SELECT c FROM Constancia c WHERE c.nombre LIKE :nombre",Constancia.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
    	}

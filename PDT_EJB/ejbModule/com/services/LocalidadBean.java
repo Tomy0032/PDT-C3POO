@@ -110,13 +110,13 @@ public class LocalidadBean implements LocalidadBeanRemote {
 
 	@Override
 	public List<Localidad> findAll() {
-		TypedQuery<Localidad> query = em.createQuery("SELECT l FROM Localidad l",Localidad.class); 
+		TypedQuery<Localidad> query = em.createQuery("SELECT l FROM Localidad l order by l.nombre asc",Localidad.class); 
 		return query.getResultList();
 	}
 
 	@Override
 	public List<Localidad> findAll(String filter) {
-		TypedQuery<Localidad> query = em.createQuery("SELECT l FROM Localidad l WHERE m.nombre LIKE :nombre",Localidad.class)
+		TypedQuery<Localidad> query = em.createQuery("SELECT l FROM Localidad l WHERE l.nombre LIKE :nombre",Localidad.class)
 				.setParameter("nombre", filter); 
 		return query.getResultList();
 	}

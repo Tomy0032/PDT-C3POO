@@ -92,7 +92,7 @@ public class TutorBean implements TutorBeanRemote {
 
 	@Override
 	public List<Tutor> findAll(String filter) {
-		TypedQuery<Tutor> query = em.createQuery("SELECT t FROM Tutor t WHERE m.nombre LIKE :nombre",Tutor.class)
+		TypedQuery<Tutor> query = em.createQuery("SELECT t FROM Tutor t WHERE t.nombre LIKE :nombre",Tutor.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
 	}

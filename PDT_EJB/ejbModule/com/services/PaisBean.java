@@ -68,7 +68,7 @@ public class PaisBean implements PaisBeanRemote {
 
 	@Override
 	public List<Pais> findAll(String filter) {
-		TypedQuery<Pais> query = em.createQuery("SELECT p FROM Pais p WHERE m.nombre LIKE :nombre",Pais.class)
+		TypedQuery<Pais> query = em.createQuery("SELECT p FROM Pais p WHERE p.nombre LIKE :nombre",Pais.class)
 				.setParameter("nombre", filter); 
 		return query.getResultList();
 	}

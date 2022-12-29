@@ -68,7 +68,7 @@ public class ConvocatoriaAsistenciaBean implements ConvocatoriaAsistenciaBeanRem
 
    	@Override
    	public List<ConvocatoriaAsistencia> findAll(String filter) {
-   		TypedQuery<ConvocatoriaAsistencia> query = em.createQuery("SELECT c FROM ConvocatoriaAsistencia c WHERE m.nombre LIKE :nombre",ConvocatoriaAsistencia.class)
+   		TypedQuery<ConvocatoriaAsistencia> query = em.createQuery("SELECT c FROM ConvocatoriaAsistencia c WHERE c.nombre LIKE :nombre",ConvocatoriaAsistencia.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
    	}

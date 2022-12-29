@@ -92,7 +92,7 @@ public class GeneroBean implements GeneroBeanRemote {
 
    	@Override
    	public List<Genero> findAll(String filter) {
-   		TypedQuery<Genero> query = em.createQuery("SELECT g FROM Genero g WHERE m.nombre LIKE :nombre",Genero.class)
+   		TypedQuery<Genero> query = em.createQuery("SELECT g FROM Genero g WHERE g.nombre LIKE :nombre",Genero.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
    	}

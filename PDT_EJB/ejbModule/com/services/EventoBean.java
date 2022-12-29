@@ -213,7 +213,7 @@ public class EventoBean implements EventoBeanRemote {
 
    	@Override
    	public List<Evento> findAll(String filter) {
-   		TypedQuery<Evento> query = em.createQuery("SELECT e FROM Evento e WHERE m.nombre LIKE :nombre",Evento.class)
+   		TypedQuery<Evento> query = em.createQuery("SELECT e FROM Evento e WHERE e.nombre LIKE :nombre",Evento.class)
       				.setParameter("nombre", filter); 
       		return query.getResultList();
     }

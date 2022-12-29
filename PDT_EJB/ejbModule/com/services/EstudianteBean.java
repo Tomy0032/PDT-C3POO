@@ -143,7 +143,7 @@ public class EstudianteBean implements EstudianteBeanRemote {
 
 	@Override
 	public List<Estudiante> findAll(String filter) {
-		TypedQuery<Estudiante> query = em.createQuery("SELECT e FROM Estudiante e WHERE m.nombre LIKE :nombre",Estudiante.class)
+		TypedQuery<Estudiante> query = em.createQuery("SELECT e FROM Estudiante e WHERE e.nombre LIKE :nombre",Estudiante.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
 	}

@@ -353,20 +353,24 @@ public class Registrarse extends JFrame {
 		localidad_comboBox.setBounds(417, 181, 90, 22);
 		panelFondo.add(localidad_comboBox);
 		
-		List<String> localidadesLista = new ArrayList<>();	
+		List<String> localidadesLista = new ArrayList<>();
+			
 		try {
+				
+				List<Localidad> listaLocalidades = localidadBean.findAll();
+							
+				Long idDepartamento = departamentoBean.findAll(departamentos[0]).get(0).getIdDepartamento();
 			
-			List<Localidad> listaLocalidades = localidadBean.findAll();
-			
-			for(Localidad l : listaLocalidades) {
-				if(l.getDepartamento().getIdDepartamento() == 4) {
-					localidadesLista.add(l.getNombre());
+				for(Localidad l : listaLocalidades) {
+					if(l.getDepartamento().getIdDepartamento() == idDepartamento) {
+						localidadesLista.add(l.getNombre());
+					}
 				}
-			}
 			
-		} catch (Exception e) {
+			} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		String[] localidades = localidadesLista.toArray(new String[0]);
 
 		ComboBoxModel<String> modeloLocalidades = new DefaultComboBoxModel<>(localidades);

@@ -92,7 +92,7 @@ public class AreaBean implements AreaBeanRemote {
 
    	@Override
    	public List<Area> findAll(String filter) {
-   		TypedQuery<Area> query = em.createQuery("SELECT a FROM Area a WHERE m.nombre LIKE :nombre",Area.class)
+   		TypedQuery<Area> query = em.createQuery("SELECT a FROM Area a WHERE a.nombre LIKE :nombre",Area.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
    	}

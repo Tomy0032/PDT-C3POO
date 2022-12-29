@@ -21,6 +21,8 @@ import com.entities.*;
 import com.services.*;
 import com.exception.*;
 
+import datos.*;
+
 public class Main {
 
 	public static void main(String[] args) throws NamingException, ServicesException{
@@ -66,6 +68,7 @@ public class Main {
 //		local.setDepartamento(departamentoBean.find(3L));
 //		localidadBean.create(local);
 		
+		Localidades_Departamentos.cargarDatos(departamentoBean,localidadBean);
 		
 	    Registrarse r = new Registrarse();
 		
@@ -90,9 +93,7 @@ public class Main {
 //			
 //			System.out.println(e);
 //		}
-		
-		System.out.println("Fin");
-	    
+			    
 	}
 
 }

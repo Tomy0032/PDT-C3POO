@@ -69,7 +69,7 @@ public class AccionReclamoBean implements AccionReclamoBeanRemote {
 
    	@Override
    	public List<AccionReclamo> findAll(String filter) {
-   		TypedQuery<AccionReclamo> query = em.createQuery("SELECT a FROM AccionReclamo a WHERE m.nombre LIKE :nombre",AccionReclamo.class)
+   		TypedQuery<AccionReclamo> query = em.createQuery("SELECT a FROM AccionReclamo a WHERE a.nombre LIKE :nombre",AccionReclamo.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
    	}

@@ -92,7 +92,7 @@ public class JustificacionBean implements JustificacionBeanRemote {
 
    	@Override
    	public List<Justificacion> findAll(String filter) {
-   		TypedQuery<Justificacion> query = em.createQuery("SELECT j FROM Justificacion j WHERE m.nombre LIKE :nombre",Justificacion.class)
+   		TypedQuery<Justificacion> query = em.createQuery("SELECT j FROM Justificacion j WHERE j.nombre LIKE :nombre",Justificacion.class)
    				.setParameter("nombre", filter); 
    		return query.getResultList();
    	}
