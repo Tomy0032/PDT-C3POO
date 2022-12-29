@@ -4,13 +4,20 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import com.entities.*;
 import com.exception.*;
 import com.services.*;
 
 public class Localidades_Departamentos {
-	
-	public static void cargarDatos(DepartamentoBeanRemote departamentoBean,LocalidadBeanRemote localidadBean) {
+		
+	public static void cargarDatos() throws NamingException {
+		
+		DepartamentoBeanRemote departamentoBean = (DepartamentoBeanRemote) InitialContext.doLookup("PDT_EJB/DepartamentoBean!com.services.DepartamentoBeanRemote"); 
+		LocalidadBeanRemote localidadBean = (LocalidadBeanRemote) InitialContext.doLookup("PDT_EJB/LocalidadBean!com.services.LocalidadBeanRemote"); 
+
 		
 		ArrayList<String> lista;
 		String directorioRaiz = System.getProperty("user.dir");

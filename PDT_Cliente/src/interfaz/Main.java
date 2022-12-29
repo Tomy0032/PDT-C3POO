@@ -68,7 +68,7 @@ public class Main {
 //		local.setDepartamento(departamentoBean.find(3L));
 //		localidadBean.create(local);
 		
-		Localidades_Departamentos.cargarDatos(departamentoBean,localidadBean);
+		Localidades_Departamentos.cargarDatos();
 		
 	    Registrarse r = new Registrarse();
 		
