@@ -32,42 +32,6 @@ public class Main {
 		
 		//Login l = new Login();
 		
-//		PaisBeanRemote paisBean = (PaisBeanRemote) InitialContext.doLookup("PDT_EJB/PaisBean!com.services.PaisBeanRemote"); 
-		DepartamentoBeanRemote departamentoBean = (DepartamentoBeanRemote) InitialContext.doLookup("PDT_EJB/DepartamentoBean!com.services.DepartamentoBeanRemote"); 
-		LocalidadBeanRemote localidadBean = (LocalidadBeanRemote) InitialContext.doLookup("PDT_EJB/LocalidadBean!com.services.LocalidadBeanRemote"); 
-
-		
-//		System.out.println("Inicio");
-		
-//		List<String> paises = new LinkedList<>();
-//		List<Pais> listaPaises = paisBean.findAll();
-		
-//		Departamento depa = new Departamento();
-//		depa.setNombre("MONTEVIDEO");
-//		departamentoBean.create(depa);
-//		depa.setNombre("DURAZNO");
-//		departamentoBean.create(depa);
-//		depa.setNombre("CANELONES");
-//		departamentoBean.create(depa);
-//		depa.setNombre("ARTIGAS");
-//		departamentoBean.create(depa);
-//		depa.setNombre("TACUEREMBO");
-//		departamentoBean.create(depa);
-//		
-//		Localidad local = new Localidad();
-//		local.setNombre("ARTIGAS");
-//		local.setDepartamento(departamentoBean.find(4L));
-//		localidadBean.create(local);
-//		local.setNombre("BELLA UNION");
-//		local.setDepartamento(departamentoBean.find(4L));
-//		localidadBean.create(local);
-//		local.setNombre("DURAZNO");
-//		local.setDepartamento(departamentoBean.find(2L));
-//		localidadBean.create(local);
-//		local.setNombre("PROGRESO");
-//		local.setDepartamento(departamentoBean.find(3L));
-//		localidadBean.create(local);
-		
 		Localidades_Departamentos.cargarDatos();
 		
 	    Registrarse r = new Registrarse();
@@ -79,21 +43,7 @@ public class Main {
 				
 //		Control_ci control = Control_ci.getInstance();
 //		System.out.println(control.verificarCi("31784968"));
-					
-//		PaisBeanRemote pais = (PaisBeanRemote)InitialContext.doLookup("PDT_EJB/PaisBean!com.services.PaisBeanRemote");
-//		
-//		
-//		Pais p = new Pais();
-//		p.setNombre("URUGUAY");
-//		
-//		try {
-//			pais.create(p);
-//			
-//		}catch(ServicesException e) {
-//			
-//			System.out.println(e);
-//		}
-			    
+								    
 	}
 
 }

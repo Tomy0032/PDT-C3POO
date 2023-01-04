@@ -4,12 +4,16 @@ import java.util.InputMismatchException;
 
 import javax.swing.JOptionPane;
 
-public class Control_ci {
+import interfaces.ControlCampo;
+import interfaz.Registrarse;
+
+public class Control_ci implements ControlCampo{
 
 	private static Control_ci instancia;
-	private int ci;
+	private int num_ci;
 	private int[] digitos = new int [8];
 	private final int[] CONSTANTES = {2,9,8,7,6,3,4};
+	private boolean ciCorrecta;
 	
 //-------------------------------------------	
 	//solo hace falta una instancia de control
@@ -33,9 +37,10 @@ public class Control_ci {
 	private void obtenerNumeroCi(String ci) {
 		
 		try {
-			this.ci = Integer.parseInt(ci);
+			num_ci = Integer.parseInt(ci);
 		}catch(InputMismatchException e) {
 			
+			JOptionPane.showMessageDialog(null, "Algo falló al intentar parsear la CI");
 			e.printStackTrace();
 		}	
 	}
@@ -50,8 +55,8 @@ public class Control_ci {
 			
 		for(int i=0; i<digitos.length; i++) {
 			
-			digitos[digitos.length - (i+1)] = ci % 10;
-			ci = (ci - digitos[digitos.length - (i+1)]) / 10;
+			digitos[digitos.length - (i+1)] = num_ci % 10;
+			num_ci = (num_ci - digitos[digitos.length - (i+1)]) / 10;
 		}
 	}
 //-----------------------------------------------------
@@ -63,12 +68,14 @@ public class Control_ci {
 	// primero ejecuta los metodos private definidos antes
 	// y luego ejecuta el procedimiento que esta comentado
 	// al final
-	public boolean verificarCi(String ci) {
+	public void controlCampo(){
 		
+		
+		String ci = Registrarse.getCedu_field().getText();
 		obtenerNumeroCi(ci);
 		extraerDigitos();
 		
-		boolean ciCorrecta = false;
+		ciCorrecta = false;
 		
 		int suma = 0;
 		
@@ -84,9 +91,16 @@ public class Control_ci {
 			ciCorrecta = true;
 		}
 		
-		return ciCorrecta;
 	}
 //---------------------------------------------------
+
+	
+
+	@Override
+	public boolean isOk() {
+		// TODO Auto-generated method stub
+		return ciCorrecta;
+	}
 
 
 	

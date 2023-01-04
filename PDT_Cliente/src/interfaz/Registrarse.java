@@ -17,13 +17,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.border.LineBorder;
 
 import Atxy2k.CustomTextField.RestrictedTextField;
+import controladores.ControlBotonEnviar;
 import controladores.Control_longit_min;
 import interfaces.ControlCampo;
 
@@ -353,24 +353,20 @@ public class Registrarse extends JFrame {
 		localidad_comboBox.setBounds(417, 181, 90, 22);
 		panelFondo.add(localidad_comboBox);
 		
-		List<String> localidadesLista = new ArrayList<>();
-			
+		List<String> localidadesLista = new ArrayList<>();	
 		try {
-				
-				List<Localidad> listaLocalidades = localidadBean.findAll();
-							
-				Long idDepartamento = departamentoBean.findAll(departamentos[0]).get(0).getIdDepartamento();
 			
-				for(Localidad l : listaLocalidades) {
-					if(l.getDepartamento().getIdDepartamento() == idDepartamento) {
-						localidadesLista.add(l.getNombre());
-					}
+			List<Localidad> listaLocalidades = localidadBean.findAll();
+			
+			for(Localidad l : listaLocalidades) {
+				if(l.getDepartamento().getIdDepartamento() == 4) {
+					localidadesLista.add(l.getNombre());
 				}
+			}
 			
-			} catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		String[] localidades = localidadesLista.toArray(new String[0]);
 
 		ComboBoxModel<String> modeloLocalidades = new DefaultComboBoxModel<>(localidades);
@@ -474,8 +470,9 @@ public class Registrarse extends JFrame {
 		btn_reg_siguiente.setBackground(new Color(0, 178, 240));
 		btn_reg_siguiente.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btn_reg_siguiente.setBounds(217, 405, 146, 23);
-		
-		
+		btn_reg_siguiente.setEnabled(false);
+		btn_reg_siguiente.setToolTipText("El botón se activará cuando los campos obligatorios estén completos y correctos.");
+		btn_reg_siguiente.addActionListener(new ControlBotonEnviar());
 		panelFondo.add(btn_reg_siguiente);
 
 		JPanel panel_gris = new JPanel();
@@ -550,9 +547,7 @@ public class Registrarse extends JFrame {
 		
 		listaCampos = new LinkedList<ControlCampo>();
 		listaCampos.add(c_nom1);		
-		listaCampos.add(c_nom2);
 		listaCampos.add(c_ape1);
-		listaCampos.add(c_ape2);
 		listaCampos.add(c_cedu);
 		listaCampos.add(c_mail_pers);
 		listaCampos.add(c_telef);
