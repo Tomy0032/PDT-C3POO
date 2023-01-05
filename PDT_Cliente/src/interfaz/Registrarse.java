@@ -523,7 +523,7 @@ public class Registrarse extends JFrame {
 		r_ape2 = new RestrictedTextField(this.ape2_field);
 		r_ape2.setOnlyText(true);
 		r_ape2.setLimit(20);
-		Control_longit_min c_ape2 = new Control_longit_min(ape1_field, 3);
+		Control_longit_min c_ape2 = new Control_longit_min(ape2_field, 3);
 		ape2_field.getDocument().addDocumentListener(c_ape2);
 		
 		r_cedu = new RestrictedTextField(this.cedu_field);

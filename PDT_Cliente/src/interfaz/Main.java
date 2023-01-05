@@ -32,7 +32,7 @@ public class Main {
 		
 		//Login l = new Login();
 		
-		Localidades_Departamentos.cargarDatos();
+//		Localidades_Departamentos.cargarDatos();
 		
 	    Registrarse r = new Registrarse();
 		
