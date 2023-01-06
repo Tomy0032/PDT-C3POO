@@ -59,8 +59,23 @@ public class Localidades_Departamentos {
 			String localidad = s;
 			Localidad local = new Localidad();
 			try {
-				
-				local = localidadBean.findAll(localidad).get(0);
+				boolean esta = false;
+				for(Localidad l :  localidadBean.findAll(localidad)) {
+					if(l.getDepartamento().getIdDepartamento() == depa.getIdDepartamento()) {
+						esta = true;
+					}
+				}
+				if(!esta) {
+					local.setNombre(localidad);
+					local.setDepartamento(depa);
+					try {
+						localidadBean.create(local);
+						local = localidadBean.findAll(localidad).get(0);
+					} catch (ServicesException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 				
 			}catch(Exception e){
 				

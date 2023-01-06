@@ -10,13 +10,11 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.awt.Color;
 
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Toolkit;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,16 +24,14 @@ import Atxy2k.CustomTextField.RestrictedTextField;
 import controladores.ControlBotonEnviar;
 import controladores.Control_longit_min;
 import interfaces.ControlCampo;
+import listas.ListaDepartamentos;
+import listas.ListaItrs;
+import listas.ListaLocalidades;
+import listas.ListaTipos;
 
 import com.entities.Departamento;
-import com.entities.Localidad;
-import com.entities.Pais;
-import com.services.DepartamentoBeanRemote;
-import com.services.LocalidadBeanRemote;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JYearChooser;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
@@ -72,16 +68,11 @@ public class Registrarse extends JFrame {
 	
 	private static LinkedList<ControlCampo> listaCampos;
 	
-
 	public Registrarse() throws NamingException {
-		
-		DepartamentoBeanRemote departamentoBean = (DepartamentoBeanRemote) InitialContext.doLookup("PDT_EJB/DepartamentoBean!com.services.DepartamentoBeanRemote"); 
-		LocalidadBeanRemote localidadBean = (LocalidadBeanRemote) InitialContext.doLookup("PDT_EJB/LocalidadBean!com.services.LocalidadBeanRemote"); 
-
 		
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(Registrarse.class.getResource("/recursos/imagenes/09-Isotipo-1.png")));
-		setBounds(new Rectangle(100, 100, 600, 550));
+		setBounds(new Rectangle(100, 100, 610, 550));
 		setResizable(false);
 		setTitle("Registro de nuevo usuario");
 
@@ -91,7 +82,7 @@ public class Registrarse extends JFrame {
 
 		JPanel panelArriba = new JPanel();
 		panelArriba.setBounds(new Rectangle(0, 0, 600, 100));
-		panelArriba.setBounds(0, 0, 584, 62);
+		panelArriba.setBounds(0, 0, 594, 62);
 		panelArriba.setBackground(Color.BLACK);
 		panelPrincipal.add(panelArriba);
 		panelArriba.setLayout(null);
@@ -105,7 +96,8 @@ public class Registrarse extends JFrame {
 		panelArriba.add(panel_logo_1);
 
 		PanelFondo panelFondo = new PanelFondo("");
-		panelFondo.setBounds(0, 61, 584, 430);
+		panelFondo.setBackground(new Color(240, 240, 240));
+		panelFondo.setBounds(0, 59, 594, 439);
 		panelFondo.setLayout(null);
 		panelPrincipal.add(panelFondo);
 
@@ -116,14 +108,18 @@ public class Registrarse extends JFrame {
 		JLabel tipo_usu_label = new JLabel("Tipo de usuario");
 		tipo_usu_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		tipo_usu_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		tipo_usu_label.setBounds(10, 54, 116, 21);
+		tipo_usu_label.setBounds(84, 44, 116, 21);
 		panelFondo.add(tipo_usu_label);
 
 		tipo_usu_comboBox = new JComboBox<String>();
 		tipo_usu_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
-		tipo_usu_comboBox.setToolTipText("Te registras como estudiante? Como tutor? O como analista?. Elige aqu\u00ED.");
+		tipo_usu_comboBox
+				.setToolTipText("Te registras como estudiante? Como tutor? O como analista?. Elige aqu\u00ED.");
 		tipo_usu_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		tipo_usu_comboBox.setBounds(161, 53, 90, 22);
+		tipo_usu_comboBox.setBounds(235, 43, 130, 22);
+		tipo_usu_comboBox.addItem("ANALISTA");
+		tipo_usu_comboBox.addItem("ESTUDIANTE");
+		tipo_usu_comboBox.addItem("TUTOR");
 		panelFondo.add(tipo_usu_comboBox);
 
 		JLabel nom1_label = new JLabel("Primer nombre");
@@ -136,14 +132,14 @@ public class Registrarse extends JFrame {
 		nom1_field.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
 		nom1_field.setToolTipText("Ingresa aqu\u00ED tu primer nombre, o el \u00FAnico si s\u00F3lo tienes uno. ");
 		nom1_field.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		nom1_field.setBounds(161, 97, 90, 21);
+		nom1_field.setBounds(161, 97, 130, 21);
 		panelFondo.add(nom1_field);
 		nom1_field.setColumns(10);
 
 		JLabel asterisco_label = new JLabel("*");
 		asterisco_label.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		asterisco_label.setForeground(new Color(255, 0, 0));
-		asterisco_label.setBounds(136, 53, 15, 21);
+		asterisco_label.setBounds(210, 43, 15, 21);
 		panelFondo.add(asterisco_label);
 
 		JLabel asterisco_label_2 = new JLabel("*");
@@ -155,7 +151,7 @@ public class Registrarse extends JFrame {
 		JLabel nom2_label = new JLabel("Segundo nombre");
 		nom2_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		nom2_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		nom2_label.setBounds(10, 139, 116, 21);
+		nom2_label.setBounds(303, 97, 116, 21);
 		panelFondo.add(nom2_label);
 
 		nom2_field = new JTextField();
@@ -163,13 +159,13 @@ public class Registrarse extends JFrame {
 		nom2_field.setToolTipText("Ingresa aqu\u00ED tu segundo nombre. (Opcional)");
 		nom2_field.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		nom2_field.setColumns(10);
-		nom2_field.setBounds(161, 139, 90, 21);
+		nom2_field.setBounds(454, 97, 130, 21);
 		panelFondo.add(nom2_field);
 
 		JLabel ape1_label = new JLabel("Primer apellido");
 		ape1_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		ape1_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		ape1_label.setBounds(10, 182, 116, 21);
+		ape1_label.setBounds(10, 130, 116, 21);
 		panelFondo.add(ape1_label);
 
 		ape1_field = new JTextField();
@@ -177,19 +173,19 @@ public class Registrarse extends JFrame {
 		ape1_field.setToolTipText("Ingresa aqu\u00ED tu primer apellido.");
 		ape1_field.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		ape1_field.setColumns(10);
-		ape1_field.setBounds(161, 182, 90, 21);
+		ape1_field.setBounds(161, 130, 130, 21);
 		panelFondo.add(ape1_field);
 
 		JLabel asterisco_label_3 = new JLabel("*");
 		asterisco_label_3.setForeground(Color.RED);
 		asterisco_label_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		asterisco_label_3.setBounds(136, 181, 15, 21);
+		asterisco_label_3.setBounds(136, 129, 15, 21);
 		panelFondo.add(asterisco_label_3);
 
 		JLabel ape2_label = new JLabel("Segundo apellido");
 		ape2_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		ape2_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		ape2_label.setBounds(10, 225, 116, 21);
+		ape2_label.setBounds(303, 129, 116, 21);
 		panelFondo.add(ape2_label);
 
 		ape2_field = new JTextField();
@@ -197,13 +193,13 @@ public class Registrarse extends JFrame {
 		ape2_field.setToolTipText("Ingresa aqu\u00ED tu segundo apellido. (Opcional)");
 		ape2_field.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		ape2_field.setColumns(10);
-		ape2_field.setBounds(161, 225, 90, 21);
+		ape2_field.setBounds(454, 129, 130, 21);
 		panelFondo.add(ape2_field);
 
 		JLabel cedu_label = new JLabel("C\u00E9dula");
 		cedu_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		cedu_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		cedu_label.setBounds(10, 271, 116, 21);
+		cedu_label.setBounds(10, 166, 116, 21);
 		panelFondo.add(cedu_label);
 
 		cedu_field = new JTextField();
@@ -211,31 +207,31 @@ public class Registrarse extends JFrame {
 		cedu_field.setToolTipText("Ingresa aqu\u00ED tu n\u00FAmero de documento sin espacios, puntos ni guiones.");
 		cedu_field.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		cedu_field.setColumns(10);
-		cedu_field.setBounds(161, 271, 90, 21);
+		cedu_field.setBounds(161, 166, 130, 21);
 		panelFondo.add(cedu_field);
 
 		JLabel asterisco_label_4 = new JLabel("*");
 		asterisco_label_4.setForeground(Color.RED);
 		asterisco_label_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		asterisco_label_4.setBounds(136, 270, 15, 21);
+		asterisco_label_4.setBounds(136, 165, 15, 21);
 		panelFondo.add(asterisco_label_4);
 
 		JLabel fec_nac_label = new JLabel("Fecha nacimiento");
 		fec_nac_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		fec_nac_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		fec_nac_label.setBounds(10, 315, 116, 21);
+		fec_nac_label.setBounds(303, 166, 116, 21);
 		panelFondo.add(fec_nac_label);
 
 		JLabel asterisco_label_5 = new JLabel("*");
 		asterisco_label_5.setForeground(Color.RED);
 		asterisco_label_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		asterisco_label_5.setBounds(136, 314, 15, 21);
+		asterisco_label_5.setBounds(429, 165, 15, 21);
 		panelFondo.add(asterisco_label_5);
 
 		JLabel email_pers_label = new JLabel("E-mail personal");
 		email_pers_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		email_pers_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		email_pers_label.setBounds(266, 54, 116, 21);
+		email_pers_label.setBounds(10, 199, 116, 21);
 		panelFondo.add(email_pers_label);
 
 		mail_pers_field = new JTextField();
@@ -243,19 +239,19 @@ public class Registrarse extends JFrame {
 		mail_pers_field.setToolTipText("Ingresa aqu\u00ED tu e-mail personal. ej. juanperez@gmail.com.");
 		mail_pers_field.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mail_pers_field.setColumns(10);
-		mail_pers_field.setBounds(417, 54, 90, 21);
+		mail_pers_field.setBounds(161, 199, 130, 21);
 		panelFondo.add(mail_pers_field);
 
 		JLabel asterisco_label_6 = new JLabel("*");
 		asterisco_label_6.setForeground(Color.RED);
 		asterisco_label_6.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		asterisco_label_6.setBounds(392, 53, 15, 21);
+		asterisco_label_6.setBounds(136, 198, 15, 21);
 		panelFondo.add(asterisco_label_6);
 
 		JLabel telef_label = new JLabel("Tel\u00E9fono");
 		telef_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		telef_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		telef_label.setBounds(266, 97, 116, 21);
+		telef_label.setBounds(303, 199, 116, 21);
 		panelFondo.add(telef_label);
 
 		telef_field = new JTextField();
@@ -263,47 +259,29 @@ public class Registrarse extends JFrame {
 		telef_field.setToolTipText("Ingresa aqu\u00ED tu tel\u00E9fono.");
 		telef_field.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		telef_field.setColumns(10);
-		telef_field.setBounds(417, 97, 90, 21);
+		telef_field.setBounds(454, 199, 130, 21);
 		panelFondo.add(telef_field);
 
 		JLabel departamento_label = new JLabel("Departamento");
 		departamento_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		departamento_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		departamento_label.setBounds(266, 139, 116, 21);
+		departamento_label.setBounds(10, 232, 116, 21);
 		panelFondo.add(departamento_label);
 
 		departam_comboBox = new JComboBox<String>();
 		
 		departam_comboBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				
-				if (e.getStateChange() == 2) {
-					
+			public void itemStateChanged(ItemEvent e) {				
+				if (e.getStateChange() == 2) {					
 					String nombre = (String) departam_comboBox.getSelectedItem();
-					Long id = 0L;
-					List<Departamento> departamento = departamentoBean.findAll(nombre);
-					
-					for(Departamento d : departamento) {
-						id = d.getIdDepartamento();
-					}
-					
-					List<String> localidadesLista = new ArrayList<>();	
-					try {
-						
-						List<Localidad> listaLocalidades = localidadBean.findAll();						
-						for(Localidad l : listaLocalidades) {
-							if(l.getDepartamento().getIdDepartamento() == id) {
-								localidadesLista.add(l.getNombre());
-							}							
+					int id = 0;
+					List<Departamento> depas = ListaDepartamentos.getLista();					
+					for(Departamento d : depas) {
+						if(d.getNombre().equals(nombre)) {
+							id = (int) d.getIdDepartamento();
 						}
-						
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-					String[] localidades = localidadesLista.toArray(new String[0]);
-
-					ComboBoxModel<String> modeloLocalidades = new DefaultComboBoxModel<>(localidades);
-					
+					}					
+					ComboBoxModel<String> modeloLocalidades = new DefaultComboBoxModel<>(ListaLocalidades.getListaString(id));
 					localidad_comboBox.setModel(modeloLocalidades);
 				}
 			}
@@ -312,86 +290,48 @@ public class Registrarse extends JFrame {
 		departam_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
 		departam_comboBox.setToolTipText("Elige el departamento donde resides.");
 		departam_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		departam_comboBox.setBounds(417, 138, 90, 22);
-			
-		panelFondo.add(departam_comboBox);
-
-		List<String> departamentosLista = new ArrayList<>();	
-		try {
-			
-			List<Departamento> listaDepartamentos = departamentoBean.findAll();
-			
-			for(Departamento d : listaDepartamentos) {
-				departamentosLista.add(d.getNombre());
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		String[] departamentos = departamentosLista.toArray(new String[0]);
-
-		ComboBoxModel<String> modeloDepartamentos = new DefaultComboBoxModel<>(departamentos);
-		
-		departam_comboBox.setModel(modeloDepartamentos);
+		departam_comboBox.setBounds(161, 231, 130, 22);
+		ComboBoxModel<String> modeloDepartamentos = new DefaultComboBoxModel<>(ListaDepartamentos.getListaString());
+		departam_comboBox.setModel(modeloDepartamentos);		
+		panelFondo.add(departam_comboBox);		
 		
 		JLabel asterisco_label_7 = new JLabel("*");
 		asterisco_label_7.setForeground(Color.RED);
 		asterisco_label_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		asterisco_label_7.setBounds(392, 96, 15, 21);
+		asterisco_label_7.setBounds(429, 198, 15, 21);
 		panelFondo.add(asterisco_label_7);
 
 		JLabel asterisco_label_8 = new JLabel("*");
 		asterisco_label_8.setForeground(Color.RED);
 		asterisco_label_8.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		asterisco_label_8.setBounds(392, 138, 15, 21);
+		asterisco_label_8.setBounds(136, 231, 15, 21);
 		panelFondo.add(asterisco_label_8);
 
 		localidad_comboBox = new JComboBox<String>();
 		localidad_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
 		localidad_comboBox.setToolTipText("Elige la localidad (pueblo, villa) donde resides.");
 		localidad_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		localidad_comboBox.setBounds(417, 181, 90, 22);
+		localidad_comboBox.setBounds(454, 231, 130, 22);	
+		ComboBoxModel<String> modeloLocalidades = new DefaultComboBoxModel<>(ListaLocalidades.getListaString(1));
+		localidad_comboBox.setModel(modeloLocalidades);			
 		panelFondo.add(localidad_comboBox);
-		
-		List<String> localidadesLista = new ArrayList<>();
-		
-		try {
-				
-				List<Localidad> listaLocalidades = localidadBean.findAll();
-							
-				Long idDepartamento = departamentoBean.findAll(departamentos[0]).get(0).getIdDepartamento();
-			
-				for(Localidad l : listaLocalidades) {
-					if(l.getDepartamento().getIdDepartamento() == idDepartamento) {
-						localidadesLista.add(l.getNombre());
-					}
-				}
-			
-			} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		String[] localidades = localidadesLista.toArray(new String[0]);
-		ComboBoxModel<String> modeloLocalidades = new DefaultComboBoxModel<>(localidades);
-		
-		localidad_comboBox.setModel(modeloLocalidades);
 
 		JLabel localidad_label = new JLabel("Localidad");
 		localidad_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		localidad_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		localidad_label.setBounds(266, 182, 116, 21);
+		localidad_label.setBounds(303, 232, 116, 21);
 		panelFondo.add(localidad_label);
 
 		JLabel asterisco_label_9 = new JLabel("*");
 		asterisco_label_9.setForeground(Color.RED);
 		asterisco_label_9.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		asterisco_label_9.setBounds(392, 181, 15, 21);
+		asterisco_label_9.setBounds(429, 231, 15, 21);
 		panelFondo.add(asterisco_label_9);
 
 		JLabel email_instit_label = new JLabel("E-mail institucional");
 		email_instit_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		email_instit_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		email_instit_label.setBounds(266, 225, 116, 21);
+		email_instit_label.setBounds(10, 272, 116, 21);
 		panelFondo.add(email_instit_label);
 
 		mail_instit_field = new JTextField();
@@ -400,63 +340,67 @@ public class Registrarse extends JFrame {
 				.setToolTipText("Ingresa aqu\u00ED tu e-mail institucional. ej. juan.perez@estudialtes.utec.edu.uy.");
 		mail_instit_field.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mail_instit_field.setColumns(10);
-		mail_instit_field.setBounds(417, 225, 90, 21);
+		mail_instit_field.setBounds(161, 272, 130, 21);
 		panelFondo.add(mail_instit_field);
 
 		JLabel asterisco_label_10 = new JLabel("*");
 		asterisco_label_10.setForeground(Color.RED);
 		asterisco_label_10.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		asterisco_label_10.setBounds(392, 224, 15, 21);
+		asterisco_label_10.setBounds(136, 271, 15, 21);
 		panelFondo.add(asterisco_label_10);
 
 		JLabel itr_label = new JLabel("I.T.R.");
 		itr_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		itr_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		itr_label.setBounds(266, 271, 116, 21);
+		itr_label.setBounds(303, 272, 116, 21);
 		panelFondo.add(itr_label);
 
 		itr_comboBox = new JComboBox<String>();
 		itr_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
 		itr_comboBox.setToolTipText("Elige el ITR (Instituto Tecnol\u00F3gico Regional, ej. ITR Durazno).");
 		itr_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		itr_comboBox.setBounds(417, 270, 90, 22);
+		itr_comboBox.setBounds(454, 271, 130, 22);
+		ComboBoxModel<String> modeloItr = new DefaultComboBoxModel<>(ListaItrs.getListaString());
+		itr_comboBox.setModel(modeloItr);
 		panelFondo.add(itr_comboBox);
 
 		JLabel fec_ingreso_label = new JLabel("A\u00F1o de ingreso");
 		fec_ingreso_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		fec_ingreso_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		fec_ingreso_label.setBounds(266, 315, 116, 21);
+		fec_ingreso_label.setBounds(10, 314, 116, 21);
 		panelFondo.add(fec_ingreso_label);
 
 		JLabel asterisco_label_13 = new JLabel("*");
 		asterisco_label_13.setForeground(Color.RED);
 		asterisco_label_13.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		asterisco_label_13.setBounds(392, 270, 15, 21);
+		asterisco_label_13.setBounds(429, 271, 15, 21);
 		panelFondo.add(asterisco_label_13);
 
 		JLabel asterisco_label_14 = new JLabel("*");
 		asterisco_label_14.setForeground(Color.RED);
 		asterisco_label_14.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		asterisco_label_14.setBounds(392, 314, 15, 21);
+		asterisco_label_14.setBounds(136, 313, 15, 21);
 		panelFondo.add(asterisco_label_14);
 
 		JLabel rol_label = new JLabel("Rol");
 		rol_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		rol_label.setFont(new Font("Tahoma", Font.BOLD, 12));
-		rol_label.setBounds(266, 362, 116, 21);
+		rol_label.setBounds(303, 313, 116, 21);
 		panelFondo.add(rol_label);
 
 		rol_comboBox = new JComboBox<String>();
 		rol_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
 		rol_comboBox.setToolTipText("Selecciona el rol que asumir\u00E1s.");
 		rol_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		rol_comboBox.setBounds(417, 362, 90, 22);
+		rol_comboBox.setBounds(454, 313, 130, 22);
+		ComboBoxModel<String> modeloTipos = new DefaultComboBoxModel<>(ListaTipos.getListaString());		
+		rol_comboBox.setModel(modeloTipos);	
 		panelFondo.add(rol_comboBox);
 
 		JLabel asterisco_label_14_1 = new JLabel("*");
 		asterisco_label_14_1.setForeground(Color.RED);
 		asterisco_label_14_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		asterisco_label_14_1.setBounds(392, 362, 15, 21);
+		asterisco_label_14_1.setBounds(429, 313, 15, 21);
 		panelFondo.add(asterisco_label_14_1);
 
 		aviso = new JLabel("Los campos marcados con (*) son obligatorios");
@@ -472,15 +416,16 @@ public class Registrarse extends JFrame {
 		btn_reg_siguiente.setForeground(new Color(255, 255, 255));
 		btn_reg_siguiente.setBackground(new Color(0, 178, 240));
 		btn_reg_siguiente.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btn_reg_siguiente.setBounds(217, 405, 146, 23);
+		btn_reg_siguiente.setBounds(235, 395, 130, 23);
 		btn_reg_siguiente.setEnabled(false);
-		btn_reg_siguiente.setToolTipText("El botón se activará cuando los campos obligatorios estén completos y correctos.");
+		btn_reg_siguiente
+				.setToolTipText("El botón se activar cuando los campos obligatorios estén completos y correctos.");
 		btn_reg_siguiente.addActionListener(new ControlBotonEnviar());
 		panelFondo.add(btn_reg_siguiente);
 
 		JPanel panel_gris = new JPanel();
 		panel_gris.setBackground(new Color(192, 192, 192));
-		panel_gris.setBounds(287, 0, 297, 32);
+		panel_gris.setBounds(292, 0, 302, 32);
 		panelFondo.add(panel_gris);
 
 		JLabel lblNewLabel = new JLabel("Registro de usuario");
@@ -491,23 +436,23 @@ public class Registrarse extends JFrame {
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFocusable(false);
 		lblNewLabel.setBackground(new Color(0, 178, 240));
-		lblNewLabel.setBounds(0, 0, 291, 32);
+		lblNewLabel.setBounds(0, 0, 296, 32);
 		panelFondo.add(lblNewLabel);
 
 		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(161, 315, 90, 20);
+		dateChooser.setBounds(454, 166, 130, 20);
 		panelFondo.add(dateChooser);
 
 		JYearChooser yearChooser = new JYearChooser();
-		yearChooser.setBounds(417, 315, 90, 20);
+		yearChooser.setBounds(161, 315, 130, 20);
 		panelFondo.add(yearChooser);
-		
+
 		r_nom1 = new RestrictedTextField(this.nom1_field);
 		r_nom1.setOnlyText(true);
 		r_nom1.setLimit(20);
 		Control_longit_min c_nom1 = new Control_longit_min(nom1_field, 3);
 		nom1_field.getDocument().addDocumentListener(c_nom1);
-		
+
 		r_nom2 = new RestrictedTextField(this.nom2_field);
 		r_nom2.setOnlyText(true);
 		r_nom2.setLimit(20);
@@ -525,31 +470,31 @@ public class Registrarse extends JFrame {
 		r_ape2.setLimit(20);
 		Control_longit_min c_ape2 = new Control_longit_min(ape2_field, 3);
 		ape2_field.getDocument().addDocumentListener(c_ape2);
-		
+
 		r_cedu = new RestrictedTextField(this.cedu_field);
 		r_cedu.setOnlyNums(true);
 		r_cedu.setLimit(8);
 		Control_longit_min c_cedu = new Control_longit_min(cedu_field, 8);
 		cedu_field.getDocument().addDocumentListener(c_cedu);
-		
+
 		r_mail_pers = new RestrictedTextField(this.mail_pers_field);
 		r_mail_pers.setLimit(30);
 		Control_longit_min c_mail_pers = new Control_longit_min(mail_pers_field, 12);
 		mail_pers_field.getDocument().addDocumentListener(c_mail_pers);
-		
+
 		r_telef = new RestrictedTextField(this.telef_field);
 		r_telef.setOnlyNums(true);
 		r_telef.setLimit(12);
 		Control_longit_min c_telef = new Control_longit_min(telef_field, 8);
 		telef_field.getDocument().addDocumentListener(c_telef);
-		
+
 		r_mail_instit = new RestrictedTextField(this.mail_instit_field);
 		r_mail_instit.setLimit(60);
-		Control_longit_min c_mail_instit = new Control_longit_min(mail_instit_field,15);
+		Control_longit_min c_mail_instit = new Control_longit_min(mail_instit_field, 15);
 		mail_instit_field.getDocument().addDocumentListener(c_mail_instit);
-		
+
 		listaCampos = new LinkedList<ControlCampo>();
-		listaCampos.add(c_nom1);		
+		listaCampos.add(c_nom1);
 		listaCampos.add(c_ape1);
 		listaCampos.add(c_cedu);
 		listaCampos.add(c_mail_pers);
@@ -559,12 +504,10 @@ public class Registrarse extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
-	
 
 	public static LinkedList<ControlCampo> getListaCampos() {
 		return listaCampos;
 	}
-
 
 	public static JLabel getAviso() {
 		return aviso;

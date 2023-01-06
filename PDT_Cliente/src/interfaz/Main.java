@@ -22,6 +22,7 @@ import com.services.*;
 import com.exception.*;
 
 import datos.*;
+import listas.Listas;
 
 public class Main {
 
@@ -32,7 +33,8 @@ public class Main {
 		
 		//Login l = new Login();
 		
-		Localidades_Departamentos.cargarDatos();
+		Datos.cargar();		
+		Listas.cargar();
 		
 	    Registrarse r = new Registrarse();
 		
