@@ -68,8 +68,8 @@ public class DocumentoBean implements DocumentoBeanRemote {
 
    	@Override
    	public List<Documento> findAll(String filter) {
-   		TypedQuery<Documento> query = em.createQuery("SELECT d FROM Documento d WHERE d.nombre LIKE :nombre",Documento.class)
-   				.setParameter("nombre", filter); 
+   		TypedQuery<Documento> query = em.createQuery("SELECT d FROM Documento d WHERE d.caracteres LIKE :caracteres",Documento.class)
+   				.setParameter("caracteres", filter); 
    		return query.getResultList();
    	}
 

@@ -21,9 +21,6 @@ public class Analista implements Serializable {
 	@Column(name="ID_ANALISTA", unique=true, nullable=false, precision=38)
 	private long idAnalista;
 
-	@Column(nullable=false, length=16)
-	private String caracteres;
-
 	//bi-directional many-to-one association to AccionConstancia
 	@OneToMany(mappedBy="analista")
 	private List<AccionConstancia> accionesConstancias;
@@ -54,14 +51,6 @@ public class Analista implements Serializable {
 
 	public void setIdAnalista(long idAnalista) {
 		this.idAnalista = idAnalista;
-	}
-
-	public String getCaracteres() {
-		return caracteres;
-	}
-
-	public void setCaracteres(String caracteres) {
-		this.caracteres = caracteres;
 	}
 
 	public List<AccionConstancia> getAccionesConstancias() {

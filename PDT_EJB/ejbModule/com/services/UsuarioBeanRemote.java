@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import com.entities.Analista;
+import com.entities.Documento;
 import com.entities.Estudiante;
 import com.entities.Tutor;
 import com.entities.Usuario;
@@ -23,7 +24,7 @@ public interface UsuarioBeanRemote {
 	void addTutor(Long idUsuario, Tutor tutor) throws ServicesException;
 	void removeTutor(Long idUsuario, Long idTutor) throws ServicesException;
 	List<Usuario> findAll();
-	List<Usuario> findAll(String filter);
+	List<Usuario> findAllForDocument(Documento documento);
 	Usuario find(Long idUsuario) throws ServicesException;
 
 }

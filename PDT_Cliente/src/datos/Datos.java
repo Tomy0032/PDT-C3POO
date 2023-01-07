@@ -9,6 +9,10 @@ public class Datos {
 		Localidades_Departamentos.cargarDatos();
 		Tipos.cargarDatos();
 		ITRs.cargarDatos();
+		Paises.cargarDatos();
+		Generos.cargarDatos();
+		Generaciones.cargarDatos();
+		Areas.cargarDatos();
 		
 	}
 

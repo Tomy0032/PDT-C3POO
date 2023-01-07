@@ -1,5 +1,6 @@
 package com.services;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -17,7 +18,8 @@ public interface GeneracionBeanRemote {
 	void addEstudiante(Long idGeneracion, Estudiante Generacion) throws ServicesException;
 	void removeEstudiante(Long idGeneracion, Long idEstudiante) throws ServicesException;
 	List<Generacion> findAll();
-	List<Generacion> findAll(String filter);	
+	List<Generacion> findAllForName(String filter);
+	List<Generacion> findAllForYear(BigDecimal filter);	
 	Generacion find(Long idGeneracion) throws ServicesException;
 
 }

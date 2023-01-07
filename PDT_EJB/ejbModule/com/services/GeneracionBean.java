@@ -1,5 +1,6 @@
 package com.services;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -91,9 +92,16 @@ public class GeneracionBean implements GeneracionBeanRemote {
    	}
 
    	@Override
-   	public List<Generacion> findAll(String filter) {
+   	public List<Generacion> findAllForName(String filter) {
    		TypedQuery<Generacion> query = em.createQuery("SELECT g FROM Generacion g WHERE g.nombre LIKE :nombre",Generacion.class)
    				.setParameter("nombre", filter); 
+   		return query.getResultList();
+   	}
+   	
+	@Override
+   	public List<Generacion> findAllForYear(BigDecimal filter) {
+   		TypedQuery<Generacion> query = em.createQuery("SELECT g FROM Generacion g WHERE g.ano LIKE :ano",Generacion.class)
+   				.setParameter("ano", filter); 
    		return query.getResultList();
    	}
 

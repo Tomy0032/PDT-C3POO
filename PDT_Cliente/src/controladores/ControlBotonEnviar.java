@@ -2,12 +2,15 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
+import javax.naming.NamingException;
+
+import datos.CrearUsuario;
+import interfaz.Ingrese_password;
 import interfaz.Registrarse;
 
 public class ControlBotonEnviar implements ActionListener {
-
-	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -22,10 +25,17 @@ public class ControlBotonEnviar implements ActionListener {
 		if(!ci.isOk() || !email.isOk()) {
 			
 			Registrarse.setAviso("Hay algo mal con tus datos!");
+			
 		}else {
 			
-			Registrarse.setAviso("Los campos marcados con (*) son obligatorios.");
+			Ingrese_password p = new Ingrese_password();		
+			
 		}
+	}
+
+	private String valueOf(int year) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

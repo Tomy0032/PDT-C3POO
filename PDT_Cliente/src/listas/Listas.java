@@ -8,6 +8,7 @@ public class Listas {
 		ListaLocalidades localidades = ListaLocalidades.getListaLocalidades();
 		ListaTipos tipos = ListaTipos.getListaTipos();
 		ListaItrs itrs = ListaItrs.getListaItrs();
+		ListaAreas areas = ListaAreas.getListaAreas();
 		
 	}
 	

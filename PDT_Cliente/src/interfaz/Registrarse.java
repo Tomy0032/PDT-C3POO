@@ -23,7 +23,9 @@ import javax.swing.border.LineBorder;
 import Atxy2k.CustomTextField.RestrictedTextField;
 import controladores.ControlBotonEnviar;
 import controladores.Control_longit_min;
+import controladores.VisibilidadCampos;
 import interfaces.ControlCampo;
+import listas.ListaAreas;
 import listas.ListaDepartamentos;
 import listas.ListaItrs;
 import listas.ListaLocalidades;
@@ -54,7 +56,10 @@ public class Registrarse extends JFrame {
 	private static JComboBox<String> itr_comboBox;
 	private static JComboBox<String> rol_comboBox;
 	private static JButton btn_reg_siguiente;
-
+	private static JDateChooser dateChooser;
+	private static JYearChooser yearChooser;
+	private static JComboBox<String> area_comboBox;
+	
 	private static JLabel aviso;
 
 	private RestrictedTextField r_nom1;
@@ -64,9 +69,15 @@ public class Registrarse extends JFrame {
 	private RestrictedTextField r_cedu;
 	private RestrictedTextField r_mail_pers;
 	private RestrictedTextField r_telef;
-	private RestrictedTextField r_mail_instit;
+	private RestrictedTextField r_mail_instit;	
 	
 	private static LinkedList<ControlCampo> listaCampos;
+	private static JLabel fec_ingreso_label;
+	private static JLabel rol_label;
+	private static JLabel asterisco_label_14_1;
+	private static JLabel asterisco_label_1;
+	private static JLabel area_label;
+	private static JLabel asterisco_label_15_1;
 	
 	public Registrarse() throws NamingException {
 		
@@ -120,6 +131,13 @@ public class Registrarse extends JFrame {
 		tipo_usu_comboBox.addItem("ANALISTA");
 		tipo_usu_comboBox.addItem("ESTUDIANTE");
 		tipo_usu_comboBox.addItem("TUTOR");
+		tipo_usu_comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == 2) {
+					VisibilidadCampos.cambiarVisibilidad();
+				}
+			}
+		});
 		panelFondo.add(tipo_usu_comboBox);
 
 		JLabel nom1_label = new JLabel("Primer nombre");
@@ -364,7 +382,7 @@ public class Registrarse extends JFrame {
 		itr_comboBox.setModel(modeloItr);
 		panelFondo.add(itr_comboBox);
 
-		JLabel fec_ingreso_label = new JLabel("A\u00F1o de ingreso");
+		fec_ingreso_label = new JLabel("A\u00F1o de ingreso");
 		fec_ingreso_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		fec_ingreso_label.setFont(new Font("Tahoma", Font.BOLD, 12));
 		fec_ingreso_label.setBounds(10, 314, 116, 21);
@@ -376,13 +394,13 @@ public class Registrarse extends JFrame {
 		asterisco_label_13.setBounds(429, 271, 15, 21);
 		panelFondo.add(asterisco_label_13);
 
-		JLabel asterisco_label_14 = new JLabel("*");
-		asterisco_label_14.setForeground(Color.RED);
-		asterisco_label_14.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		asterisco_label_14.setBounds(136, 313, 15, 21);
-		panelFondo.add(asterisco_label_14);
+		asterisco_label_1 = new JLabel("*");
+		asterisco_label_1.setForeground(Color.RED);
+		asterisco_label_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		asterisco_label_1.setBounds(136, 313, 15, 21);
+		panelFondo.add(asterisco_label_1);
 
-		JLabel rol_label = new JLabel("Rol");
+		rol_label = new JLabel("Rol");
 		rol_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		rol_label.setFont(new Font("Tahoma", Font.BOLD, 12));
 		rol_label.setBounds(303, 313, 116, 21);
@@ -396,8 +414,29 @@ public class Registrarse extends JFrame {
 		ComboBoxModel<String> modeloTipos = new DefaultComboBoxModel<>(ListaTipos.getListaString());		
 		rol_comboBox.setModel(modeloTipos);	
 		panelFondo.add(rol_comboBox);
+		
+		area_label = new JLabel("Area");
+		area_label.setHorizontalAlignment(SwingConstants.TRAILING);
+		area_label.setFont(new Font("Tahoma", Font.BOLD, 12));
+		area_label.setBounds(10, 314, 116, 21);
+		panelFondo.add(area_label);
+		
+		asterisco_label_15_1 = new JLabel("*");
+		asterisco_label_15_1.setForeground(Color.RED);
+		asterisco_label_15_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		asterisco_label_15_1.setBounds(136, 313, 15, 21);
+		panelFondo.add(asterisco_label_15_1);
+		
+		area_comboBox = new JComboBox<String>();
+		area_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
+		area_comboBox.setToolTipText("Selecciona el rol que asumir\u00E1s.");
+		area_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		area_comboBox.setBounds(161, 315, 130, 20);
+		ComboBoxModel<String> modeloAreas = new DefaultComboBoxModel<>(ListaAreas.getListaString());		
+		area_comboBox.setModel(modeloAreas);
+		panelFondo.add(area_comboBox);
 
-		JLabel asterisco_label_14_1 = new JLabel("*");
+		asterisco_label_14_1 = new JLabel("*");
 		asterisco_label_14_1.setForeground(Color.RED);
 		asterisco_label_14_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		asterisco_label_14_1.setBounds(429, 313, 15, 21);
@@ -439,56 +478,57 @@ public class Registrarse extends JFrame {
 		lblNewLabel.setBounds(0, 0, 296, 32);
 		panelFondo.add(lblNewLabel);
 
-		JDateChooser dateChooser = new JDateChooser();
+		dateChooser = new JDateChooser();
 		dateChooser.setBounds(454, 166, 130, 20);
+		dateChooser.setDateFormatString("dd/MM/yyyy");
 		panelFondo.add(dateChooser);
 
-		JYearChooser yearChooser = new JYearChooser();
+		yearChooser = new JYearChooser();
 		yearChooser.setBounds(161, 315, 130, 20);
 		panelFondo.add(yearChooser);
 
-		r_nom1 = new RestrictedTextField(this.nom1_field);
+		r_nom1 = new RestrictedTextField(Registrarse.nom1_field);
 		r_nom1.setOnlyText(true);
 		r_nom1.setLimit(20);
 		Control_longit_min c_nom1 = new Control_longit_min(nom1_field, 3);
 		nom1_field.getDocument().addDocumentListener(c_nom1);
 
-		r_nom2 = new RestrictedTextField(this.nom2_field);
+		r_nom2 = new RestrictedTextField(Registrarse.nom2_field);
 		r_nom2.setOnlyText(true);
 		r_nom2.setLimit(20);
 		Control_longit_min c_nom2 = new Control_longit_min(nom2_field, 3);
 		nom2_field.getDocument().addDocumentListener(c_nom2);
 
-		r_ape1 = new RestrictedTextField(this.ape1_field);
+		r_ape1 = new RestrictedTextField(Registrarse.ape1_field);
 		r_ape1.setOnlyText(true);
 		r_ape1.setLimit(20);
 		Control_longit_min c_ape1 = new Control_longit_min(ape1_field, 3);
 		ape1_field.getDocument().addDocumentListener(c_ape1);
 
-		r_ape2 = new RestrictedTextField(this.ape2_field);
+		r_ape2 = new RestrictedTextField(Registrarse.ape2_field);
 		r_ape2.setOnlyText(true);
 		r_ape2.setLimit(20);
 		Control_longit_min c_ape2 = new Control_longit_min(ape2_field, 3);
 		ape2_field.getDocument().addDocumentListener(c_ape2);
 
-		r_cedu = new RestrictedTextField(this.cedu_field);
+		r_cedu = new RestrictedTextField(Registrarse.cedu_field);
 		r_cedu.setOnlyNums(true);
 		r_cedu.setLimit(8);
 		Control_longit_min c_cedu = new Control_longit_min(cedu_field, 8);
 		cedu_field.getDocument().addDocumentListener(c_cedu);
 
-		r_mail_pers = new RestrictedTextField(this.mail_pers_field);
+		r_mail_pers = new RestrictedTextField(Registrarse.mail_pers_field);
 		r_mail_pers.setLimit(30);
 		Control_longit_min c_mail_pers = new Control_longit_min(mail_pers_field, 12);
 		mail_pers_field.getDocument().addDocumentListener(c_mail_pers);
 
-		r_telef = new RestrictedTextField(this.telef_field);
+		r_telef = new RestrictedTextField(Registrarse.telef_field);
 		r_telef.setOnlyNums(true);
 		r_telef.setLimit(12);
 		Control_longit_min c_telef = new Control_longit_min(telef_field, 8);
 		telef_field.getDocument().addDocumentListener(c_telef);
 
-		r_mail_instit = new RestrictedTextField(this.mail_instit_field);
+		r_mail_instit = new RestrictedTextField(Registrarse.mail_instit_field);
 		r_mail_instit.setLimit(60);
 		Control_longit_min c_mail_instit = new Control_longit_min(mail_instit_field, 15);
 		mail_instit_field.getDocument().addDocumentListener(c_mail_instit);
@@ -503,6 +543,45 @@ public class Registrarse extends JFrame {
 
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		VisibilidadCampos.cambiarVisibilidad();
+		
+	}
+	
+	public static JComboBox<String> getArea_comboBox() {
+		return area_comboBox;
+	}
+
+	public static JLabel getArea_label() {
+		return area_label;
+	}
+
+	public static JLabel getAsterisco_label_15_1() {
+		return asterisco_label_15_1;
+	}
+
+	public static JLabel getAsterisco_label_1() {
+		return asterisco_label_1;
+	}
+
+	public static JLabel getFec_ingreso_label() {
+		return fec_ingreso_label;
+	}
+
+	public static JLabel getRol_label() {
+		return rol_label;
+	}
+
+	public static JLabel getAsterisco_label_14_1() {
+		return asterisco_label_14_1;
+	}
+
+	public static JDateChooser getDateChooser() {
+		return dateChooser;
+	}
+
+	public static JYearChooser getYearChooser() {
+		return yearChooser;
 	}
 
 	public static LinkedList<ControlCampo> getListaCampos() {
@@ -572,4 +651,6 @@ public class Registrarse extends JFrame {
 	public static JButton getBtn_enviar() {
 		return btn_reg_siguiente;
 	}
+	
+	
 }

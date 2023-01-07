@@ -9,13 +9,17 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
+import controladores.ControlBotonPassword;
+
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
 public class Ingrese_password extends JFrame {
-	private JPasswordField password;
-	private JPasswordField rep_password;
+	private static JPasswordField password;
+	private static JPasswordField rep_password;
 	private JButton btn_reg_enviar;
+	private static JLabel lblAviso;
 
 	public Ingrese_password() {
 		setBounds(new Rectangle(100, 100, 320, 320));
@@ -101,17 +105,34 @@ public class Ingrese_password extends JFrame {
 		btn_reg_enviar.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
 		btn_reg_enviar.setBackground(new Color(0, 178, 240));
 		btn_reg_enviar.setBounds(75, 247, 146, 23);
+		btn_reg_enviar.addActionListener(new ControlBotonPassword());
 		getContentPane().add(btn_reg_enviar);
+		
+		lblAviso = new JLabel("Las constrase\u00F1as no coinciden");
+		lblAviso.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAviso.setForeground(Color.RED);
+		lblAviso.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblAviso.setBounds(0, 215, 301, 21);
+		lblAviso.setVisible(false);
+		getContentPane().add(lblAviso);
 
 		setVisible(true);
 	}
 
-	public JPasswordField getPassword() {
+	public static JPasswordField getPassword() {
 		return password;
 	}
 
-	public JPasswordField getRep_password() {
+	public static JPasswordField getRep_password() {
 		return rep_password;
+	}
+
+	public static JLabel getLblAviso() {
+		return lblAviso;
+	}
+
+	public static void setRep_password(JPasswordField rep_password) {
+		Ingrese_password.rep_password = rep_password;
 	}
 
 	public JButton getBtn_reg_enviar() {

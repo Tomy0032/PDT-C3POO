@@ -10,6 +10,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import com.entities.Analista;
+import com.entities.Documento;
 import com.entities.Estudiante;
 import com.entities.Tutor;
 import com.entities.Usuario;
@@ -139,9 +140,9 @@ public class UsuarioBean implements UsuarioBeanRemote {
 	}
 
 	@Override
-	public List<Usuario> findAll(String filter) {
-		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.nombre LIKE :nombre",Usuario.class)
-				.setParameter("nombre", filter); 
+	public List<Usuario> findAllForDocument(Documento documento) {
+		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.documento = :documento",Usuario.class)
+				.setParameter("documento", documento); 
 		return query.getResultList();
 	}
 
