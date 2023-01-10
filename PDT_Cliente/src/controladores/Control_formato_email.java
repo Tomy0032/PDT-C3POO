@@ -11,17 +11,19 @@ public class Control_formato_email implements ControlCampo{
 	        + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 	
 	private Pattern patron = Pattern.compile(REGEX_PATTERN); 
-	private boolean match = false;		
+	protected boolean match = false;		
+	protected String email;
 	
-	
-	
+	public Control_formato_email(String email) {
+		
+		this.email = email;
+	}
 	
 	@Override
 	public void controlCampo() {
 		// TODO Auto-generated method stub
 		
-		String emailAddress = Registrarse.getMail_pers_field().getText();
-		if(patron.matcher(emailAddress).matches()) {
+		if(patron.matcher(email).matches()) {
 			
 			match = true;
 			Registrarse.setAviso("Los campos marcados con (*) son obligatorios.");

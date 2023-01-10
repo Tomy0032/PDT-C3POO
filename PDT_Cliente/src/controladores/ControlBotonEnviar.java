@@ -14,15 +14,20 @@ public class ControlBotonEnviar implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 
 		Control_ci ci = Control_ci.getInstance();
 		ci.controlCampo();
 		
-		Control_formato_email email = new Control_formato_email();
+		Control_formato_email email = new Control_formato_email(Registrarse.getMail_instit_field().getText());
 		email.controlCampo();
 		
-		if(!ci.isOk() || !email.isOk()) {
+		Control_email_institucional email_instit = new Control_email_institucional(Registrarse.getMail_instit_field().getText());
+		email_instit.controlCampo();
+		
+		Control_fecha_nac edad = new Control_fecha_nac(Registrarse.getDateChooser().getDate());
+		edad.controlCampo();
+		
+		if(!ci.isOk() || !email.isOk() || !email_instit.isOk() || !edad.isOk()) {
 			
 			Registrarse.setAviso("Hay algo mal con tus datos!");
 			
@@ -34,7 +39,6 @@ public class ControlBotonEnviar implements ActionListener {
 	}
 
 	private String valueOf(int year) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

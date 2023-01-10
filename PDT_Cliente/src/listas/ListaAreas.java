@@ -23,7 +23,7 @@ public class ListaAreas {
 		}
 	}
 	
-	public static ListaAreas getListaAreas() {
+	public static ListaAreas getInstance() {
 		if(listaAreas == null) {
 			listaAreas = new ListaAreas(); 
 		}

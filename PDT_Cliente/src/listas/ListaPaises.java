@@ -23,7 +23,7 @@ public class ListaPaises {
 		}
 	}
 	
-	public static ListaPaises getListaTipos() {
+	public static ListaPaises getInstance() {
 		if(listaPaises == null) {
 			listaPaises = new ListaPaises(); 
 		}

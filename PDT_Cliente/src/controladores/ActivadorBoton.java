@@ -5,14 +5,12 @@ import interfaz.Registrarse;
 
 public class ActivadorBoton {
 
-	private LinkedList<ControlCampo> listaControladores;
-	
+	private LinkedList<ControlCampo> listaControladores;	
 	
 	public ActivadorBoton(LinkedList<ControlCampo> c) {
 		
 		listaControladores = c;
-	}
-	
+	}	
 	
 	public void activarBoton() {
 		

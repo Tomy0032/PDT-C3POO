@@ -1,6 +1,7 @@
-/datos/
-/interfaz/
-/recursos/
 /controladores/
+/datos/
 /interfaces/
+/interfaz/
+/jndi.properties
 /listas/
+/recursos/

@@ -24,7 +24,7 @@ public class ListaTipos {
 		}
 	}
 	
-	public static ListaTipos getListaTipos() {
+	public static ListaTipos getInstance() {
 		if(listaTipos == null) {
 			listaTipos = new ListaTipos(); 
 		}

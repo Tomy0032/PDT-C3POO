@@ -42,7 +42,7 @@ public class ListaLocalidades {
 		}
 	}
 	
-	public static ListaLocalidades getListaLocalidades() {
+	public static ListaLocalidades getInstance() {
 		if(listaLocalidades == null) {
 			listaLocalidades = new ListaLocalidades();
 		}
