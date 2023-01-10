@@ -12,8 +12,10 @@ public class Main {
 
 	public static void main(String[] args) throws NamingException, ServicesException{
 				
-//		Datos.cargar();		
+		Datos.cargar();		
 		Listas.cargar();
+		
+		MensajeConsola.Iniciar();
 		
 	    Registrarse r = new Registrarse();
 								    
