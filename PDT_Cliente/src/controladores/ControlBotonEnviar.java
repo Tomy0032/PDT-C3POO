@@ -19,10 +19,16 @@ public class ControlBotonEnviar implements ActionListener {
 		Control_ci ci = Control_ci.getInstance();
 		ci.controlCampo();
 		
-		Control_formato_email email = new Control_formato_email();
+		Control_formato_email email = new Control_formato_email(Registrarse.getMail_instit_field().getText());
 		email.controlCampo();
 		
-		if(!ci.isOk() || !email.isOk()) {
+		Control_email_institucional email_instit = new Control_email_institucional(Registrarse.getMail_instit_field().getText());
+		email_instit.controlCampo();
+		
+		Control_edad edad = new Control_edad(Registrarse.getDateChooser().getDate());
+		edad.controlCampo();
+		
+		if(!ci.isOk() || !email.isOk() || !email_instit.isOk() || !edad.isOk()) {
 			
 			Registrarse.setAviso("Hay algo mal con tus datos!");
 			

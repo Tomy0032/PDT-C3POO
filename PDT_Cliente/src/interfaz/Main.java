@@ -15,6 +15,8 @@ public class Main {
 		Datos.cargar();		
 		Listas.cargar();
 		
+		MensajeConsola.Iniciar();
+		
 	    Registrarse r = new Registrarse();
 								    
 	}

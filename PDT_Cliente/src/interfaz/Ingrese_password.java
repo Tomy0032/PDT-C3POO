@@ -10,7 +10,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import controladores.ControlBotonPassword;
+import interfaces.ControlBotonPassword;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;

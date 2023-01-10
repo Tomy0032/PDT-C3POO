@@ -22,7 +22,7 @@ public class ListaItrs {
 		}
 	}
 	
-	public static ListaItrs getListaItrs() {
+	public static ListaItrs getInstance() {
 		if(listaItrs == null) {
 			listaItrs = new ListaItrs(); 
 		}

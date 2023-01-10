@@ -23,7 +23,7 @@ public class ListaDepartamentos {
 		}
 	}
 	
-	public static ListaDepartamentos getListaDepartamentos() {
+	public static ListaDepartamentos getInstance() {
 		
 		if(listaDepartamentos == null) {
 			listaDepartamentos = new ListaDepartamentos();
