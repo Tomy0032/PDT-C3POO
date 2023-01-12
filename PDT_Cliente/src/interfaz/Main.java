@@ -17,7 +17,11 @@ public class Main {
 		
 		MensajeConsola.Iniciar();
 		
-	    Registrarse r = new Registrarse();
+		Login l = new Login();
+		
+//	    Registrarse r = new Registrarse();
+		
+//		Ingrese_password p = new Ingrese_password();
 								    
 	}
 

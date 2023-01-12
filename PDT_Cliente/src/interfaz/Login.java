@@ -8,8 +8,12 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.JPasswordField;
+import javax.naming.NamingException;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Login extends JFrame{
 	/**
@@ -24,7 +28,7 @@ public class Login extends JFrame{
 	public Login() {
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 12));
 		setResizable(false);
-		setBounds(new Rectangle(100, 100, 305, 320));
+		setBounds(new Rectangle(100, 100, 305, 340));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Registrarse.class.getResource("/recursos/imagenes/09-Isotipo-1.png")));
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -40,8 +44,9 @@ public class Login extends JFrame{
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("usuario");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(120, 90, 46, 14);
+		lblNewLabel_1.setBounds(121, 95, 46, 14);
 		getContentPane().add(lblNewLabel_1);
 		
 		nom_usuario_login = new JTextField();
@@ -52,9 +57,10 @@ public class Login extends JFrame{
 		nom_usuario_login.setColumns(10);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("contrase\u00F1a");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1.setToolTipText("Ingrese aqu\u00ED su contrase\u00F1a.");
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_1.setBounds(109, 146, 68, 14);
+		lblNewLabel_1_1.setBounds(110, 151, 68, 14);
 		getContentPane().add(lblNewLabel_1_1);
 		
 		passw_usuario_login = new JPasswordField();
@@ -70,16 +76,29 @@ public class Login extends JFrame{
 		btn_inic_sesion_login.setForeground(new Color(255, 255, 255));
 		btn_inic_sesion_login.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btn_inic_sesion_login.setFocusable(false);
-		btn_inic_sesion_login.setBounds(81, 203, 126, 23);
+		btn_inic_sesion_login.setBounds(81, 210, 126, 23);
 		getContentPane().add(btn_inic_sesion_login);
 		
 		JButton btnRegistrarse = new JButton("registrarse");
+		btnRegistrarse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					Registrarse r = new Registrarse();
+					dispose();
+				} catch (NamingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		
 		btnRegistrarse.setBorder(new LineBorder(new Color(0, 178, 240), 2, true));
 		btnRegistrarse.setForeground(Color.WHITE);
 		btnRegistrarse.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnRegistrarse.setBackground(new Color(0, 178, 240));
-		btnRegistrarse.setBounds(81, 237, 126, 23);
+		btnRegistrarse.setBounds(81, 249, 126, 23);
 		btnRegistrarse.setFocusable(false);
 		getContentPane().add(btnRegistrarse);
 		setVisible(true);

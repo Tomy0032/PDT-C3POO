@@ -15,6 +15,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Toolkit;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,6 +23,8 @@ import javax.swing.border.LineBorder;
 
 import Atxy2k.CustomTextField.RestrictedTextField;
 import controladores.ControlBotonEnviar;
+import controladores.ControlBotonPassword;
+import controladores.Control_anio_ingreso;
 import controladores.Control_longit_min;
 import controladores.VisibilidadCampos;
 import interfaces.ControlCampo;
@@ -35,6 +38,10 @@ import com.entities.Departamento;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JYearChooser;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
 public class Registrarse extends JFrame {
@@ -79,7 +86,19 @@ public class Registrarse extends JFrame {
 	private static JLabel area_label;
 	private static JLabel asterisco_label_15_1;
 	
+	private static boolean registro = false;
+	
+	public static boolean getRegistro() {
+		return registro;
+	}
+	
+	public static void setRegistro(boolean registro) {
+		Registrarse.registro = registro;
+	}
+	
 	public Registrarse() throws NamingException {
+		
+		cerrar();
 		
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(Registrarse.class.getResource("/recursos/imagenes/09-Isotipo-1.png")));
@@ -355,7 +374,7 @@ public class Registrarse extends JFrame {
 		mail_instit_field = new JTextField();
 		mail_instit_field.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
 		mail_instit_field
-				.setToolTipText("Ingresa aqu\u00ED tu e-mail institucional. ej. juan.perez@estudialtes.utec.edu.uy.");
+				.setToolTipText("Ingresa aqu\u00ED tu e-mail institucional. ej. juan.perez@estudiantes.utec.edu.uy.");
 		mail_instit_field.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		mail_instit_field.setColumns(10);
 		mail_instit_field.setBounds(161, 272, 130, 21);
@@ -429,7 +448,7 @@ public class Registrarse extends JFrame {
 		
 		area_comboBox = new JComboBox<String>();
 		area_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
-		area_comboBox.setToolTipText("Selecciona el rol que asumir\u00E1s.");
+		area_comboBox.setToolTipText("Selecciona el área a la que perteneces.");
 		area_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		area_comboBox.setBounds(161, 315, 130, 20);
 		ComboBoxModel<String> modeloAreas = new DefaultComboBoxModel<>(ListaAreas.getListaString());		
@@ -446,7 +465,7 @@ public class Registrarse extends JFrame {
 		aviso.setForeground(new Color(255, 0, 0));
 		aviso.setHorizontalAlignment(SwingConstants.CENTER);
 		aviso.setFont(new Font("Tahoma", Font.BOLD, 10));
-		aviso.setBounds(20, 352, 291, 21);
+		aviso.setBounds(10, 352, 327, 21);
 		panelFondo.add(aviso);
 
 		btn_reg_siguiente = new JButton("Siguiente");
@@ -459,7 +478,6 @@ public class Registrarse extends JFrame {
 		btn_reg_siguiente.setEnabled(false);
 		btn_reg_siguiente
 				.setToolTipText("El botón se activar cuando los campos obligatorios estén completos y correctos.");
-		btn_reg_siguiente.addActionListener(new ControlBotonEnviar());
 		panelFondo.add(btn_reg_siguiente);
 
 		JPanel panel_gris = new JPanel();
@@ -485,30 +503,35 @@ public class Registrarse extends JFrame {
 
 		yearChooser = new JYearChooser();
 		yearChooser.setBounds(161, 315, 130, 20);
+		Control_anio_ingreso c_anio = new Control_anio_ingreso(2014);
 		panelFondo.add(yearChooser);
 
 		r_nom1 = new RestrictedTextField(Registrarse.nom1_field);
 		r_nom1.setOnlyText(true);
-		r_nom1.setLimit(20);
-		Control_longit_min c_nom1 = new Control_longit_min(nom1_field, 3);
+		r_nom1.setAcceptSpace(true);
+		r_nom1.setLimit(16);
+		Control_longit_min c_nom1 = new Control_longit_min(nom1_field, 2);
 		nom1_field.getDocument().addDocumentListener(c_nom1);
 
 		r_nom2 = new RestrictedTextField(Registrarse.nom2_field);
 		r_nom2.setOnlyText(true);
-		r_nom2.setLimit(20);
-		Control_longit_min c_nom2 = new Control_longit_min(nom2_field, 3);
+		r_nom2.setAcceptSpace(true);
+		r_nom2.setLimit(16);
+		Control_longit_min c_nom2 = new Control_longit_min(nom2_field, 2);
 		nom2_field.getDocument().addDocumentListener(c_nom2);
 
 		r_ape1 = new RestrictedTextField(Registrarse.ape1_field);
 		r_ape1.setOnlyText(true);
-		r_ape1.setLimit(20);
-		Control_longit_min c_ape1 = new Control_longit_min(ape1_field, 3);
+		r_ape1.setAcceptSpace(true);
+		r_ape1.setLimit(16);
+		Control_longit_min c_ape1 = new Control_longit_min(ape1_field, 2);
 		ape1_field.getDocument().addDocumentListener(c_ape1);
 
 		r_ape2 = new RestrictedTextField(Registrarse.ape2_field);
 		r_ape2.setOnlyText(true);
-		r_ape2.setLimit(20);
-		Control_longit_min c_ape2 = new Control_longit_min(ape2_field, 3);
+		r_ape2.setAcceptSpace(true);
+		r_ape2.setLimit(16);
+		Control_longit_min c_ape2 = new Control_longit_min(ape2_field, 2);
 		ape2_field.getDocument().addDocumentListener(c_ape2);
 
 		r_cedu = new RestrictedTextField(Registrarse.cedu_field);
@@ -544,6 +567,7 @@ public class Registrarse extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
+		btn_reg_siguiente.addActionListener(new ControlBotonEnviar());
 		VisibilidadCampos.cambiarVisibilidad();
 		
 	}
@@ -652,5 +676,35 @@ public class Registrarse extends JFrame {
 		return btn_reg_siguiente;
 	}
 	
+	private void cerrar() {
+		
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e) {		
+				dispose();
+				Login l = new Login();
+			}
+		});
+		
+	}
+	
+	public static void limpiar() {
+		nom1_field.setText("");
+		nom2_field.setText("");
+		ape1_field.setText("");
+		ape2_field.setText("");
+		cedu_field.setText("");
+		mail_instit_field.setText("");
+		mail_pers_field.setText("");
+		tipo_usu_comboBox.setSelectedIndex(0);
+		departam_comboBox.setSelectedIndex(0);
+		localidad_comboBox.setSelectedIndex(0);
+		dateChooser.setDate(null);
+		yearChooser.setYear(2023);
+		itr_comboBox.setSelectedIndex(0);
+		area_comboBox.setSelectedIndex(0);
+		rol_comboBox.setSelectedIndex(0);
+		telef_field.setText("");
+	}
 	
 }

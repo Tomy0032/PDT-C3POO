@@ -22,10 +22,10 @@ public class Generacion implements Serializable {
 	@Column(name="ID_GENERACION", unique=true, nullable=false, precision=38)
 	private long idGeneracion;
 
-	@Column(nullable=false, precision=38)
+	@Column(nullable=false, unique=true, precision=38)
 	private BigDecimal ano;
 
-	@Column(nullable=false, length=20)
+	@Column(nullable=false, unique=true, length=20)
 	private String nombre;
 
 	//bi-directional many-to-one association to Estudiante

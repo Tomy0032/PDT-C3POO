@@ -145,6 +145,34 @@ public class UsuarioBean implements UsuarioBeanRemote {
 				.setParameter("documento", documento); 
 		return query.getResultList();
 	}
+	
+	@Override
+	public List<Usuario> findAllForPersonalEmail(String email) {
+		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.correoPersonal LIKE :email",Usuario.class)
+				.setParameter("email", email); 
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<Usuario> findAllForInstitutionalEmail(String email) {
+		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.correoInstitucional LIKE :email",Usuario.class)
+				.setParameter("email", email); 
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<Usuario> findAllForUsername(String nombreUsuario) {
+		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.nombreUsuario LIKE :nombreUsuario",Usuario.class)
+				.setParameter("nombreUsuario", nombreUsuario); 
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<Usuario> findAllForTelephone(String telefono) {
+		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.telefono LIKE :telefono",Usuario.class)
+				.setParameter("telefono", telefono); 
+		return query.getResultList();
+	}
 
 	@Override
 	public Usuario find(Long idUsuario) throws ServicesException {

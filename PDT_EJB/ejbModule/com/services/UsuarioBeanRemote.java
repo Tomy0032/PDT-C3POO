@@ -25,6 +25,11 @@ public interface UsuarioBeanRemote {
 	void removeTutor(Long idUsuario, Long idTutor) throws ServicesException;
 	List<Usuario> findAll();
 	List<Usuario> findAllForDocument(Documento documento);
+	List<Usuario> findAllForPersonalEmail(String email);
+	List<Usuario> findAllForInstitutionalEmail(String email);
+	List<Usuario> findAllForUsername(String nombreUsuario);
+	List<Usuario> findAllForTelephone(String telefono);
+
 	Usuario find(Long idUsuario) throws ServicesException;
 
 }

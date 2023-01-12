@@ -21,7 +21,7 @@ public class Departamento implements Serializable {
 	@Column(name="ID_DEPARTAMENTO", unique=true, nullable=false, precision=38)
 	private long idDepartamento;
 
-	@Column(nullable=false, length=16)
+	@Column(nullable=false, unique=true, length=16)
 	private String nombre;
 
 	//bi-directional many-to-one association to Localidad

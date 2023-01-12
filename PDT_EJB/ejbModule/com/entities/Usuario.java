@@ -31,17 +31,17 @@ public class Usuario implements Serializable {
 	@Column(nullable=false, length=16)
 	private String contrasena;
 
-	@Column(name="CORREO_INSTITUCIONAL", nullable=false, length=60)
+	@Column(name="CORREO_INSTITUCIONAL", unique=true, nullable=false, length=60)
 	private String correoInstitucional;
 
-	@Column(name="CORREO_PERSONAL", length=30)
+	@Column(name="CORREO_PERSONAL", unique=true, length=30)
 	private String correoPersonal;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="FECHA_NACIMIENTO", nullable=false)
 	private Date fechaNacimiento;
 
-	@Column(name="NOMBRE_USUARIO", nullable=false, length=40)
+	@Column(name="NOMBRE_USUARIO", unique=true, nullable=false, length=40)
 	private String nombreUsuario;
 
 	@Column(nullable=false, length=20)
@@ -50,7 +50,7 @@ public class Usuario implements Serializable {
 	@Column(length=20)
 	private String nombre2;
 
-	@Column(length=10)
+	@Column(unique=true, length=10)
 	private String telefono;
 
 	//bi-directional many-to-one association to Analista
@@ -72,7 +72,7 @@ public class Usuario implements Serializable {
 
 	//bi-directional many-to-one association to Genero
 	@ManyToOne
-	@JoinColumn(name="ID_GENERO", nullable=false)
+	@JoinColumn(name="ID_GENERO", nullable=true)
 	private Genero genero;
 
 	//bi-directional many-to-one association to Itr

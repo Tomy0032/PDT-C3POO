@@ -21,7 +21,7 @@ public class Tipo implements Serializable {
 	@Column(name="ID_TIPO", unique=true, nullable=false, precision=38)
 	private long idTipo;
 
-	@Column(nullable=false, length=20)
+	@Column(nullable=false, unique=true, length=20)
 	private String nombre;
 
 	//bi-directional many-to-one association to Tutor

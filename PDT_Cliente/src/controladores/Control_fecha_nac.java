@@ -24,14 +24,14 @@ public class Control_fecha_nac implements ControlCampo{
 		
 		this.nacimiento = nacimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		minimo = LocalDate.now().minusYears(100l); //fecha actual menos 100 años
-		maximo = LocalDate.now().minusYears(12l);  //fecha actual menos 12 años
+		maximo = LocalDate.now().minusYears(17l);  //fecha actual menos 17 años
 	}
 	
 	@Override
 	public void controlCampo() {
 		// TODO Auto-generated method stub
 			
-		//la persona tiene que tener minimo 12 y maximo 100 años 
+		//la persona tiene que tener minimo 17 y maximo 100 años 
 		edadOk = (nacimiento.isAfter(minimo) && nacimiento.isBefore(maximo));	
 	
 	}

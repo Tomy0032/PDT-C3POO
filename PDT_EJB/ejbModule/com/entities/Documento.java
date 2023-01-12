@@ -21,7 +21,7 @@ public class Documento implements Serializable {
 	@Column(name="ID_DOCUMENTO", unique=true, nullable=false, precision=38)
 	private long idDocumento;
 
-	@Column(nullable=false, length=16)
+	@Column(nullable=false, unique=true, length=16)
 	private String caracteres;
 
 	//bi-directional many-to-one association to Pais

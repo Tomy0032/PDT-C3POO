@@ -10,23 +10,59 @@ import javax.swing.JOptionPane;
 
 import datos.CrearUsuario;
 import interfaz.Ingrese_password;
+import interfaz.Login;
 import interfaz.Registrarse;
 
-public class ControlBotonPassword implements ActionListener {
+public class ControlBotonPassword {
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
+	public ControlBotonPassword() {
+	}
+	
+	public boolean controlar() {
 		// TODO Auto-generated method stub
+		
+		boolean continuar = true;
+		
+		Ingrese_password.getLblAviso().setVisible(false);
+		Ingrese_password.getLblAviso2().setVisible(false);
+		Ingrese_password.getLblAviso3().setVisible(false);
+		Ingrese_password.getLblAviso4().setVisible(false);
 		
 		@SuppressWarnings("deprecation")
 		String campo1 = Ingrese_password.getPassword().getText().toString();
 		@SuppressWarnings("deprecation")
 		String campo2 = Ingrese_password.getRep_password().getText().toString();
 		
-		System.out.println(campo1);
-		System.out.println(campo2);
+		if(campo1.length() < 8) {
+			
+			continuar = false;
+			Ingrese_password.getLblAviso4().setVisible(true);
+			
+		}else {
 		
-		if(campo1.equals(campo2)) {
+			try {
+				
+				int p = Integer.parseInt(campo1);
+				continuar = false;
+				Ingrese_password.getLblAviso3().setVisible(true);
+				
+			}catch(Exception ex) {	
+				
+				if(!campo1.matches(".*[0-9].*")){
+					continuar = false;
+					Ingrese_password.getLblAviso2().setVisible(true);
+				}
+				else if(!campo1.equals(campo2)) { 
+					continuar = false;
+					Ingrese_password.getLblAviso().setVisible(true);
+				}
+				
+			}
+		}
+		
+		
+		
+		if(continuar) {
 			
 			Date fecha = Registrarse.getDateChooser().getDate();
 			long f = fecha.getTime();
@@ -53,17 +89,16 @@ public class ControlBotonPassword implements ActionListener {
 					};
 			
 			try {
-				CrearUsuario.crear(datos);
+				if(CrearUsuario.crear(datos)) {
+					return true;
+				}
+				return false;
 			} catch (NamingException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
-		}else {
-			
-			Ingrese_password.getLblAviso().setVisible(true);
-			
 		}
+		return false;
 				
 	}
 

@@ -26,7 +26,7 @@ public class Control_formato_email implements ControlCampo{
 		if(patron.matcher(email).matches()) {
 			
 			match = true;
-			Registrarse.setAviso("Los campos marcados con (*) son obligatorios.");
+			Registrarse.setAviso("Los campos marcados con (*) son obligatorios");
 		}else {
 			
 			match = false;
