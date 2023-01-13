@@ -7,6 +7,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.entities.Area;
+import com.exception.ServicesException;
 import com.services.AreaBeanRemote;
 
 public class ListaAreas {
@@ -37,8 +38,8 @@ public class ListaAreas {
 		try {				
 			lista = areaBean.findAll();
 								
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (ServicesException e) {
+			System.out.println(e.getMessage());
 		}
 		
 	}

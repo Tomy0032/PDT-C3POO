@@ -44,8 +44,7 @@ public class Tipos {
 				try {
 					tipoBean.create(tipo);
 				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				}
 				
 			}

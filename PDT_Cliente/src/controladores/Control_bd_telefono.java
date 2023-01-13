@@ -1,8 +1,8 @@
 package controladores;
 
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
-import com.entities.Usuario;
 import com.services.UsuarioBeanRemote;
 
 import interfaces.ControlCampo;
@@ -16,18 +16,18 @@ public class Control_bd_telefono implements ControlCampo{
 		this.telefono = telefono;
 	}
 	
-	public void controlCampo(){
+	public void controlCampo() throws NamingException{
+		
+		UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
 		
 		try{
-			
-			UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
-			
-			Usuario usuario = new Usuario();
-			usuario = usuarioBean.findAllForTelephone(telefono).get(0);
+						
+			usuarioBean.findAllForTelephone(telefono).get(0);
 			ok = false;
 			
 		}catch(Exception e) {
 			ok = true;
+			System.out.println(e.getMessage());
 		}
 		
 	}

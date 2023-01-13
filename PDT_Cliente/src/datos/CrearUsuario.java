@@ -35,8 +35,6 @@ import com.services.TipoBeanRemote;
 import com.services.TutorBeanRemote;
 import com.services.UsuarioBeanRemote;
 
-import interfaz.Login;
-
 public class CrearUsuario {
 
 	public static boolean crear(String[] datos) throws NamingException {
@@ -47,6 +45,7 @@ public class CrearUsuario {
 		DocumentoBeanRemote documentoBean = (DocumentoBeanRemote) InitialContext.doLookup("PDT_EJB/DocumentoBean!com.services.DocumentoBeanRemote"); 
 		PaisBeanRemote paisBean = (PaisBeanRemote) InitialContext.doLookup("PDT_EJB/PaisBean!com.services.PaisBeanRemote"); 
 		ItrBeanRemote itrBean = (ItrBeanRemote) InitialContext.doLookup("PDT_EJB/ItrBean!com.services.ItrBeanRemote"); 
+		@SuppressWarnings("unused")
 		GeneroBeanRemote generoBean = (GeneroBeanRemote) InitialContext.doLookup("PDT_EJB/GeneroBean!com.services.GeneroBeanRemote"); 
 		EstudianteBeanRemote estudianteBean = (EstudianteBeanRemote) InitialContext.doLookup("PDT_EJB/EstudianteBean!com.services.EstudianteBeanRemote"); 
 		GeneracionBeanRemote generacionBean = (GeneracionBeanRemote) InitialContext.doLookup("PDT_EJB/GeneracionBean!com.services.GeneracionBeanRemote"); 
@@ -100,13 +99,20 @@ public class CrearUsuario {
 //			usuario.setGenero(generoBean.find(1L));
 			
 			usuario.setContrasena(datos[16]);
-			usuario.setNombreUsuario(datos[6]+"."+datos[1]);
+			
+			if(datos[0].equals("ESTUDIANTE")) {
+				usuario.setNombreUsuario(usuario.getCorreoInstitucional().replaceAll("@estudiantes.utec.edu.uy", "").toString());
+			}
+			else {
+				usuario.setNombreUsuario(usuario.getCorreoInstitucional().replaceAll("@utec.edu.uy", "").toString());
+			}
+//			usuario.setNombreUsuario(datos[6]+"."+datos[1]);
 									
 			usuarioBean.create(usuario);
 			usuario = usuarioBean.findAllForDocument(documento).get(0);
 			
 			if(datos[0].equals("ESTUDIANTE")) {
-				
+								
 				BigDecimal ano = new BigDecimal(datos[13]);
 			
 				Generacion generacion = generacionBean.findAllForYear(ano).get(0);				
@@ -149,7 +155,14 @@ public class CrearUsuario {
 			}
 					
 		}catch(ServicesException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			try {
+				Documento documento = documentoBean.findAll(datos[9]).get(0);
+				documentoBean.drop(documento.getIdDocumento());
+			}
+			catch(ServicesException e1){
+				System.out.println(e1.getMessage());
+			}
 		}
 		
 		return false;

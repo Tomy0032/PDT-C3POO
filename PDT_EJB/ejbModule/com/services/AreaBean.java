@@ -85,16 +85,24 @@ public class AreaBean implements AreaBeanRemote {
    	}
    	
    	@Override
-   	public List<Area> findAll() {
-   		TypedQuery<Area> query = em.createQuery("SELECT a FROM Area a",Area.class); 
-   		return query.getResultList();
+   	public List<Area> findAll() throws ServicesException {
+   		try{
+   			TypedQuery<Area> query = em.createQuery("SELECT a FROM Area a",Area.class); 
+   			return query.getResultList();
+	   	}catch(Exception e) {
+			throw new ServicesException("No se encontraron AREAS");
+		}
    	}
 
    	@Override
-   	public List<Area> findAll(String filter) {
-   		TypedQuery<Area> query = em.createQuery("SELECT a FROM Area a WHERE a.nombre LIKE :nombre",Area.class)
-   				.setParameter("nombre", filter); 
-   		return query.getResultList();
+   	public List<Area> findAll(String filter) throws ServicesException {
+   		try {
+	   		TypedQuery<Area> query = em.createQuery("SELECT a FROM Area a WHERE a.nombre LIKE :nombre",Area.class)
+	   				.setParameter("nombre", filter); 
+	   		return query.getResultList();
+	   	}catch(Exception e) {
+			throw new ServicesException("No se encontraron AREAS con ese NOMBRE");
+		}
    	}
 
 	@Override

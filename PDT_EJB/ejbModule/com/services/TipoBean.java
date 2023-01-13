@@ -85,16 +85,24 @@ public class TipoBean implements TipoBeanRemote {
    	}
    	
    	@Override
-   	public List<Tipo> findAll() {
-   		TypedQuery<Tipo> query = em.createQuery("SELECT t FROM Tipo t",Tipo.class); 
-   		return query.getResultList();
+   	public List<Tipo> findAll() throws ServicesException {
+   		try {
+	   		TypedQuery<Tipo> query = em.createQuery("SELECT t FROM Tipo t",Tipo.class); 
+	   		return query.getResultList();
+	   	}catch(Exception e) {
+			throw new ServicesException("No se encontraron TIPOS");
+		}
    	}
 
    	@Override
-   	public List<Tipo> findAll(String filter) {
-   		TypedQuery<Tipo> query = em.createQuery("SELECT t FROM Tipo t WHERE t.nombre LIKE :nombre",Tipo.class)
-   				.setParameter("nombre", filter); 
-   		return query.getResultList();
+   	public List<Tipo> findAll(String filter) throws ServicesException {
+   		try {
+   			TypedQuery<Tipo> query = em.createQuery("SELECT t FROM Tipo t WHERE t.nombre LIKE :nombre",Tipo.class)
+	   				.setParameter("nombre", filter); 
+	   		return query.getResultList();
+	   	}catch(Exception e) {
+			throw new ServicesException("No se encontraron TIPOS con ese NOMBRE");
+		}
    	}
 
 	@Override

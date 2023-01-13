@@ -1,16 +1,10 @@
 package controladores;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.naming.NamingException;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import datos.CrearUsuario;
 import interfaz.Ingrese_password;
-import interfaz.Login;
 import interfaz.Registrarse;
 
 public class ControlBotonPassword {
@@ -42,7 +36,7 @@ public class ControlBotonPassword {
 		
 			try {
 				
-				int p = Integer.parseInt(campo1);
+				Integer.parseInt(campo1);
 				continuar = false;
 				Ingrese_password.getLblAviso3().setVisible(true);
 				
@@ -59,9 +53,7 @@ public class ControlBotonPassword {
 				
 			}
 		}
-		
-		
-		
+				
 		if(continuar) {
 			
 			Date fecha = Registrarse.getDateChooser().getDate();
@@ -93,8 +85,8 @@ public class ControlBotonPassword {
 					return true;
 				}
 				return false;
-			} catch (NamingException e1) {
-				e1.printStackTrace();
+			} catch (NamingException e) {
+				System.out.println(e.getMessage());
 			}
 			
 		}

@@ -61,16 +61,24 @@ public class PaisBean implements PaisBeanRemote {
 	}
 
 	@Override
-	public List<Pais> findAll() {
-		TypedQuery<Pais> query = em.createQuery("SELECT p FROM Pais p",Pais.class); 
-		return query.getResultList();
+	public List<Pais> findAll() throws ServicesException {
+		try {
+			TypedQuery<Pais> query = em.createQuery("SELECT p FROM Pais p",Pais.class); 
+			return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron PAISES");
+	}
 	}
 
 	@Override
-	public List<Pais> findAll(String filter) {
-		TypedQuery<Pais> query = em.createQuery("SELECT p FROM Pais p WHERE p.nombre LIKE :nombre",Pais.class)
-				.setParameter("nombre", filter); 
-		return query.getResultList();
+	public List<Pais> findAll(String filter) throws ServicesException {
+		try {
+			TypedQuery<Pais> query = em.createQuery("SELECT p FROM Pais p WHERE p.nombre LIKE :nombre",Pais.class)
+					.setParameter("nombre", filter); 
+			return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron PAISES con ese NOMBRE");
+		}
 	}
 
 	@Override

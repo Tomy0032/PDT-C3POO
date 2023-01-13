@@ -134,44 +134,68 @@ public class UsuarioBean implements UsuarioBeanRemote {
 	}
 
 	@Override
-	public List<Usuario> findAll() {
-		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u",Usuario.class); 
-		return query.getResultList();
+	public List<Usuario> findAll() throws ServicesException {
+		try {
+			TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u",Usuario.class); 
+			return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron USUARIOS");
+		}
 	}
 
 	@Override
-	public List<Usuario> findAllForDocument(Documento documento) {
-		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.documento = :documento",Usuario.class)
-				.setParameter("documento", documento); 
-		return query.getResultList();
+	public List<Usuario> findAllForDocument(Documento documento) throws ServicesException {
+		try {
+			TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.documento = :documento",Usuario.class)
+					.setParameter("documento", documento); 
+			return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron USUARIOS con ese DOCUMENTO");
+		}
 	}
 	
 	@Override
-	public List<Usuario> findAllForPersonalEmail(String email) {
-		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.correoPersonal LIKE :email",Usuario.class)
-				.setParameter("email", email); 
-		return query.getResultList();
+	public List<Usuario> findAllForPersonalEmail(String email) throws ServicesException {
+		try{
+			TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.correoPersonal LIKE :email",Usuario.class)
+					.setParameter("email", email); 
+			return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron USUARIOS con ese CORREO PERSONAL");
+		}
 	}
 	
 	@Override
-	public List<Usuario> findAllForInstitutionalEmail(String email) {
-		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.correoInstitucional LIKE :email",Usuario.class)
-				.setParameter("email", email); 
-		return query.getResultList();
+	public List<Usuario> findAllForInstitutionalEmail(String email) throws ServicesException {
+		try {
+			TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.correoInstitucional LIKE :email",Usuario.class)
+					.setParameter("email", email); 
+			return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron USUARIOS con ese CORREO INSTITUCIONAL");
+		}
 	}
 	
 	@Override
-	public List<Usuario> findAllForUsername(String nombreUsuario) {
-		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.nombreUsuario LIKE :nombreUsuario",Usuario.class)
-				.setParameter("nombreUsuario", nombreUsuario); 
-		return query.getResultList();
+	public List<Usuario> findAllForUsername(String nombreUsuario) throws ServicesException {
+		try {
+			TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.nombreUsuario LIKE :nombreUsuario",Usuario.class)
+					.setParameter("nombreUsuario", nombreUsuario); 
+			return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron USUARIOS con ese NOMBRE DE USUARIO");
+		}
 	}
 	
 	@Override
-	public List<Usuario> findAllForTelephone(String telefono) {
-		TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.telefono LIKE :telefono",Usuario.class)
-				.setParameter("telefono", telefono); 
-		return query.getResultList();
+	public List<Usuario> findAllForTelephone(String telefono) throws ServicesException {
+		try {
+			TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.telefono LIKE :telefono",Usuario.class)
+					.setParameter("telefono", telefono); 
+			return query.getResultList();
+		}catch(PersistenceException e) {
+			throw new ServicesException("No se encontraron USUARIOS con ese TELEFONO");
+	}
 	}
 
 	@Override
@@ -179,8 +203,20 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		try{
 			Usuario usuario = em.find(Usuario.class, idUsuario);
 			return usuario;
-		}catch(PersistenceException e){
+		}catch(Exception e){
 			throw new ServicesException("No se pudo obtener el USUARIO");
+		}
+	}
+
+	@Override
+	public Usuario inicioSesion(String nombreUsuario, String contrasena) throws ServicesException {
+		try {
+			TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.nombreUsuario LIKE :nombreUsuario AND u.contrasena LIKE :contrasena",Usuario.class)
+					.setParameter("nombreUsuario", nombreUsuario)
+					.setParameter("contrasena", contrasena); 
+			return query.getResultList().get(0);
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron USUARIOS con esas CREDENCIALES");
 		}
 	}
     

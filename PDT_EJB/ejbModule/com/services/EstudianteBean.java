@@ -12,9 +12,9 @@ import javax.persistence.TypedQuery;
 import com.entities.Constancia;
 import com.entities.ConvocatoriaAsistencia;
 import com.entities.Estudiante;
-import com.entities.Evento;
 import com.entities.Generacion;
 import com.entities.Justificacion;
+import com.entities.Usuario;
 import com.exception.ServicesException;
 
 /**
@@ -136,16 +136,24 @@ public class EstudianteBean implements EstudianteBeanRemote {
 	}
 
 	@Override
-	public List<Estudiante> findAll() {
-		TypedQuery<Estudiante> query = em.createQuery("SELECT e FROM Estudiante e",Estudiante.class); 
-   		return query.getResultList();
+	public List<Estudiante> findAll() throws ServicesException {
+		try {
+			TypedQuery<Estudiante> query = em.createQuery("SELECT e FROM Estudiante e",Estudiante.class); 
+	   		return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron ESTUDIANTES");
+		}
 	}
 
 	@Override
-	public List<Estudiante> findAll(String filter) {
-		TypedQuery<Estudiante> query = em.createQuery("SELECT e FROM Estudiante e WHERE e.nombre LIKE :nombre",Estudiante.class)
-   				.setParameter("nombre", filter); 
-   		return query.getResultList();
+	public List<Estudiante> findAllForGeneracion(Generacion generacion) throws ServicesException {
+		try{
+			TypedQuery<Estudiante> query = em.createQuery("SELECT e FROM Estudiante e WHERE e.generacion = :generacion",Estudiante.class)
+	   				.setParameter("geenracion", generacion); 
+	   		return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron ESTUDIANTES en esa GENERACION");
+		}
 	}
 
 	@Override
@@ -157,5 +165,16 @@ public class EstudianteBean implements EstudianteBeanRemote {
    			throw new ServicesException("No se pudo obtener el ESTUDIANTE");
    		}
 	} 
+	
+	@Override
+	public Estudiante findForUser(Usuario usuario) throws ServicesException {
+		try {
+			TypedQuery<Estudiante> query = em.createQuery("SELECT e FROM Estudiante e WHERE e.usuario = :usuario",Estudiante.class)
+	   				.setParameter("usuario", usuario); 
+	   		return query.getResultList().get(0);
+		}catch(Exception e) {
+			throw new ServicesException("Ese USUARIO no es ESTUDIANTE");
+		}
+	}
 
 }

@@ -16,8 +16,8 @@ public interface AreaBeanRemote {
 	void drop(Long idArea) throws ServicesException;
 	void addTutor(Long idArea, Tutor tutor) throws ServicesException;
 	void removeTutor(Long idArea, Long idTutor) throws ServicesException;
-	List<Area> findAll();
-	List<Area> findAll(String filter);
+	List<Area> findAll() throws ServicesException;
+	List<Area> findAll(String filter) throws ServicesException;
 	Area find(Long idArea) throws ServicesException;
 
 }

@@ -7,6 +7,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.entities.Itr;
+import com.exception.ServicesException;
 import com.services.ItrBeanRemote;
 
 public class ListaItrs {
@@ -36,8 +37,8 @@ public class ListaItrs {
 		try {				
 			lista = itrBean.findAll();
 								
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (ServicesException e) {
+			System.out.println(e.getMessage());
 		}
 		
 	}

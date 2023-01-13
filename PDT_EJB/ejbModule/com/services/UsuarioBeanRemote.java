@@ -23,12 +23,13 @@ public interface UsuarioBeanRemote {
 	void removeEstudiante(Long idUsuario, Long idEstudiante) throws ServicesException;
 	void addTutor(Long idUsuario, Tutor tutor) throws ServicesException;
 	void removeTutor(Long idUsuario, Long idTutor) throws ServicesException;
-	List<Usuario> findAll();
-	List<Usuario> findAllForDocument(Documento documento);
-	List<Usuario> findAllForPersonalEmail(String email);
-	List<Usuario> findAllForInstitutionalEmail(String email);
-	List<Usuario> findAllForUsername(String nombreUsuario);
-	List<Usuario> findAllForTelephone(String telefono);
+	List<Usuario> findAll() throws ServicesException;
+	List<Usuario> findAllForDocument(Documento documento) throws ServicesException;
+	List<Usuario> findAllForPersonalEmail(String email) throws ServicesException;
+	List<Usuario> findAllForInstitutionalEmail(String email) throws ServicesException;
+	List<Usuario> findAllForUsername(String nombreUsuario) throws ServicesException;
+	List<Usuario> findAllForTelephone(String telefono) throws ServicesException;
+	Usuario inicioSesion(String nombreUsuario,String contrasena) throws ServicesException;
 
 	Usuario find(Long idUsuario) throws ServicesException;
 

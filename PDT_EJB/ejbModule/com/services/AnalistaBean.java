@@ -13,6 +13,7 @@ import com.entities.AccionConstancia;
 import com.entities.AccionJustificacion;
 import com.entities.AccionReclamo;
 import com.entities.Analista;
+import com.entities.Usuario;
 import com.exception.ServicesException;
 
 /**
@@ -133,16 +134,13 @@ public class AnalistaBean implements AnalistaBeanRemote {
 	}
 
 	@Override
-	public List<Analista> findAll() {
-		TypedQuery<Analista> query = em.createQuery("SELECT a FROM Analista a",Analista.class); 
-   		return query.getResultList();
-	}
-
-	@Override
-	public List<Analista> findAll(String filter) {
-		TypedQuery<Analista> query = em.createQuery("SELECT a FROM Analista a WHERE a.nombre LIKE :nombre",Analista.class)
-   				.setParameter("nombre", filter); 
-   		return query.getResultList();
+	public List<Analista> findAll() throws ServicesException {
+		try {
+			TypedQuery<Analista> query = em.createQuery("SELECT a FROM Analista a",Analista.class); 
+	   		return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron ANALISTAS");
+		}
 	}
 
 	@Override
@@ -153,6 +151,17 @@ public class AnalistaBean implements AnalistaBeanRemote {
    		}catch(PersistenceException e){
    			throw new ServicesException("No se pudo obtener el ANALISTA");
    		}
+	}
+
+	@Override
+	public Analista findForUser(Usuario usuario) throws ServicesException {
+		try {
+			TypedQuery<Analista> query = em.createQuery("SELECT a FROM Analista a WHERE a.usuario = :usuario",Analista.class)
+	   				.setParameter("usuario", usuario); 
+	   		return query.getResultList().get(0);
+		}catch(Exception e) {
+			throw new ServicesException("El USUARIO no es ANALISTA");
+		}
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.entities.Localidad;
+import com.exception.ServicesException;
 import com.services.LocalidadBeanRemote;
 
 public class ListaLocalidades {
@@ -52,7 +53,12 @@ public class ListaLocalidades {
 	public static void cargarListas() throws NamingException {
 		
 		LocalidadBeanRemote localidadBean = (LocalidadBeanRemote) InitialContext.doLookup("PDT_EJB/LocalidadBean!com.services.LocalidadBeanRemote"); 		
-		List<Localidad> listaLocalidades = localidadBean.findAll();
+		List<Localidad> listaLocalidades = null;
+		try {
+			listaLocalidades = localidadBean.findAll();
+		} catch (ServicesException e) {
+			System.out.println(e.getMessage());
+		}
 		
 		for(Localidad l : listaLocalidades) {
 				

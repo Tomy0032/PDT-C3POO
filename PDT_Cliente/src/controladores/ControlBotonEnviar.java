@@ -2,18 +2,15 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
-
 import javax.naming.NamingException;
 
-import datos.CrearUsuario;
 import interfaz.Ingrese_password;
 import interfaz.Registrarse;
 
 public class ControlBotonEnviar implements ActionListener {
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent ev) {
 		
 		Control_ci ci = Control_ci.getInstance();
 		ci.controlCampo();
@@ -37,16 +34,32 @@ public class ControlBotonEnviar implements ActionListener {
 		}else {
 			
 			Control_bd_email_personal bd_email = new Control_bd_email_personal(Registrarse.getMail_pers_field().getText());
-			bd_email.controlCampo();
+			try {
+				bd_email.controlCampo();
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
 			
 			Control_bd_email_institucional bd_email_institucional = new Control_bd_email_institucional(Registrarse.getMail_instit_field().getText());
-			bd_email_institucional.controlCampo();
+			try {
+				bd_email_institucional.controlCampo();
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
 			
 			Control_bd_documento bd_documento = new Control_bd_documento(Registrarse.getCedu_field().getText());
-			bd_documento.controlCampo();
+			try {
+				bd_documento.controlCampo();
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
 			
 			Control_bd_telefono bd_telefono = new Control_bd_telefono(Registrarse.getTelef_field().getText());
-			bd_telefono.controlCampo();
+			try {
+				bd_telefono.controlCampo();
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
 			
 			if(!bd_email.isOk()) {
 				
@@ -69,14 +82,10 @@ public class ControlBotonEnviar implements ActionListener {
 				
 			}else {
 				
-				Ingrese_password p = new Ingrese_password();
+				new Ingrese_password();
 				
 			}
 		}
-	}
-
-	private String valueOf(int year) {
-		return null;
 	}
 
 }

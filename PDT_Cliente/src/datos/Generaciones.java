@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import com.entities.Departamento;
 import com.entities.Generacion;
 import com.exception.ServicesException;
 import com.services.GeneracionBeanRemote;
@@ -54,8 +53,7 @@ public class Generaciones {
 				try {
 					generacionBean.create(generacion);
 				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 				
 			}

@@ -45,7 +45,11 @@ public static void cargarDatos() throws NamingException {
 			int ind =s.indexOf(",");
 			String departamento = s.substring(0,ind);
 			Departamento depa = new Departamento();
-			depa = departamentoBean.findAll(departamento).get(0);
+			try {
+				depa = departamentoBean.findAll(departamento).get(0);
+			} catch (ServicesException e2) {
+				System.out.println(e2.getMessage());
+			}
 			
 			int ultimo = s.length();
 			s = s.substring(ind+1,ultimo);
@@ -55,13 +59,18 @@ public static void cargarDatos() throws NamingException {
 			String localidad = s.substring(0,ind);
 
 			Localidad local = new Localidad();
-			List<Localidad> localidades = localidadBean.findAll(localidad);
+			List<Localidad> localidades = null;
+			
+			try {
+				localidades = localidadBean.findAll(localidad);
+			} catch (ServicesException e2) {
+				System.out.println(e2.getMessage());
+			}
 			for(Localidad l : localidades) {
 				if(l.getDepartamento().getIdDepartamento() == depa.getIdDepartamento()) {
 					local = l;
 				}
-			}
-			
+			}			
 			
 			ultimo = s.length();
 			s = s.substring(ind+1,ultimo);
@@ -85,7 +94,7 @@ public static void cargarDatos() throws NamingException {
 					
 				} catch (ServicesException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				}
 				
 			}

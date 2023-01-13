@@ -9,8 +9,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
+import com.entities.Area;
 import com.entities.Responsabilidad;
+import com.entities.Tipo;
 import com.entities.Tutor;
+import com.entities.Usuario;
 import com.exception.ServicesException;
 
 /**
@@ -85,16 +88,35 @@ public class TutorBean implements TutorBeanRemote {
 	}
 
 	@Override
-	public List<Tutor> findAll() {
-		TypedQuery<Tutor> query = em.createQuery("SELECT t FROM Tutor t",Tutor.class); 
-   		return query.getResultList();
+	public List<Tutor> findAll() throws ServicesException {
+		try {
+			TypedQuery<Tutor> query = em.createQuery("SELECT t FROM Tutor t",Tutor.class); 
+	   		return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron TUTORES");
+		}
 	}
 
 	@Override
-	public List<Tutor> findAll(String filter) {
-		TypedQuery<Tutor> query = em.createQuery("SELECT t FROM Tutor t WHERE t.nombre LIKE :nombre",Tutor.class)
-   				.setParameter("nombre", filter); 
-   		return query.getResultList();
+	public List<Tutor> findAllForArea(Area area) throws ServicesException {
+		try {
+			TypedQuery<Tutor> query = em.createQuery("SELECT t FROM Tutor t WHERE t.area = :area",Tutor.class)
+	   				.setParameter("area", area); 
+	   		return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron TUTORES para esa AREA");
+		}
+	}
+	
+	@Override
+	public List<Tutor> findAllForTipo(Tipo tipo) throws ServicesException {
+		try {
+			TypedQuery<Tutor> query = em.createQuery("SELECT t FROM Tutor t WHERE t.tipo = :tipo",Tutor.class)
+	   				.setParameter("tipo", tipo); 
+	   		return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron TUTORES para ese TIPO");
+		}
 	}
 
 	@Override
@@ -107,4 +129,15 @@ public class TutorBean implements TutorBeanRemote {
    		}
 	}
 
+	@Override
+	public Tutor findForUser(Usuario usuario) throws ServicesException {
+		try {	
+			TypedQuery<Tutor> query = em.createQuery("SELECT t FROM Tutor t WHERE t.usuario = :usuario",Tutor.class)
+	   				.setParameter("usuario", usuario); 
+	   		return query.getResultList().get(0);
+		}catch(Exception e) {
+			throw new ServicesException("El USUARIO no es TUTOR");
+		}
+	}
+	
 }

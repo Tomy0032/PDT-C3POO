@@ -17,9 +17,9 @@ public interface GeneracionBeanRemote {
 	void drop(Long idGeneracion) throws ServicesException;
 	void addEstudiante(Long idGeneracion, Estudiante Generacion) throws ServicesException;
 	void removeEstudiante(Long idGeneracion, Long idEstudiante) throws ServicesException;
-	List<Generacion> findAll();
-	List<Generacion> findAllForName(String filter);
-	List<Generacion> findAllForYear(BigDecimal filter);	
+	List<Generacion> findAll() throws ServicesException;
+	List<Generacion> findAllForName(String filter) throws ServicesException;
+	List<Generacion> findAllForYear(BigDecimal filter) throws ServicesException;	
 	Generacion find(Long idGeneracion) throws ServicesException;
 
 }

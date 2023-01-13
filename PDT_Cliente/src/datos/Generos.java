@@ -46,7 +46,7 @@ public class Generos {
 					generoBean.create(genero);
 				} catch (ServicesException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				}
 				
 			}

@@ -44,8 +44,7 @@ public class Areas {
 				try {
 					areaBean.create(area);
 				} catch (ServicesException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 				
 			}

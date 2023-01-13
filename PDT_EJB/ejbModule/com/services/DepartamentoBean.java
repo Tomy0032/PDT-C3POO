@@ -85,16 +85,24 @@ public class DepartamentoBean implements DepartamentoBeanRemote {
 	}
 
 	@Override
-	public List<Departamento> findAll() {
-		TypedQuery<Departamento> query = em.createQuery("SELECT d FROM Departamento d order by d.idDepartamento asc",Departamento.class); 
-		return query.getResultList();
+	public List<Departamento> findAll() throws ServicesException {
+		try{
+			TypedQuery<Departamento> query = em.createQuery("SELECT d FROM Departamento d order by d.idDepartamento asc",Departamento.class); 
+			return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron DEPARTAMENTOS");
+		}
 	}
 
 	@Override
-	public List<Departamento> findAll(String filter) {
-		TypedQuery<Departamento> query = em.createQuery("SELECT d FROM Departamento d WHERE d.nombre LIKE :nombre",Departamento.class)
-				.setParameter("nombre", filter); 
-		return query.getResultList();
+	public List<Departamento> findAll(String filter) throws ServicesException {
+		try {
+			TypedQuery<Departamento> query = em.createQuery("SELECT d FROM Departamento d WHERE d.nombre LIKE :nombre",Departamento.class)
+					.setParameter("nombre", filter); 
+			return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron DEPARTAMENTOS con ese NOMBRE");
+		}
 	}
 
 	@Override

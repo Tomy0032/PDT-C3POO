@@ -16,8 +16,8 @@ public interface GeneroBeanRemote {
 	void drop(Long idGenero) throws ServicesException;
 	void addUsuario(Long idGenero, Usuario usuario) throws ServicesException;
 	void removeUsuario(Long idGenero, Long idUsuario) throws ServicesException;
-	List<Genero> findAll();
-	List<Genero> findAll(String filter);
+	List<Genero> findAll() throws ServicesException;
+	List<Genero> findAll(String filter) throws ServicesException;
 	Genero find(Long idGenero) throws ServicesException;
 	
 }

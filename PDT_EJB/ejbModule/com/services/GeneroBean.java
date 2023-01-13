@@ -85,16 +85,24 @@ public class GeneroBean implements GeneroBeanRemote {
    	}
    	
    	@Override
-   	public List<Genero> findAll() {
-   		TypedQuery<Genero> query = em.createQuery("SELECT g FROM Genero g",Genero.class); 
-   		return query.getResultList();
+   	public List<Genero> findAll() throws ServicesException {
+   		try {
+	   		TypedQuery<Genero> query = em.createQuery("SELECT g FROM Genero g",Genero.class); 
+	   		return query.getResultList();
+	   	}catch(Exception e) {
+			throw new ServicesException("No se encontraron GENEROS");
+		}
    	}
 
    	@Override
-   	public List<Genero> findAll(String filter) {
-   		TypedQuery<Genero> query = em.createQuery("SELECT g FROM Genero g WHERE g.nombre LIKE :nombre",Genero.class)
-   				.setParameter("nombre", filter); 
-   		return query.getResultList();
+   	public List<Genero> findAll(String filter) throws ServicesException {
+   		try {
+	   		TypedQuery<Genero> query = em.createQuery("SELECT g FROM Genero g WHERE g.nombre LIKE :nombre",Genero.class)
+	   				.setParameter("nombre", filter); 
+	   		return query.getResultList();
+	   	}catch(Exception e) {
+			throw new ServicesException("No se encontraron GENEROS con ese NOMBRE");
+		}
    	}
 
 	@Override

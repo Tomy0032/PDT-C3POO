@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -12,7 +13,6 @@ import javax.swing.border.LineBorder;
 
 import Atxy2k.CustomTextField.RestrictedTextField;
 import controladores.ControlBotonPassword;
-import controladores.Control_longit_min;
 
 import javax.swing.JPasswordField;
 import javax.swing.ImageIcon;
@@ -44,7 +44,10 @@ public class Ingrese_password extends JFrame {
 		
 		cerrar();
 		
-		setBounds(new Rectangle(100, 100, 356, 375));
+		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+	    int height = pantalla.height;
+	    int width = pantalla.width;
+	    setBounds(new Rectangle((width-356)/2, (height-375)/2, 356, 375));
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(Ingrese_password.class.getResource("/recursos/imagenes/09-Isotipo-1.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -187,7 +190,7 @@ public class Ingrese_password extends JFrame {
 					password.setEchoChar((char)0);
 				}else {
 					showPass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye.png")));
-					password.setEchoChar((char)'*');
+					password.setEchoChar((char)'•');
 				}
 			}
 		});
@@ -213,8 +216,6 @@ public class Ingrese_password extends JFrame {
 		
 		r_password = new RestrictedTextField(password);
 		r_password.setLimit(16);
-		System.out.println(password);
-		System.out.println(password.getEchoChar());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		setVisible(true);

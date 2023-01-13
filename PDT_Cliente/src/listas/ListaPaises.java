@@ -7,6 +7,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.entities.Pais;
+import com.exception.ServicesException;
 import com.services.PaisBeanRemote;
 
 public class ListaPaises {
@@ -37,8 +38,8 @@ public class ListaPaises {
 		try {				
 			lista = paisBean.findAll();
 								
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (ServicesException e) {
+			System.out.println(e.getMessage());
 		}
 		
 	}

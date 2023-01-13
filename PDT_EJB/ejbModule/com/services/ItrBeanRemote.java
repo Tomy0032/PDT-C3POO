@@ -16,8 +16,8 @@ public interface ItrBeanRemote {
 	void drop(Long idItr) throws ServicesException;
 	void addUsuario(Long idItr, Usuario usuario) throws ServicesException;
 	void removeUsuario(Long idItr, Long idUsuario) throws ServicesException;
-	List<Itr> findAll();
-	List<Itr> findAll(String filter);
+	List<Itr> findAll() throws ServicesException;
+	List<Itr> findAll(String filter) throws ServicesException;
 	Itr find(Long idItr) throws ServicesException;
 
 }

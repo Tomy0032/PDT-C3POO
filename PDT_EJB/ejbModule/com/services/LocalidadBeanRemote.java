@@ -19,8 +19,8 @@ public interface LocalidadBeanRemote {
 	void removeItr(Long idLocalidad, Long idItr) throws ServicesException;
 	void addUsuario(Long idLocalidad, Usuario usuario) throws ServicesException;
 	void removeUsuario(Long idLocalidad, Long idUsuario) throws ServicesException;
-	List<Localidad> findAll();
-	List<Localidad> findAll(String filter);
+	List<Localidad> findAll() throws ServicesException;
+	List<Localidad> findAll(String filter) throws ServicesException;
 	Localidad find(Long idLocalidad) throws ServicesException;
 
 }

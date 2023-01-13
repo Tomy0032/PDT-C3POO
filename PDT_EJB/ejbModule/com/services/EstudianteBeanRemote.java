@@ -9,6 +9,7 @@ import com.entities.ConvocatoriaAsistencia;
 import com.entities.Estudiante;
 import com.entities.Generacion;
 import com.entities.Justificacion;
+import com.entities.Usuario;
 import com.exception.ServicesException;
 
 @Remote
@@ -23,8 +24,9 @@ public interface EstudianteBeanRemote {
 	void removeJustificacion(Long idEstudiante, Long idJustificacion) throws ServicesException;
 	void addConvocatoriaAsistencia(Long idEstudiante, ConvocatoriaAsistencia convocatoriaAsistencia) throws ServicesException;
 	void removeConvocatoriaAsistencia(Long idEstudiante, Long idConvicatoriaAsistencia) throws ServicesException;
-	List<Estudiante> findAll();
-	List<Estudiante> findAll(String filter);
+	List<Estudiante> findAll() throws ServicesException;
+	List<Estudiante> findAllForGeneracion(Generacion generacion) throws ServicesException;
 	Estudiante find(Long idEstudiante) throws ServicesException;
+	Estudiante findForUser(Usuario usuario) throws ServicesException;
 
 }

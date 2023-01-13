@@ -1,9 +1,9 @@
 package controladores;
 
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import com.entities.Documento;
-import com.entities.Usuario;
 import com.services.DocumentoBeanRemote;
 import com.services.UsuarioBeanRemote;
 
@@ -18,22 +18,22 @@ public class Control_bd_documento implements ControlCampo{
 		this.documento = documento;
 	}
 	
-	public void controlCampo(){
+	public void controlCampo() throws NamingException{		
 		
+		UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
+		DocumentoBeanRemote documentoBean = (DocumentoBeanRemote) InitialContext.doLookup("PDT_EJB/DocumentoBean!com.services.DocumentoBeanRemote"); 
+
 		try{
 			
-			UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
-			DocumentoBeanRemote documentoBean = (DocumentoBeanRemote) InitialContext.doLookup("PDT_EJB/DocumentoBean!com.services.DocumentoBeanRemote"); 
-
 			Documento doc = new Documento();
 			doc = documentoBean.findAll(documento).get(0);
 			
-			Usuario usuario = new Usuario();
-			usuario = usuarioBean.findAllForDocument(doc).get(0);
+			usuarioBean.findAllForDocument(doc).get(0);
 			ok = false;
 			
 		}catch(Exception e) {
 			ok = true;
+			System.out.println(e.getMessage());
 		}
 		
 	}

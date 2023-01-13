@@ -16,8 +16,8 @@ public interface DepartamentoBeanRemote {
 	void drop(Long idDepartamento) throws ServicesException;
 	void addLocalidad(Long idDepartamento, Localidad localidad) throws ServicesException;
 	void removeLocalidad(Long idDepartamento, Long idLocalidad) throws ServicesException;
-	List<Departamento> findAll();
-	List<Departamento> findAll(String filter);
+	List<Departamento> findAll() throws ServicesException;
+	List<Departamento> findAll(String filter) throws ServicesException;
 	Departamento find(Long idDepartamento) throws ServicesException;
 	
 }

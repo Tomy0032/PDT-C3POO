@@ -16,8 +16,8 @@ public interface TipoBeanRemote {
 	void drop(Long idTipo) throws ServicesException;
 	void addTutor(Long idTipo, Tutor tutor) throws ServicesException;
 	void removeTutor(Long idTipo, Long idTutor) throws ServicesException;
-	List<Tipo> findAll();
-	List<Tipo> findAll(String filter);
+	List<Tipo> findAll() throws ServicesException;
+	List<Tipo> findAll(String filter) throws ServicesException;
 	Tipo tipo(Long idTipo) throws ServicesException;
 	
 }

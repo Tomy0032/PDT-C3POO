@@ -50,7 +50,7 @@ public class Localidades_Departamentos {
 					depa = departamentoBean.findAll(departamento).get(0);
 				} catch (ServicesException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				}
 				
 			}
@@ -72,12 +72,11 @@ public class Localidades_Departamentos {
 						localidadBean.create(local);
 						local = localidadBean.findAll(localidad).get(0);
 					} catch (ServicesException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						System.out.println(e1.getMessage());
 					}
 				}
 				
-			}catch(Exception e){
+			}catch(ServicesException e){
 				
 				local.setNombre(localidad);
 				local.setDepartamento(depa);
@@ -86,7 +85,7 @@ public class Localidades_Departamentos {
 					local = localidadBean.findAll(localidad).get(0);
 				} catch (ServicesException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					System.out.println(e1.getMessage());
 				}
 				
 			}

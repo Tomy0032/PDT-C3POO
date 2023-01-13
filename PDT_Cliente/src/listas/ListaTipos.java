@@ -7,8 +7,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.services.TipoBeanRemote;
-import com.entities.Departamento;
 import com.entities.Tipo;
+import com.exception.ServicesException;
 
 public class ListaTipos {
 	
@@ -38,8 +38,8 @@ public class ListaTipos {
 		try {				
 			lista = tipoBean.findAll();
 								
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (ServicesException e) {
+			System.out.println(e.getMessage());
 		}
 		
 	}

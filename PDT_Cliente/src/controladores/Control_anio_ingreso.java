@@ -2,11 +2,7 @@ package controladores;
 
 import java.time.LocalDate;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import interfaces.ControlCampo;
-import interfaz.Registrarse;
 
 public class Control_anio_ingreso implements ControlCampo{
 

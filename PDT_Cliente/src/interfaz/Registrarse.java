@@ -9,13 +9,13 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.naming.NamingException;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.Toolkit;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +23,6 @@ import javax.swing.border.LineBorder;
 
 import Atxy2k.CustomTextField.RestrictedTextField;
 import controladores.ControlBotonEnviar;
-import controladores.ControlBotonPassword;
 import controladores.Control_anio_ingreso;
 import controladores.Control_longit_min;
 import controladores.VisibilidadCampos;
@@ -40,8 +39,6 @@ import com.toedter.calendar.JYearChooser;
 import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
 public class Registrarse extends JFrame {
@@ -102,7 +99,10 @@ public class Registrarse extends JFrame {
 		
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(Registrarse.class.getResource("/recursos/imagenes/09-Isotipo-1.png")));
-		setBounds(new Rectangle(100, 100, 610, 550));
+		Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+	    int height = pantalla.height;
+	    int width = pantalla.width;
+	    setBounds(new Rectangle((width-610)/2, (height-550)/2, 610, 550));
 		setResizable(false);
 		setTitle("Registro de nuevo usuario");
 
@@ -503,7 +503,7 @@ public class Registrarse extends JFrame {
 
 		yearChooser = new JYearChooser();
 		yearChooser.setBounds(161, 315, 130, 20);
-		Control_anio_ingreso c_anio = new Control_anio_ingreso(2014);
+		new Control_anio_ingreso(2014);
 		panelFondo.add(yearChooser);
 
 		r_nom1 = new RestrictedTextField(Registrarse.nom1_field);
@@ -564,8 +564,8 @@ public class Registrarse extends JFrame {
 		listaCampos.add(c_telef);
 		listaCampos.add(c_mail_instit);
 
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		btn_reg_siguiente.addActionListener(new ControlBotonEnviar());
 		VisibilidadCampos.cambiarVisibilidad();
@@ -682,7 +682,7 @@ public class Registrarse extends JFrame {
 		addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {		
 				dispose();
-				Login l = new Login();
+				new Login();
 			}
 		});
 		

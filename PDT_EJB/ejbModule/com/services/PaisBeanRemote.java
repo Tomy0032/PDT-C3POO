@@ -13,8 +13,8 @@ public interface PaisBeanRemote {
 	void create(Pais pais) throws ServicesException;
 	void update(Pais pais) throws ServicesException;
 	void drop(Long idPais) throws ServicesException;
-	List<Pais> findAll();
-	List<Pais> findAll(String filter);
+	List<Pais> findAll() throws ServicesException;
+	List<Pais> findAll(String filter) throws ServicesException;
 	Pais find(Long idPais) throws ServicesException;
 	
 }

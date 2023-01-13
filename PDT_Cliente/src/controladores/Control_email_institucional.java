@@ -10,11 +10,9 @@ public class Control_email_institucional extends Control_formato_email{
 	
 	public void controlCampo() {
 		
-		String nom = Registrarse.getNom1_field().getText(),
-			   ape = Registrarse.getApe1_field().getText(),
-	    estudiante = "@estudiantes.utec.edu.uy",
-	    tutor_analista = "@utec.edu.uy";
-		
+		Registrarse.getApe1_field().getText();
+		String estudiante = "@estudiantes.utec.edu.uy", tutor_analista = "@utec.edu.uy";
+		Registrarse.getNom1_field().getText();
 		String tipoUsuario = (String)Registrarse.getTipo_usu_comboBox().getSelectedItem();
 		
 //		String estudianteCorrecto = nom.toLowerCase()+"."+ape.toLowerCase()+estudiante,

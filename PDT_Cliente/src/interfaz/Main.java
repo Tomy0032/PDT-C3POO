@@ -16,12 +16,8 @@ public class Main {
 		Listas.cargar();
 		
 		MensajeConsola.Iniciar();
-		
-		Login l = new Login();
-		
-//	    Registrarse r = new Registrarse();
-		
-//		Ingrese_password p = new Ingrese_password();
+				
+		new Login();
 								    
 	}
 

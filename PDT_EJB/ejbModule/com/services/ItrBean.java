@@ -85,16 +85,24 @@ public class ItrBean implements ItrBeanRemote {
    	}
    	
    	@Override
-   	public List<Itr> findAll() {
-   		TypedQuery<Itr> query = em.createQuery("SELECT i FROM Itr i",Itr.class); 
-   		return query.getResultList();
+   	public List<Itr> findAll() throws ServicesException {
+   		try {
+	   		TypedQuery<Itr> query = em.createQuery("SELECT i FROM Itr i",Itr.class); 
+	   		return query.getResultList();
+	   	}catch(Exception e) {
+			throw new ServicesException("No se encontraron ITRs");
+		}
    	}
 
    	@Override
-   	public List<Itr> findAll(String filter) {
-   		TypedQuery<Itr> query = em.createQuery("SELECT i FROM Itr i WHERE i.nombre LIKE :nombre",Itr.class)
-   				.setParameter("nombre", filter); 
-   		return query.getResultList();
+   	public List<Itr> findAll(String filter) throws ServicesException {
+   		try {
+	   		TypedQuery<Itr> query = em.createQuery("SELECT i FROM Itr i WHERE i.nombre LIKE :nombre",Itr.class)
+	   				.setParameter("nombre", filter); 
+	   		return query.getResultList();
+	   	}catch(Exception e) {
+			throw new ServicesException("No se encontraron ITRs con ese NOMBRE");
+		}
    	}
 
 	@Override

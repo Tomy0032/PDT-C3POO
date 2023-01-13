@@ -11,8 +11,6 @@ import javax.persistence.TypedQuery;
 
 import com.entities.AccionConstancia;
 import com.entities.Constancia;
-import com.entities.Departamento;
-import com.entities.Localidad;
 import com.exception.ServicesException;
 
 /**

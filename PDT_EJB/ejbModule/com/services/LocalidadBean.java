@@ -101,7 +101,7 @@ public class LocalidadBean implements LocalidadBeanRemote {
 		try{
 			Localidad localidad = em.find(Localidad.class, idLocalidad);
 			Usuario usuario = em.find(Usuario.class, idUsuario);
-			localidad.getItrs().remove(usuario);
+			localidad.getUsuarios().remove(usuario);
 			em.flush();
 		}catch(PersistenceException e){
 			throw new ServicesException("No se pudo remover el USUARIO de la LOCALIDAD");
@@ -109,16 +109,24 @@ public class LocalidadBean implements LocalidadBeanRemote {
 	}
 
 	@Override
-	public List<Localidad> findAll() {
-		TypedQuery<Localidad> query = em.createQuery("SELECT l FROM Localidad l order by l.nombre asc",Localidad.class); 
-		return query.getResultList();
+	public List<Localidad> findAll() throws ServicesException {
+		try {
+			TypedQuery<Localidad> query = em.createQuery("SELECT l FROM Localidad l order by l.nombre asc",Localidad.class); 
+			return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron LOCALIDADES");
+	}
 	}
 
 	@Override
-	public List<Localidad> findAll(String filter) {
-		TypedQuery<Localidad> query = em.createQuery("SELECT l FROM Localidad l WHERE l.nombre LIKE :nombre",Localidad.class)
-				.setParameter("nombre", filter); 
-		return query.getResultList();
+	public List<Localidad> findAll(String filter) throws ServicesException {
+		try {
+			TypedQuery<Localidad> query = em.createQuery("SELECT l FROM Localidad l WHERE l.nombre LIKE :nombre",Localidad.class)
+					.setParameter("nombre", filter); 
+			return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron LOCALIDADES con ese NOMBRE");
+		}
 	}
 
 	@Override

@@ -86,23 +86,35 @@ public class GeneracionBean implements GeneracionBeanRemote {
    	}
 
    	@Override
-   	public List<Generacion> findAll() {
-   		TypedQuery<Generacion> query = em.createQuery("SELECT g FROM Generacion g",Generacion.class); 
-   		return query.getResultList();
+   	public List<Generacion> findAll() throws ServicesException {
+   		try {
+	   		TypedQuery<Generacion> query = em.createQuery("SELECT g FROM Generacion g",Generacion.class); 
+	   		return query.getResultList();
+	   	}catch(Exception e) {
+			throw new ServicesException("No se encontraron GENERACIONES");
+		}
    	}
 
    	@Override
-   	public List<Generacion> findAllForName(String filter) {
-   		TypedQuery<Generacion> query = em.createQuery("SELECT g FROM Generacion g WHERE g.nombre LIKE :nombre",Generacion.class)
-   				.setParameter("nombre", filter); 
-   		return query.getResultList();
+   	public List<Generacion> findAllForName(String filter) throws ServicesException {
+   		try {
+	   		TypedQuery<Generacion> query = em.createQuery("SELECT g FROM Generacion g WHERE g.nombre LIKE :nombre",Generacion.class)
+	   				.setParameter("nombre", filter); 
+	   		return query.getResultList();
+	   	}catch(Exception e) {
+			throw new ServicesException("No se encontraron GENERACIONES con ese NOMBRE");
+	}
    	}
    	
 	@Override
-   	public List<Generacion> findAllForYear(BigDecimal filter) {
-   		TypedQuery<Generacion> query = em.createQuery("SELECT g FROM Generacion g WHERE g.ano LIKE :ano",Generacion.class)
-   				.setParameter("ano", filter); 
-   		return query.getResultList();
+   	public List<Generacion> findAllForYear(BigDecimal filter) throws ServicesException {
+		try {
+	   		TypedQuery<Generacion> query = em.createQuery("SELECT g FROM Generacion g WHERE g.ano LIKE :ano",Generacion.class)
+	   				.setParameter("ano", filter); 
+	   		return query.getResultList();
+		}catch(Exception e) {
+			throw new ServicesException("No se encontraron GENERACIONES para ese AÑO");
+		}
    	}
 
 	@Override

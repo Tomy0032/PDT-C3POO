@@ -8,6 +8,10 @@ import javax.swing.JPanel;
 
 public class PanelFondo extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Image imagen;
 	private String rutaImagen;
 	

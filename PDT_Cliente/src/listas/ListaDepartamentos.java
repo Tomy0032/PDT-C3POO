@@ -7,6 +7,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.entities.Departamento;
+import com.exception.ServicesException;
 import com.services.DepartamentoBeanRemote;
 
 public class ListaDepartamentos {
@@ -38,8 +39,8 @@ public class ListaDepartamentos {
 		try {				
 			lista = departamentoBean.findAll();
 								
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (ServicesException e) {
+			System.out.println(e.getMessage());
 		}
 		
 	}
@@ -64,7 +65,7 @@ public class ListaDepartamentos {
 	}
 
 	public static void setLista(List<Departamento> lista) {
-		listaDepartamentos.lista = lista;
+		ListaDepartamentos.lista = lista;
 	}
 	
 }
