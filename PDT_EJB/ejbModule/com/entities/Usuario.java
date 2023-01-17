@@ -2,6 +2,7 @@ package com.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -84,6 +85,12 @@ public class Usuario implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_LOCALIDAD", nullable=false)
 	private Localidad localidad;
+	
+	@Column(nullable=false)	
+	private Boolean activo;
+	
+	@Column(nullable=false)	
+	private Boolean eliminado;
 
 	public Usuario() {
 	}
@@ -274,4 +281,20 @@ public class Usuario implements Serializable {
 		this.localidad = localidad;
 	}
 
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+
+	public Boolean getEliminado() {
+		return eliminado;
+	}
+
+	public void setEliminado(Boolean eliminado) {
+		this.eliminado = eliminado;
+	}	
+	
 }

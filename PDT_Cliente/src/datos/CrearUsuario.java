@@ -97,6 +97,9 @@ public class CrearUsuario {
 			usuario.setLocalidad(localidad);
 			
 //			usuario.setGenero(generoBean.find(1L));
+			usuario.setActivo(false);
+			usuario.setEliminado(false);
+
 			
 			usuario.setContrasena(datos[16]);
 			
@@ -123,9 +126,6 @@ public class CrearUsuario {
 				
 				estudianteBean.create(estudiante);
 			
-				JOptionPane.showMessageDialog(new JFrame(), "ESTUDIANTE creado correctamente");
-				return true;
-			
 			}
 			else if(datos[0].equals("TUTOR")) {
 				
@@ -138,9 +138,6 @@ public class CrearUsuario {
 				tutor.setArea(area);
 						
 				tutorBean.create(tutor);
-					
-				JOptionPane.showMessageDialog(new JFrame(), "TUTOR creado correctamente");
-				return true;
 			
 			}
 			else if(datos[0].equals("ANALISTA")) {
@@ -149,11 +146,12 @@ public class CrearUsuario {
 				analista.setUsuario(usuario);
 				
 				analistaBean.create(analista);
-				
-				JOptionPane.showMessageDialog(new JFrame(), "ANALISTA creado correctamente");
-				return true;
+
 			}
-					
+			
+			JOptionPane.showMessageDialog(new JFrame(), "Se ha completado el registro correctamente. Sus datos serán revisados antes de la activación de la cuenta");
+			return true;
+			
 		}catch(ServicesException e) {
 			System.out.println(e.getMessage());
 			try {

@@ -14,5 +14,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="src/recursos/lib/Atxy2k.jar"/>
 	<classpathentry kind="lib" path="src/recursos/lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="src/recursos/lib/javax.mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,7 +1,5 @@
+/Mail/
+/mail/
 /controladores/
-/datos/
-/interfaces/
 /interfaz/
-/jndi.properties
-/listas/
-/recursos/
+/datos/

@@ -173,7 +173,7 @@ public class EstudianteBean implements EstudianteBeanRemote {
 	   				.setParameter("usuario", usuario); 
 	   		return query.getResultList().get(0);
 		}catch(Exception e) {
-			throw new ServicesException("Ese USUARIO no es ESTUDIANTE");
+			throw new ServicesException("El USUARIO no es ESTUDIANTE");
 		}
 	}
 

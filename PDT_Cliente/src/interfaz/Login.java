@@ -109,17 +109,7 @@ public class Login extends JFrame{
 					
 				}
 				if(verificacion.get(0) == "si") {
-					switch(verificacion.get(1)) {
-					case "ESTUDIANTE":
-						new EstudiantePrincipal(Long.parseLong(verificacion.get(2)));
-						break;
-					case "ANALISTA":
-						new AnalistaPrincipal(Long.parseLong(verificacion.get(2)));
-						break;
-					case "TUTOR":
-						new TutorPrincipal(Long.parseLong(verificacion.get(2)));
-						break;
-					}
+					new Aplicacion(Long.parseLong(verificacion.get(2)));					
 					dispose();	
 				}							
 			}
@@ -140,7 +130,6 @@ public class Login extends JFrame{
 					new Registrarse();
 					dispose();
 				} catch (NamingException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
