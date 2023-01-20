@@ -3,6 +3,7 @@ package interfaz;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
@@ -13,8 +14,10 @@ import com.exception.ServicesException;
 import com.services.UsuarioBeanRemote;
 
 import controladores.ControlBotonesAplicacion;
+import controladores.VisibilidadCampos;
 import datos.ComprobarTipoUsuario;
 import listas.ListaItrs;
+import listas.ListaUsuarios;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -23,6 +26,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 import java.awt.Font;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
@@ -31,6 +36,7 @@ import java.util.List;
 import java.awt.Dimension;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.SystemColor;
 
 public class Aplicacion extends JFrame {
 	/**
@@ -49,10 +55,11 @@ public class Aplicacion extends JFrame {
 	private static JPanel card_container_panel;
 	private JTable table;
 	private JLabel lbl_estado;
-	private JComboBox<String> combo_filtro_tipoUsu;
-	private JComboBox<String> combo_filtro_itr;
-	private JComboBox<Object> combo_filtro_Generac;
-	private JComboBox<String> combo_filtro_estado;
+	private static JLabel lbl_generacion;
+	private static JComboBox<String> combo_filtro_tipoUsu;
+	private static JComboBox<String> combo_filtro_itr;
+	private static JComboBox<Object> combo_filtro_Generac;
+	private static JComboBox<String> combo_filtro_estado;
 	private static Usuario usuario;
 	private static String tipoUsuario;
 
@@ -105,27 +112,47 @@ public class Aplicacion extends JFrame {
 		card_container_panel.add(panel_usuarios, "Panel de Usuarios");
 		panel_usuarios.setLayout(null);
 
-		table = new JTable();
-		table.setBounds(33, 146, 450, 64);
-		table.setModel(new DefaultTableModel(
-				new Object[][] { { null, null, null, null, null, null }, { null, null, null, null, null, null },
-						{ null, null, null, null, null, null }, { null, null, null, null, null, null }, },
-				new String[] { "New column", "New column", "New column", "New column", "New column", "New column" }));
-		table.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		table.setBackground(new Color(255, 128, 0));
-		panel_usuarios.add(table);
+//		table = new JTable();
+//		table.setBounds(33, 146, 450, 64);
+//		table.setModel(new DefaultTableModel(
+//				new Object[][] { { null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null }, },
+//				new String[] { "New column", "New column", "New column", "New column", "New column", "New column" }));
+//		table.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+//		table.setBackground(new Color(255, 128, 0));
+//		panel_usuarios.add(table);
+		
+		DefaultTableModel tm = new DefaultTableModel(
+				ListaUsuarios.getListaStringListado(),
+				new String[] { "Estado", "Nombre de usuario", "Tipo de usuario", "Nombre 1", "Apellido 1", "ITR" }){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		tm.setColumnIdentifiers(new String[] { "Estado", "Usuario", "Tipo de usuario", "Nombre", "Apellido", "ITR" });
+		JTable t = new JTable(tm);
+		JScrollPane sp = new JScrollPane(t);
+		sp.setBounds(60, 146, 780, 400);
+		panel_usuarios.add(sp);
+		
 		JLabel lbl_filtros = new JLabel("Filtrar por:");
 		lbl_filtros.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbl_filtros.setBounds(116, 72, 61, 14);
+		lbl_filtros.setBounds(116, 73, 61, 22);
 		panel_usuarios.add(lbl_filtros);
 
 		JLabel lbl_tipo_usuario = new JLabel("Tipo Usuario");
 		lbl_tipo_usuario.setBounds(205, 73, 110, 22);
 		panel_usuarios.add(lbl_tipo_usuario);
 
-		JLabel lbl_generacion = new JLabel("Generaci\u00F3n");
-		lbl_generacion.setBounds(465, 73, 70, 22);
+		lbl_generacion = new JLabel("Generaci\u00F3n");
+		lbl_generacion.setBounds(575, 73, 70, 22);
+		lbl_generacion.setVisible(false);
 		panel_usuarios.add(lbl_generacion);
 
 		JLabel lbl_itr = new JLabel("ITR");
@@ -133,30 +160,42 @@ public class Aplicacion extends JFrame {
 		panel_usuarios.add(lbl_itr);
 
 		lbl_estado = new JLabel("Estado");
-		lbl_estado.setBounds(545, 73, 100, 22);
+		lbl_estado.setBounds(465, 73, 100, 22);
 		panel_usuarios.add(lbl_estado);
 
 		combo_filtro_tipoUsu = new JComboBox<String>();
 		combo_filtro_tipoUsu.setBounds(205, 100, 110, 22);
+		combo_filtro_tipoUsu.addItem("TODOS");
 		combo_filtro_tipoUsu.addItem("ANALISTA");
 		combo_filtro_tipoUsu.addItem("ESTUDIANTE");
 		combo_filtro_tipoUsu.addItem("TUTOR");
+		combo_filtro_tipoUsu.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == 2) {
+					VisibilidadCampos.cambiarVisibilidadListadoUsuarios();
+				}
+			}
+		});
 		panel_usuarios.add(combo_filtro_tipoUsu);
 
 		combo_filtro_itr = new JComboBox<String>();
 		combo_filtro_itr.setBounds(325, 100, 130, 22);
-		combo_filtro_itr.setModel(new DefaultComboBoxModel<>(ListaItrs.getListaString()));
+		combo_filtro_itr.setModel(new DefaultComboBoxModel<>(getItrs()));
+		combo_filtro_itr.addItem("TODOS");
 		panel_usuarios.add(combo_filtro_itr);		
 		
 		combo_filtro_Generac = new JComboBox<Object>();
-		combo_filtro_Generac.setBounds(465, 100, 70, 22);
+		combo_filtro_Generac.setBounds(575, 100, 70, 22);
 		combo_filtro_Generac.setModel(new DefaultComboBoxModel<>(getGeneraciones()));
+		combo_filtro_Generac.setVisible(false);
 		panel_usuarios.add(combo_filtro_Generac);
 
 		combo_filtro_estado = new JComboBox<String>();
-		combo_filtro_estado.setBounds(545, 100, 100, 22);
+		combo_filtro_estado.setBounds(465, 100, 100, 22);
+		combo_filtro_estado.addItem("TODOS");
+		combo_filtro_estado.addItem("SIN VALIDAR");
 		combo_filtro_estado.addItem("ACTIVO");
-		combo_filtro_estado.addItem("INACTIVO");
+		combo_filtro_estado.addItem("ELIMINADO");
 		panel_usuarios.add(combo_filtro_estado);
 
 		panel_eventos = new JPanel();
@@ -225,6 +264,26 @@ public class Aplicacion extends JFrame {
 	public static void setTipoUsuario(String tipoUsuario) {
 		Aplicacion.tipoUsuario = tipoUsuario;
 	}
+	
+	public static JComboBox<String> getCombo_filtro_tipoUsu() {
+		return combo_filtro_tipoUsu;
+	}
+
+	public static JComboBox<String> getCombo_filtro_itr() {
+		return combo_filtro_itr;
+	}
+
+	public static JComboBox<Object> getCombo_filtro_Generac() {
+		return combo_filtro_Generac;
+	}
+
+	public static JComboBox<String> getCombo_filtro_estado() {
+		return combo_filtro_estado;
+	}
+	
+	public static JLabel getLbl_generacion() {
+		return lbl_generacion;
+	}
 
 	public static void setUsuario(Long idUsuario) {
 		UsuarioBeanRemote usuarioBean = null;
@@ -266,14 +325,33 @@ public class Aplicacion extends JFrame {
 		LocalDate current_date = LocalDate.now();
 		int actual = current_date.getYear();
 		
-		List<Integer> generaciones = new ArrayList<>();
-		
+		List<String> generaciones = new ArrayList<>();
+		generaciones.add("TODAS");
 		while(anio < actual) {
-			generaciones.add(anio);
+			generaciones.add(Integer.toString(anio));
 			anio++;
 		}
 		
 		return (Object[]) generaciones.toArray();
+		
+	}
+	
+	public String[] getItrs() {
+		
+		String[] list = ListaItrs.getListaString();
+		String[] lista = new String[list.length + 1];
+		
+		for(int i = 0; i < lista.length; i++) {
+			
+			if(i == 0) {
+				lista[i] = "TODOS";
+			}else {
+				lista[i] = list[i-1];
+			}
+			
+		}
+				
+		return lista;
 		
 	}
 	

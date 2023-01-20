@@ -153,7 +153,7 @@ public class Registrarse extends JFrame {
 		tipo_usu_comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == 2) {
-					VisibilidadCampos.cambiarVisibilidad();
+					VisibilidadCampos.cambiarVisibilidadRegistro();
 				}
 			}
 		});
@@ -568,7 +568,7 @@ public class Registrarse extends JFrame {
 		setVisible(true);
 		
 		btn_reg_siguiente.addActionListener(new ControlBotonEnviar());
-		VisibilidadCampos.cambiarVisibilidad();
+		VisibilidadCampos.cambiarVisibilidadRegistro();
 		
 	}
 	

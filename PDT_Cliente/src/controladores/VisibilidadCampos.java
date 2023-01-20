@@ -1,9 +1,10 @@
 package controladores;
+import interfaz.Aplicacion;
 import interfaz.Registrarse;
 
 public class VisibilidadCampos {
 	
-	public static void cambiarVisibilidad() {
+	public static void cambiarVisibilidadRegistro() {
 		
 		String tipo = Registrarse.getTipo_usu_comboBox().getSelectedItem().toString();
 		
@@ -54,6 +55,20 @@ public class VisibilidadCampos {
 			break;
 		}
 		
+	}
+
+	public static void cambiarVisibilidadListadoUsuarios() {
+		String tipo = Aplicacion.getCombo_filtro_tipoUsu().getSelectedItem().toString();
+		switch(tipo) {
+			case "ESTUDIANTE":
+				Aplicacion.getLbl_generacion().setVisible(true);
+				Aplicacion.getCombo_filtro_Generac().setVisible(true);
+				break;
+			default:
+				Aplicacion.getLbl_generacion().setVisible(false);
+				Aplicacion.getCombo_filtro_Generac().setVisible(false);
+				break;
+		}
 	}
 
 }

@@ -35,6 +35,8 @@ import com.services.TipoBeanRemote;
 import com.services.TutorBeanRemote;
 import com.services.UsuarioBeanRemote;
 
+import listas.ListaUsuarios;
+
 public class CrearUsuario {
 
 	public static boolean crear(String[] datos) throws NamingException {
@@ -150,6 +152,7 @@ public class CrearUsuario {
 			}
 			
 			JOptionPane.showMessageDialog(new JFrame(), "Se ha completado el registro correctamente. Sus datos serán revisados antes de la activación de la cuenta");
+			ListaUsuarios.cargarLista();
 			return true;
 			
 		}catch(ServicesException e) {
