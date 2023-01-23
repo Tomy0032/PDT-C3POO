@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.entities.Usuario;
@@ -36,7 +35,6 @@ import java.util.List;
 import java.awt.Dimension;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.SystemColor;
 
 public class Aplicacion extends JFrame {
 	/**
@@ -64,18 +62,18 @@ public class Aplicacion extends JFrame {
 	private static String tipoUsuario;
 
 	public Aplicacion(Long idUsuario) {
-		
+
 		setUsuario(idUsuario);
 		cerrar();
 		getContentPane().setLayout(null);
 
 		btn_container_panel = new JPanel();
-		btn_container_panel.setBounds(0, 0, 152, 746);
+		btn_container_panel.setBounds(0, 102, 169, 644);
 		getContentPane().add(btn_container_panel);
 		btn_container_panel.setLayout(null);
 
 		btn_usuarios = new JButton("USUARIOS");
-		btn_usuarios.setBounds(0, 5, 121, 25);
+		btn_usuarios.setBounds(0, 5, 141, 25);
 		btn_usuarios.setMinimumSize(new Dimension(120, 23));
 		btn_usuarios.setMaximumSize(new Dimension(120, 23));
 		btn_usuarios.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -83,26 +81,26 @@ public class Aplicacion extends JFrame {
 		btn_usuarios.addActionListener(new ControlBotonesAplicacion());
 
 		btn_eventos = new JButton("EVENTOS");
-		btn_eventos.setBounds(0, 41, 121, 25);
+		btn_eventos.setBounds(0, 41, 141, 25);
 		btn_eventos.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_container_panel.add(btn_eventos);
 		btn_eventos.addActionListener(new ControlBotonesAplicacion());
 
 		btn_constancias = new JButton("CONSTANCIAS");
 
-		btn_constancias.setBounds(0, 77, 121, 25);
+		btn_constancias.setBounds(0, 77, 141, 25);
 		btn_constancias.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_container_panel.add(btn_constancias);
 		btn_constancias.addActionListener(new ControlBotonesAplicacion());
 
 		btn_reclamos = new JButton("RECLAMOS");
-		btn_reclamos.setBounds(0, 113, 121, 25);
+		btn_reclamos.setBounds(0, 113, 141, 25);
 		btn_reclamos.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_container_panel.add(btn_reclamos);
 		btn_reclamos.addActionListener(new ControlBotonesAplicacion());
 
 		card_container_panel = new JPanel();
-		card_container_panel.setBounds(130, 0, 892, 746);
+		card_container_panel.setBounds(144, 102, 878, 644);
 		getContentPane().add(card_container_panel);
 		card_container_panel.setLayout(new CardLayout(0, 0));
 
@@ -140,7 +138,7 @@ public class Aplicacion extends JFrame {
 		JScrollPane sp = new JScrollPane(t);
 		sp.setBounds(60, 146, 780, 400);
 		panel_usuarios.add(sp);
-		
+
 		JLabel lbl_filtros = new JLabel("Filtrar por:");
 		lbl_filtros.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lbl_filtros.setBounds(116, 73, 61, 22);
@@ -182,8 +180,8 @@ public class Aplicacion extends JFrame {
 		combo_filtro_itr.setBounds(325, 100, 130, 22);
 		combo_filtro_itr.setModel(new DefaultComboBoxModel<>(getItrs()));
 		combo_filtro_itr.addItem("TODOS");
-		panel_usuarios.add(combo_filtro_itr);		
-		
+		panel_usuarios.add(combo_filtro_itr);
+
 		combo_filtro_Generac = new JComboBox<Object>();
 		combo_filtro_Generac.setBounds(575, 100, 70, 22);
 		combo_filtro_Generac.setModel(new DefaultComboBoxModel<>(getGeneraciones()));
@@ -212,19 +210,32 @@ public class Aplicacion extends JFrame {
 		panel_reclamos.setBackground(new Color(64, 0, 64));
 		panel_reclamos.setForeground(new Color(0, 0, 0));
 		card_container_panel.add(panel_reclamos, "Panel de Reclamos");
-		
+
 		JLabel lblUserName = new JLabel(usuario.getNombreUsuario());
 		lblUserName.setBounds(0, 233, 130, 26);
 		btn_container_panel.add(lblUserName);
 		lblUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
 		btn_reclamos.addActionListener(new ControlBotonesAplicacion());
-		
+
 		JLabel lblUserType = new JLabel(getTipoUsuario());
 		lblUserType.setBounds(0, 196, 130, 26);
 		btn_container_panel.add(lblUserType);
 		lblUserType.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblUserType.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JPanel panel_arriba = new JPanel();
+		panel_arriba.setBackground(new Color(0, 0, 0));
+		panel_arriba.setBounds(0, 0, 1027, 104);
+		getContentPane().add(panel_arriba);
+		panel_arriba.setLayout(null);
+		PanelFondo logo = new PanelFondo("/recursos/imagenes/09-Isotipo-1.png");
+		PanelFondo logo_1 = new PanelFondo("/recursos/imagenes/banner2_utec.png");
+		logo.setBounds(11, 11, 80, 80);
+		logo_1.setBounds(101, 11, 186, 82);
+		panel_arriba.add(logo);
+		panel_arriba.add(logo_1);
+
 		btn_reclamos.addActionListener(new ControlBotonesAplicacion());
 
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -233,19 +244,19 @@ public class Aplicacion extends JFrame {
 
 	}
 
-	public static  JButton getBtn_usuarios() {
+	public static JButton getBtn_usuarios() {
 		return btn_usuarios;
 	}
 
-	public static  JButton getBtn_eventos() {
+	public static JButton getBtn_eventos() {
 		return btn_eventos;
 	}
 
-	public static  JButton getBtnConstancias() {
+	public static JButton getBtnConstancias() {
 		return btn_constancias;
 	}
 
-	public static  JButton getBtnReclamos() {
+	public static JButton getBtnReclamos() {
 		return btn_reclamos;
 	}
 
@@ -256,7 +267,7 @@ public class Aplicacion extends JFrame {
 	public static Usuario getUsuario() {
 		return usuario;
 	}
-	
+
 	public static String getTipoUsuario() {
 		return tipoUsuario;
 	}
@@ -264,7 +275,7 @@ public class Aplicacion extends JFrame {
 	public static void setTipoUsuario(String tipoUsuario) {
 		Aplicacion.tipoUsuario = tipoUsuario;
 	}
-	
+
 	public static JComboBox<String> getCombo_filtro_tipoUsu() {
 		return combo_filtro_tipoUsu;
 	}
@@ -280,7 +291,7 @@ public class Aplicacion extends JFrame {
 	public static JComboBox<String> getCombo_filtro_estado() {
 		return combo_filtro_estado;
 	}
-	
+
 	public static JLabel getLbl_generacion() {
 		return lbl_generacion;
 	}
@@ -288,7 +299,8 @@ public class Aplicacion extends JFrame {
 	public static void setUsuario(Long idUsuario) {
 		UsuarioBeanRemote usuarioBean = null;
 		try {
-			usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote");
+			usuarioBean = (UsuarioBeanRemote) InitialContext
+					.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -306,53 +318,52 @@ public class Aplicacion extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void cerrar() {
-		
+
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		addWindowListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent e) {		
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
 				dispose();
 				new Login();
 			}
 		});
-		
+
 	}
-	
+
 	public Object[] getGeneraciones() {
-		
+
 		int anio = 2014;
 		LocalDate current_date = LocalDate.now();
 		int actual = current_date.getYear();
-		
+
 		List<String> generaciones = new ArrayList<>();
 		generaciones.add("TODAS");
-		while(anio < actual) {
+		while (anio < actual) {
 			generaciones.add(Integer.toString(anio));
 			anio++;
 		}
-		
+
 		return (Object[]) generaciones.toArray();
-		
+
 	}
-	
+
 	public String[] getItrs() {
-		
+
 		String[] list = ListaItrs.getListaString();
 		String[] lista = new String[list.length + 1];
-		
-		for(int i = 0; i < lista.length; i++) {
-			
-			if(i == 0) {
+
+		for (int i = 0; i < lista.length; i++) {
+
+			if (i == 0) {
 				lista[i] = "TODOS";
-			}else {
-				lista[i] = list[i-1];
+			} else {
+				lista[i] = list[i - 1];
 			}
-			
+
 		}
-				
+
 		return lista;
-		
+
 	}
-	
 }
