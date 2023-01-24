@@ -12,6 +12,7 @@ import com.entities.Usuario;
 import com.exception.ServicesException;
 import com.services.UsuarioBeanRemote;
 
+import componentes.PanelNuevoEvento;
 import controladores.ControlBotonesAplicacion;
 import controladores.VisibilidadCampos;
 import datos.ComprobarTipoUsuario;
@@ -35,6 +36,7 @@ import java.util.List;
 import java.awt.Dimension;
 import java.awt.CardLayout;
 import java.awt.Color;
+import javax.swing.JTabbedPane;
 
 public class Aplicacion extends JFrame {
 	/**
@@ -119,10 +121,9 @@ public class Aplicacion extends JFrame {
 //		table.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 //		table.setBackground(new Color(255, 128, 0));
 //		panel_usuarios.add(table);
-		
-		DefaultTableModel tm = new DefaultTableModel(
-				ListaUsuarios.getListaStringListado(),
-				new String[] { "Estado", "Nombre de usuario", "Tipo de usuario", "Nombre 1", "Apellido 1", "ITR" }){
+
+		DefaultTableModel tm = new DefaultTableModel(ListaUsuarios.getListaStringListado(),
+				new String[] { "Estado", "Nombre de usuario", "Tipo de usuario", "Nombre 1", "Apellido 1", "ITR" }) {
 			/**
 			 * 
 			 */
@@ -197,9 +198,15 @@ public class Aplicacion extends JFrame {
 		panel_usuarios.add(combo_filtro_estado);
 
 		panel_eventos = new JPanel();
-		panel_eventos.setBackground(new Color(0, 128, 0));
 		panel_eventos.setForeground(new Color(0, 0, 0));
 		card_container_panel.add(panel_eventos, "Panel de Eventos");
+
+		JTabbedPane tabbedPaneEventos = new JTabbedPane(JTabbedPane.TOP);
+		panel_eventos.add(tabbedPaneEventos);
+		
+		PanelNuevoEvento panelNuevoEvento = new PanelNuevoEvento();
+		tabbedPaneEventos.add("Nuevo Evento",panelNuevoEvento);
+		
 
 		panel_constancias = new JPanel();
 		panel_constancias.setBackground(new Color(0, 0, 255));
