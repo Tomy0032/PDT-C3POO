@@ -12,6 +12,7 @@ import com.entities.Usuario;
 import com.exception.ServicesException;
 import com.services.UsuarioBeanRemote;
 
+import componentes.PanelListadoEventos;
 import componentes.PanelNuevoEvento;
 import controladores.ControlBotonesAplicacion;
 import controladores.VisibilidadCampos;
@@ -203,10 +204,12 @@ public class Aplicacion extends JFrame {
 
 		JTabbedPane tabbedPaneEventos = new JTabbedPane(JTabbedPane.TOP);
 		panel_eventos.add(tabbedPaneEventos);
-		
+
 		PanelNuevoEvento panelNuevoEvento = new PanelNuevoEvento();
-		tabbedPaneEventos.add("Nuevo Evento",panelNuevoEvento);
-		
+		tabbedPaneEventos.add("Nuevo Evento", panelNuevoEvento);
+
+		PanelListadoEventos panelListarEventos = new PanelListadoEventos();
+		tabbedPaneEventos.add("Listar Eventos", panelListarEventos);
 
 		panel_constancias = new JPanel();
 		panel_constancias.setBackground(new Color(0, 0, 255));

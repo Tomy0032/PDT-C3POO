@@ -7,7 +7,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
-import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class PanelNuevoEvento extends JPanel {
 
@@ -16,12 +18,15 @@ public class PanelNuevoEvento extends JPanel {
 	private static TimeSpinner horaInicioSpinner;
 	private static TimeSpinner horaFinSpinner;
 	private static JComboBox ModalidadEventocomboBox;
-	private static JButton btnAgregarTutor;
-	private static JButton btnQuitarTutor;
 	private static JComboBox ITREventocomboBox;
 	private static JDateChooser dateChooserFinEvento;
 	private static JTextField tituloEventoField;
 	private static JTextField LocalizacionEventoField;
+	private static JTable eventoTutores_table;
+
+	public static JTable getEventoTutores_table() {
+		return eventoTutores_table;
+	}
 
 	public static JComboBox getTipoEventocomboBox() {
 		return tipoEventocomboBox;
@@ -41,14 +46,6 @@ public class PanelNuevoEvento extends JPanel {
 
 	public static JComboBox getModalidadEventocomboBox() {
 		return ModalidadEventocomboBox;
-	}
-
-	public static JButton getBtnAgregarTutor() {
-		return btnAgregarTutor;
-	}
-
-	public static JButton getBtnQuitarTutor() {
-		return btnQuitarTutor;
 	}
 
 	public static JComboBox getITREventocomboBox() {
@@ -77,7 +74,7 @@ public class PanelNuevoEvento extends JPanel {
 		add(lblNewLabel);
 
 		tituloEventoField = new JTextField();
-		tituloEventoField.setBounds(133, 9, 227, 20);
+		tituloEventoField.setBounds(133, 9, 296, 20);
 		add(tituloEventoField);
 		tituloEventoField.setColumns(10);
 
@@ -148,37 +145,41 @@ public class PanelNuevoEvento extends JPanel {
 		JLabel lblEventoITR = new JLabel("ITR");
 		lblEventoITR.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblEventoITR.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblEventoITR.setBounds(10, 174, 113, 14);
+		lblEventoITR.setBounds(261, 136, 21, 14);
 		add(lblEventoITR);
 
 		ITREventocomboBox = new JComboBox();
 		ITREventocomboBox.setFont(new Font("Tahoma", Font.BOLD, 12));
-		ITREventocomboBox.setBounds(133, 171, 121, 22);
+		ITREventocomboBox.setBounds(298, 137, 131, 22);
 		add(ITREventocomboBox);
 
 		JLabel lblLocalizacionEvento = new JLabel("Localizaci\u00F3n");
 		lblLocalizacionEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblLocalizacionEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblLocalizacionEvento.setBounds(10, 206, 113, 14);
+		lblLocalizacionEvento.setBounds(10, 168, 113, 14);
 		add(lblLocalizacionEvento);
 
 		LocalizacionEventoField = new JTextField();
 		LocalizacionEventoField.setColumns(10);
-		LocalizacionEventoField.setBounds(133, 204, 227, 20);
+		LocalizacionEventoField.setBounds(133, 166, 227, 20);
 		add(LocalizacionEventoField);
 
 		JLabel lblTutoresEvento = new JLabel("Tutor/es");
 		lblTutoresEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblTutoresEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblTutoresEvento.setBounds(10, 238, 113, 14);
+		lblTutoresEvento.setBounds(10, 200, 113, 14);
 		add(lblTutoresEvento);
 
-		btnAgregarTutor = new JButton("Agregar");
-		btnAgregarTutor.setBounds(133, 235, 71, 23);
-		add(btnAgregarTutor);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(133, 200, 296, 92);
+		add(scrollPane);
 
-		btnQuitarTutor = new JButton("Quitar");
-		btnQuitarTutor.setBounds(217, 235, 71, 23);
-		add(btnQuitarTutor);
+		eventoTutores_table = new JTable();
+		eventoTutores_table.setModel(new DefaultTableModel(
+				new Object[][] { { null, null, null, null, null }, { null, null, null, null, null },
+						{ null, null, null, null, null }, { null, null, null, null, null },
+						{ null, null, null, null, null }, },
+				new String[] { "New column", "New column", "New column", "New column", "New column" }));
+		scrollPane.setViewportView(eventoTutores_table);
 	}
 }
