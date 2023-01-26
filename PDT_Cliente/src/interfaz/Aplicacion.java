@@ -7,9 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 import com.entities.Usuario;
 import com.exception.ServicesException;
@@ -20,9 +18,6 @@ import controladores.VisibilidadCampos;
 import datos.ComprobarTipoUsuario;
 import listas.ListaItrs;
 import listas.ListaUsuarios;
-import modelos.MyDefaultTableModel;
-import renders.myeditor;
-import renders.rendererButton;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -60,7 +55,6 @@ public class Aplicacion extends JFrame {
 	private static JPanel card_container_panel;
 	private JTable table;
 	private JLabel lbl_estado;
-	private static MyDefaultTableModel myModel;
 	private static JLabel lbl_generacion;
 	private static JComboBox<String> combo_filtro_tipoUsu;
 	private static JComboBox<String> combo_filtro_itr;
@@ -117,27 +111,35 @@ public class Aplicacion extends JFrame {
 		panel_usuarios.setForeground(new Color(0, 0, 0));
 		card_container_panel.add(panel_usuarios, "Panel de Usuarios");
 		panel_usuarios.setLayout(null);
+
+//		table = new JTable();
+//		table.setBounds(33, 146, 450, 64);
+//		table.setModel(new DefaultTableModel(
+//				new Object[][] { { null, null, null, null, null, null }, { null, null, null, null, null, null },
+//						{ null, null, null, null, null, null }, { null, null, null, null, null, null }, },
+//				new String[] { "New column", "New column", "New column", "New column", "New column", "New column" }));
+//		table.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+//		table.setBackground(new Color(255, 128, 0));
+//		panel_usuarios.add(table);
 		
-		myModel = new MyDefaultTableModel(
+		DefaultTableModel tm = new DefaultTableModel(
 				ListaUsuarios.getListaStringListado(),
-				new String[] { "Estado", "Nombre de usuario", "Tipo de usuario", "Nombre 1", "Apellido 1", "ITR" });
-		myModel.addColumn("Ver más");
-		
-		JTable t = new JTable(myModel);
-		t.setRowHeight(30);
+				new String[] { "Estado", "Nombre de usuario", "Tipo de usuario", "Nombre 1", "Apellido 1", "ITR" }){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		tm.setColumnIdentifiers(new String[] { "Estado", "Usuario", "Tipo de usuario", "Nombre", "Apellido", "ITR" });
+		JTable t = new JTable(tm);
 		JScrollPane sp = new JScrollPane(t);
 		sp.setBounds(60, 146, 780, 400);
 		panel_usuarios.add(sp);
-		
-		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
-		tcr.setHorizontalAlignment(SwingConstants.CENTER);
-		for(int i = 0; i < t.getColumnCount(); i++) {
-			t.getColumnModel().getColumn(i).setCellRenderer(tcr);
-		}
-		TableColumn columnaEditar;
-		columnaEditar = t.getColumnModel().getColumn(t.getColumnModel().getColumnCount()-1);
-		columnaEditar.setCellEditor(new myeditor(t));
-		columnaEditar.setCellRenderer(new rendererButton());
 		
 		JLabel lbl_filtros = new JLabel("Filtrar por:");
 		lbl_filtros.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -281,10 +283,6 @@ public class Aplicacion extends JFrame {
 	
 	public static JLabel getLbl_generacion() {
 		return lbl_generacion;
-	}
-	
-	public static DefaultTableModel getMyModel() {
-		return myModel;
 	}
 
 	public static void setUsuario(Long idUsuario) {

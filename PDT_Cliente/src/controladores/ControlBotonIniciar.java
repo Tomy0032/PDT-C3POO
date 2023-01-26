@@ -7,7 +7,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.entities.Usuario;
-import com.enums.estado;
 import com.services.AnalistaBeanRemote;
 import com.services.EstudianteBeanRemote;
 import com.services.TutorBeanRemote;
@@ -22,7 +21,6 @@ public class ControlBotonIniciar{
 		
 		Login.getLblAviso().setVisible(false);
 		Login.getLblAviso2().setVisible(false);
-		Login.getLblAviso3().setVisible(false);
 		
 		List<String> verificacion = new ArrayList<>();
 		verificacion.add("no");
@@ -45,14 +43,8 @@ public class ControlBotonIniciar{
 			try {
 				
 				usuario = usuarioBean.inicioSesion(nombreUsuario, contrasena);
-				if(usuario.getEstado()==estado.ACTIVO) {
-					verificacion.set(0,"si");
-				}else {
-					verificacion.set(0,"no_activo");
-					Login.getLblAviso3().setVisible(true);
-					return verificacion; 
-				}
-								
+				verificacion.set(0,"si");
+				
 			}
 			catch(Exception e) {
 				Login.getLblAviso().setVisible(true);

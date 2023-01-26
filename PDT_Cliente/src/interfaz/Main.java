@@ -7,7 +7,6 @@ import com.exception.*;
 
 import datos.*;
 import listas.Listas;
-import mail.EmailSenderService;
 
 public class Main {
 
@@ -19,7 +18,7 @@ public class Main {
 		MensajeConsola.Iniciar();
 				
 		new Login();
-		
+								    
 	}
 
 }

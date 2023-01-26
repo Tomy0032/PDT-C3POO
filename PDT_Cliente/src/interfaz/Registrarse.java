@@ -9,8 +9,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Dimension;
 
 import javax.naming.NamingException;
@@ -149,10 +147,9 @@ public class Registrarse extends JFrame {
 				.setToolTipText("Te registras como estudiante? Como tutor? O como analista?. Elige aqu\u00ED.");
 		tipo_usu_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		tipo_usu_comboBox.setBounds(235, 43, 130, 22);
-		tipo_usu_comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));		
 		tipo_usu_comboBox.addItem("ANALISTA");
 		tipo_usu_comboBox.addItem("ESTUDIANTE");
-		tipo_usu_comboBox.addItem("TUTOR");		
+		tipo_usu_comboBox.addItem("TUTOR");
 		tipo_usu_comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == 2) {
@@ -309,7 +306,7 @@ public class Registrarse extends JFrame {
 		panelFondo.add(departamento_label);
 
 		departam_comboBox = new JComboBox<String>();
-		departam_comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		
 		departam_comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {				
 				if (e.getStateChange() == 2) {					
@@ -348,7 +345,6 @@ public class Registrarse extends JFrame {
 		panelFondo.add(asterisco_label_8);
 
 		localidad_comboBox = new JComboBox<String>();
-		localidad_comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		localidad_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
 		localidad_comboBox.setToolTipText("Elige la localidad (pueblo, villa) donde resides.");
 		localidad_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -397,7 +393,6 @@ public class Registrarse extends JFrame {
 		panelFondo.add(itr_label);
 
 		itr_comboBox = new JComboBox<String>();
-		itr_comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		itr_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
 		itr_comboBox.setToolTipText("Elige el ITR (Instituto Tecnol\u00F3gico Regional, ej. ITR Durazno).");
 		itr_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -431,7 +426,6 @@ public class Registrarse extends JFrame {
 		panelFondo.add(rol_label);
 
 		rol_comboBox = new JComboBox<String>();
-		rol_comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		rol_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
 		rol_comboBox.setToolTipText("Selecciona el rol que asumir\u00E1s.");
 		rol_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -453,7 +447,6 @@ public class Registrarse extends JFrame {
 		panelFondo.add(asterisco_label_15_1);
 		
 		area_comboBox = new JComboBox<String>();
-		area_comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		area_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
 		area_comboBox.setToolTipText("Selecciona el área a la que perteneces.");
 		area_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -506,11 +499,9 @@ public class Registrarse extends JFrame {
 		dateChooser = new JDateChooser();
 		dateChooser.setBounds(454, 166, 130, 20);
 		dateChooser.setDateFormatString("dd/MM/yyyy");
-		dateChooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panelFondo.add(dateChooser);
 
 		yearChooser = new JYearChooser();
-		yearChooser.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		yearChooser.setBounds(161, 315, 130, 20);
 		new Control_anio_ingreso(2014);
 		panelFondo.add(yearChooser);
