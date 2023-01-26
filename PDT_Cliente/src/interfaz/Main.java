@@ -12,14 +12,12 @@ public class Main {
 
 	public static void main(String[] args) throws NamingException, ServicesException{
 				
-//		Datos.cargar();
+		Datos.cargar();
 		Listas.cargar();
 		
 		MensajeConsola.Iniciar();
 				
-//		new Login();
-		
-		new Aplicacion(1L);
+		new Login();
 								    
 	}
 
