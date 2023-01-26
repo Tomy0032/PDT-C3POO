@@ -71,8 +71,13 @@ public class Aplicacion extends JFrame {
 	private static Usuario usuario;
 	private static String tipoUsuario;
 	private static MyDefaultTableModel myModel;
+	private String[] titulos = new String[] {
+			"Estado", "Nombre de usuario", "Tipo de usuario", "Nombre", "Apellido", "ITR", "Generación", "Ver más" };
+	private TableColumn columnaEditar;
+	private JTable tablaUsuarios;
+	private DefaultTableCellRenderer tcr;
 
-	public Aplicacion(Long idUsuario) {
+	public Aplicacion(Long idUsuario) throws NamingException, ServicesException {
 
 		setUsuario(idUsuario);
 		cerrar();
@@ -121,24 +126,20 @@ public class Aplicacion extends JFrame {
 		card_container_panel.add(panel_usuarios, "Panel de Usuarios");
 		panel_usuarios.setLayout(null);
 		
-		DefaultTableModel myModel = new MyDefaultTableModel(
-				ListaUsuarios.getListaStringListado(),
-				new String[] { "Estado", "Nombre de usuario", "Tipo de usuario", "Nombre 1", "Apellido 1", "ITR" });
-				myModel.addColumn("Ver más");
-		JTable t = new JTable(myModel);
-		t.setRowHeight(30);
-		JScrollPane sp = new JScrollPane(t);
+		myModel = new MyDefaultTableModel(ListaUsuarios.getListaStringListado(),titulos);
+		tablaUsuarios = new JTable(myModel);
+		tablaUsuarios.setRowHeight(30);
+		JScrollPane sp = new JScrollPane(tablaUsuarios);
 		sp.setBounds(60, 146, 780, 400);
 		panel_usuarios.add(sp);
 		
-		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+		tcr = new DefaultTableCellRenderer();
 		tcr.setHorizontalAlignment(SwingConstants.CENTER);
-		for(int i = 0; i < t.getColumnCount(); i++) {
-			t.getColumnModel().getColumn(i).setCellRenderer(tcr);
+		for(int i = 0; i < tablaUsuarios.getColumnCount(); i++) {
+			tablaUsuarios.getColumnModel().getColumn(i).setCellRenderer(tcr);
 		}
-		TableColumn columnaEditar;
-		columnaEditar = t.getColumnModel().getColumn(t.getColumnModel().getColumnCount()-1);
-		columnaEditar.setCellEditor(new myeditor(t));
+		columnaEditar = tablaUsuarios.getColumnModel().getColumn(tablaUsuarios.getColumnModel().getColumnCount()-1);
+		columnaEditar.setCellEditor(new myeditor(tablaUsuarios));
 		columnaEditar.setCellRenderer(new rendererButton());
 
 		JLabel lbl_filtros = new JLabel("Filtrar por:");
@@ -171,8 +172,11 @@ public class Aplicacion extends JFrame {
 		combo_filtro_tipoUsu.addItem("TUTOR");
 		combo_filtro_tipoUsu.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == 2) {
-					VisibilidadCampos.cambiarVisibilidadListadoUsuarios();
+				try {
+					filtros(e);
+				} catch (ServicesException | NamingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -181,13 +185,32 @@ public class Aplicacion extends JFrame {
 		combo_filtro_itr = new JComboBox<String>();
 		combo_filtro_itr.setBounds(325, 100, 130, 22);
 		combo_filtro_itr.setModel(new DefaultComboBoxModel<>(getItrs()));
-		combo_filtro_itr.addItem("TODOS");
+		combo_filtro_itr.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				try {
+					filtros(e);
+				} catch (ServicesException | NamingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		panel_usuarios.add(combo_filtro_itr);
 
 		combo_filtro_Generac = new JComboBox<Object>();
 		combo_filtro_Generac.setBounds(575, 100, 70, 22);
 		combo_filtro_Generac.setModel(new DefaultComboBoxModel<>(getGeneraciones()));
 		combo_filtro_Generac.setVisible(false);
+		combo_filtro_Generac.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				try {
+					filtros(e);
+				} catch (ServicesException | NamingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		panel_usuarios.add(combo_filtro_Generac);
 
 		combo_filtro_estado = new JComboBox<String>();
@@ -196,6 +219,16 @@ public class Aplicacion extends JFrame {
 		combo_filtro_estado.addItem("SIN VALIDAR");
 		combo_filtro_estado.addItem("ACTIVO");
 		combo_filtro_estado.addItem("ELIMINADO");
+		combo_filtro_estado.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				try {
+					filtros(e);
+				} catch (ServicesException | NamingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		panel_usuarios.add(combo_filtro_estado);
 
 		panel_eventos = new JPanel();
@@ -379,5 +412,34 @@ public class Aplicacion extends JFrame {
 
 		return lista;
 
+	}
+	
+	private void filtros(ItemEvent e) throws ServicesException, NamingException {
+		if (e.getStateChange() == 2) {
+			combo_filtro_Generac.setVisible(false);
+			switch(combo_filtro_tipoUsu.getSelectedItem().toString()) {
+			case "ANALISTA":
+				myModel.setDataVector(ListaUsuarios.getListaAnalistasStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);
+				break;
+			case "ESTUDIANTE":
+				combo_filtro_Generac.setVisible(true);
+				myModel.setDataVector(ListaUsuarios.getListaEstudiantesStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString(),combo_filtro_Generac.getSelectedItem().toString()), titulos);
+				break;
+			case "TUTOR":
+				myModel.setDataVector(ListaUsuarios.getListaTutoresStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);				
+				break;
+			case "TODOS":
+				myModel.setDataVector(ListaUsuarios.getListaStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);
+				break;
+			}
+
+
+			for(int i = 0; i < tablaUsuarios.getColumnCount(); i++) {
+				tablaUsuarios.getColumnModel().getColumn(i).setCellRenderer(tcr);
+			}
+			columnaEditar = tablaUsuarios.getColumnModel().getColumn(tablaUsuarios.getColumnModel().getColumnCount()-1);
+			columnaEditar.setCellEditor(new myeditor(tablaUsuarios));
+			columnaEditar.setCellRenderer(new rendererButton());
+		}
 	}
 }

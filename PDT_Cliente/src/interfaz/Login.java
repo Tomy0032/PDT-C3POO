@@ -16,6 +16,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
+import com.exception.ServicesException;
+
 import controladores.ControlBotonIniciar;
 
 import javax.swing.SwingConstants;
@@ -112,7 +114,12 @@ public class Login extends JFrame{
 					
 				}
 				if(verificacion.get(0) == "si") {
-					new Aplicacion(Long.parseLong(verificacion.get(2)));					
+					try {
+						new Aplicacion(Long.parseLong(verificacion.get(2)));
+					} catch (NumberFormatException | NamingException | ServicesException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}					
 					dispose();	
 				}							
 			}
