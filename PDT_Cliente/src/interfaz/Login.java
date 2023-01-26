@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 
 import javax.swing.JPasswordField;
@@ -32,6 +33,7 @@ public class Login extends JFrame{
 	private static JPasswordField passw_usuario_login;
 	private static JLabel lblAviso;
 	private static JLabel lblAviso2;
+	private static JLabel lblAviso3;
 		
 	public Login() {
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -97,6 +99,7 @@ public class Login extends JFrame{
 		});
 		showPass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye.png")));
 		showPass.setBounds(203, 172, 22, 22);
+		showPass.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		getContentPane().add(showPass);
 		
 		JButton btn_inic_sesion_login = new JButton("Iniciar sesi\u00F3n");
@@ -120,6 +123,7 @@ public class Login extends JFrame{
 		btn_inic_sesion_login.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btn_inic_sesion_login.setFocusable(false);
 		btn_inic_sesion_login.setBounds(81, 235, 126, 23);
+		btn_inic_sesion_login.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		getContentPane().add(btn_inic_sesion_login);
 		
 		JButton btnRegistrarse = new JButton("Registrarse");
@@ -142,6 +146,7 @@ public class Login extends JFrame{
 		btnRegistrarse.setBackground(new Color(0, 178, 240));
 		btnRegistrarse.setBounds(81, 274, 126, 23);
 		btnRegistrarse.setFocusable(false);
+		btnRegistrarse.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		getContentPane().add(btnRegistrarse);
 		
 		lblAviso = new JLabel("Error de autentificaci\u00F3n");
@@ -159,6 +164,14 @@ public class Login extends JFrame{
 		lblAviso2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblAviso2.setVisible(false);
 		getContentPane().add(lblAviso2);
+		
+		lblAviso3 = new JLabel("El usuario no está habilitado");
+		lblAviso3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAviso3.setBounds(45, 205, 196, 14);
+		lblAviso3.setForeground(Color.RED);
+		lblAviso3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblAviso3.setVisible(false);
+		getContentPane().add(lblAviso3);
 		
 		setVisible(true);
 		
@@ -180,5 +193,10 @@ public class Login extends JFrame{
 	public static JLabel getLblAviso2() {
 		return lblAviso2;
 	}
+
+	public static JLabel getLblAviso3() {
+		return lblAviso3;
+	}
+	
 	
 }

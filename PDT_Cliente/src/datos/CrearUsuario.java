@@ -20,6 +20,7 @@ import com.entities.Localidad;
 import com.entities.Tipo;
 import com.entities.Tutor;
 import com.entities.Usuario;
+import com.enums.estado;
 import com.exception.ServicesException;
 import com.services.AnalistaBeanRemote;
 import com.services.AreaBeanRemote;
@@ -36,6 +37,7 @@ import com.services.TutorBeanRemote;
 import com.services.UsuarioBeanRemote;
 
 import listas.ListaUsuarios;
+import mail.EmailSenderService;
 
 public class CrearUsuario {
 
@@ -99,8 +101,7 @@ public class CrearUsuario {
 			usuario.setLocalidad(localidad);
 			
 //			usuario.setGenero(generoBean.find(1L));
-			usuario.setActivo(false);
-			usuario.setEliminado(false);
+			usuario.setEstado(estado.SIN_VALIDAR);
 
 			
 			usuario.setContrasena(datos[16]);
@@ -127,6 +128,7 @@ public class CrearUsuario {
 				estudiante.setGeneracion(generacion);
 				
 				estudianteBean.create(estudiante);
+				EmailSenderService.correoInicial(usuario.getCorreoInstitucional());
 			
 			}
 			else if(datos[0].equals("TUTOR")) {
@@ -140,6 +142,7 @@ public class CrearUsuario {
 				tutor.setArea(area);
 						
 				tutorBean.create(tutor);
+				EmailSenderService.correoInicial(usuario.getCorreoInstitucional());
 			
 			}
 			else if(datos[0].equals("ANALISTA")) {
@@ -148,6 +151,7 @@ public class CrearUsuario {
 				analista.setUsuario(usuario);
 				
 				analistaBean.create(analista);
+				EmailSenderService.correoInicial(usuario.getCorreoInstitucional());
 
 			}
 			

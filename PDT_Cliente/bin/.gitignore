@@ -1,6 +1,8 @@
-/Mail/
-/mail/
 /controladores/
-/interfaz/
 /datos/
+/interfaces/
+/interfaz/
 /listas/
+/mail/
+/renders/
+/modelos/
