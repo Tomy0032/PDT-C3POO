@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.enums.Estado;
+
 import java.util.Date;
 import java.util.List;
 
@@ -87,10 +89,7 @@ public class Usuario implements Serializable {
 	private Localidad localidad;
 	
 	@Column(nullable=false)	
-	private Boolean activo;
-	
-	@Column(nullable=false)	
-	private Boolean eliminado;
+	private Estado estado;
 
 	public Usuario() {
 	}
@@ -281,20 +280,12 @@ public class Usuario implements Serializable {
 		this.localidad = localidad;
 	}
 
-	public Boolean getActivo() {
-		return activo;
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setActivo(Boolean activo) {
-		this.activo = activo;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
-
-	public Boolean getEliminado() {
-		return eliminado;
-	}
-
-	public void setEliminado(Boolean eliminado) {
-		this.eliminado = eliminado;
-	}	
 	
 }

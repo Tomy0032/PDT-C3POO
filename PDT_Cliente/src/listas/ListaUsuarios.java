@@ -81,13 +81,11 @@ public class ListaUsuarios {
 		
 		for(Usuario u : lista) {
 			linea = new ArrayList<>();
-			if(u.getEliminado()) {
-				linea.add("Eliminado");
-			}else if(u.getActivo()) {
-				linea.add("Activo");
-			}else{
-				linea.add("Sin validar");
-			}
+			if(u.getEstado().toString().equals("SIN_VALIDAR")){
+				linea.add("SIN VALIDAR");
+			}else {
+				linea.add(u.getEstado().toString());
+			}			
 			linea.add(u.getNombreUsuario());
 			try {
 				linea.add(ComprobarTipoUsuario.is(u));

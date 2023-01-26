@@ -20,6 +20,7 @@ import com.entities.Localidad;
 import com.entities.Tipo;
 import com.entities.Tutor;
 import com.entities.Usuario;
+import com.enums.Estado;
 import com.exception.ServicesException;
 import com.services.AnalistaBeanRemote;
 import com.services.AreaBeanRemote;
@@ -36,6 +37,7 @@ import com.services.TutorBeanRemote;
 import com.services.UsuarioBeanRemote;
 
 import listas.ListaUsuarios;
+import mail.EmailSenderService;
 
 public class CrearUsuario {
 
@@ -99,8 +101,7 @@ public class CrearUsuario {
 			usuario.setLocalidad(localidad);
 			
 //			usuario.setGenero(generoBean.find(1L));
-			usuario.setActivo(false);
-			usuario.setEliminado(false);
+			usuario.setEstado(Estado.SIN_VALIDAR);
 
 			
 			usuario.setContrasena(datos[16]);
@@ -114,6 +115,9 @@ public class CrearUsuario {
 //			usuario.setNombreUsuario(datos[6]+"."+datos[1]);
 									
 			usuarioBean.create(usuario);
+			
+			EmailSenderService.correoInicial(usuario.getCorreoInstitucional());
+			
 			usuario = usuarioBean.findAllForDocument(documento).get(0);
 			
 			if(datos[0].equals("ESTUDIANTE")) {
