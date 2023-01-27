@@ -18,7 +18,7 @@ public class Main {
 		MensajeConsola.Iniciar();
 				
 		new Login();
-								    
+		
 	}
 
 }

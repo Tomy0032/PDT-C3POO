@@ -22,19 +22,19 @@ public class ComprobarTipoUsuario {
 			analistaBean.findForUser(usuario);
 			return "ANALISTA";
 		}catch(ServicesException e) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 		}
 		try {
 			estudianteBean.findForUser(usuario);
 			return "ESTUDIANTE";
 		}catch(ServicesException e) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 		}
 		try {
 			tutorBean.findForUser(usuario);
 			return "TUTOR";
 		}catch(ServicesException e) {
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 		}
 
 		return null;

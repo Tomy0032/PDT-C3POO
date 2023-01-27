@@ -3,6 +3,8 @@ package datos;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -40,6 +42,8 @@ import listas.ListaUsuarios;
 import mail.EmailSenderService;
 
 public class CrearUsuario {
+	
+	static Usuario usuario;
 
 	public static boolean crear(String[] datos) throws NamingException {
 		
@@ -58,7 +62,7 @@ public class CrearUsuario {
 		AreaBeanRemote areaBean = (AreaBeanRemote) InitialContext.doLookup("PDT_EJB/AreaBean!com.services.AreaBeanRemote"); 
 		AnalistaBeanRemote analistaBean = (AnalistaBeanRemote) InitialContext.doLookup("PDT_EJB/AnalistaBean!com.services.AnalistaBeanRemote"); 
 		
-		Usuario usuario = new Usuario();
+		usuario = new Usuario();
 					
 		usuario.setApellido1(datos[1]);
 		if(!datos[2].equals("")) {
@@ -99,8 +103,7 @@ public class CrearUsuario {
 				}
 			}
 			usuario.setLocalidad(localidad);
-			
-//			usuario.setGenero(generoBean.find(1L));
+
 			usuario.setEstado(Estado.SIN_VALIDAR);
 
 			
@@ -112,12 +115,14 @@ public class CrearUsuario {
 			else {
 				usuario.setNombreUsuario(usuario.getCorreoInstitucional().replaceAll("@utec.edu.uy", "").toString());
 			}
-//			usuario.setNombreUsuario(datos[6]+"."+datos[1]);
-									
+			
 			usuarioBean.create(usuario);
 			
-			EmailSenderService.correoInicial(usuario.getCorreoInstitucional());
-			
+			ExecutorService exec = Executors.newSingleThreadExecutor();
+			exec.submit(() ->{
+				EmailSenderService.correoInicial(usuario.getCorreoInstitucional());
+			});
+						
 			usuario = usuarioBean.findAllForDocument(documento).get(0);
 			
 			if(datos[0].equals("ESTUDIANTE")) {

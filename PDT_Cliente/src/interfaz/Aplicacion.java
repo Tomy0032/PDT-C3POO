@@ -6,12 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-
 import javax.swing.border.BevelBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-
+import javax.swing.table.JTableHeader;
 import com.entities.Usuario;
 import com.exception.ServicesException;
 import com.services.UsuarioBeanRemote;
@@ -19,13 +15,14 @@ import com.services.UsuarioBeanRemote;
 import componentes.PanelListadoEventos;
 import componentes.PanelNuevoEvento;
 import controladores.ControlBotonesAplicacion;
-import controladores.VisibilidadCampos;
 import datos.ComprobarTipoUsuario;
+import datos.OperacionUsuario;
 import listas.ListaItrs;
 import listas.ListaUsuarios;
-import modelos.MyDefaultTableModel;
-import renders.myeditor;
-import renders.rendererButton;
+import utilidades.GestionCeldas;
+import utilidades.GestionEncabezadoTabla;
+import utilidades.ModeloTabla;
+import utilidades.Utilidades;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -36,6 +33,8 @@ import javax.swing.JComboBox;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
@@ -46,7 +45,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JTabbedPane;
 
-public class Aplicacion extends JFrame {
+public class Aplicacion extends JFrame implements MouseListener{
 	/**
 	 * 
 	 */
@@ -61,7 +60,6 @@ public class Aplicacion extends JFrame {
 	private JPanel panel_constancias;
 	private JPanel panel_reclamos;
 	private static JPanel card_container_panel;
-	private JTable table;
 	private JLabel lbl_estado;
 	private static JLabel lbl_generacion;
 	private static JComboBox<String> combo_filtro_tipoUsu;
@@ -70,12 +68,12 @@ public class Aplicacion extends JFrame {
 	private static JComboBox<String> combo_filtro_estado;
 	private static Usuario usuario;
 	private static String tipoUsuario;
-	private static MyDefaultTableModel myModel;
-	private String[] titulos = new String[] {
-			"Estado", "Nombre de usuario", "Tipo de usuario", "Nombre", "Apellido", "ITR", "Generación", "Ver más" };
-	private TableColumn columnaEditar;
-	private JTable tablaUsuarios;
-	private DefaultTableCellRenderer tcr;
+	
+	private static String[] titulos = new String[] {
+			"Estado", "Nombre de usuario", "Usuario", "ITR", "Generación", "", "", ""};
+	private static JTable tablaUsuarios;
+	private static ModeloTabla modelo;
+	private static JScrollPane scrollPaneTabla;
 
 	public Aplicacion(Long idUsuario) throws NamingException, ServicesException {
 
@@ -126,22 +124,18 @@ public class Aplicacion extends JFrame {
 		card_container_panel.add(panel_usuarios, "Panel de Usuarios");
 		panel_usuarios.setLayout(null);
 		
-		myModel = new MyDefaultTableModel(ListaUsuarios.getListaStringListado(),titulos);
-		tablaUsuarios = new JTable(myModel);
-		tablaUsuarios.setRowHeight(30);
-		JScrollPane sp = new JScrollPane(tablaUsuarios);
-		sp.setBounds(60, 146, 780, 400);
-		panel_usuarios.add(sp);
+		scrollPaneTabla = new JScrollPane();
+		scrollPaneTabla.setBounds(60, 146, 780, 400);
+		panel_usuarios.add(scrollPaneTabla);
 		
-		tcr = new DefaultTableCellRenderer();
-		tcr.setHorizontalAlignment(SwingConstants.CENTER);
-		for(int i = 0; i < tablaUsuarios.getColumnCount(); i++) {
-			tablaUsuarios.getColumnModel().getColumn(i).setCellRenderer(tcr);
-		}
-		columnaEditar = tablaUsuarios.getColumnModel().getColumn(tablaUsuarios.getColumnModel().getColumnCount()-1);
-		columnaEditar.setCellEditor(new myeditor(tablaUsuarios));
-		columnaEditar.setCellRenderer(new rendererButton());
-
+		tablaUsuarios = new JTable();
+		tablaUsuarios.setBackground(Color.WHITE);
+		tablaUsuarios.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		tablaUsuarios.addMouseListener(this);
+		tablaUsuarios.setOpaque(false);
+		
+		scrollPaneTabla.setViewportView(tablaUsuarios);
+		
 		JLabel lbl_filtros = new JLabel("Filtrar por:");
 		lbl_filtros.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lbl_filtros.setBounds(116, 73, 61, 22);
@@ -175,7 +169,6 @@ public class Aplicacion extends JFrame {
 				try {
 					filtros(e);
 				} catch (ServicesException | NamingException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -190,7 +183,6 @@ public class Aplicacion extends JFrame {
 				try {
 					filtros(e);
 				} catch (ServicesException | NamingException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -206,7 +198,6 @@ public class Aplicacion extends JFrame {
 				try {
 					filtros(e);
 				} catch (ServicesException | NamingException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -224,7 +215,6 @@ public class Aplicacion extends JFrame {
 				try {
 					filtros(e);
 				} catch (ServicesException | NamingException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -280,6 +270,8 @@ public class Aplicacion extends JFrame {
 		panel_arriba.add(logo_1);
 
 		btn_reclamos.addActionListener(new ControlBotonesAplicacion());
+		
+		construirTabla(ListaUsuarios.getListaStringListado(),titulos);
 
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -338,9 +330,9 @@ public class Aplicacion extends JFrame {
 	public static JLabel getLbl_generacion() {
 		return lbl_generacion;
 	}
-	
-	public static DefaultTableModel getMyModel() {
-		return myModel;
+
+	public static JTable getTablaUsuarios() {
+		return tablaUsuarios;
 	}
 
 	public static void setUsuario(Long idUsuario) {
@@ -419,27 +411,131 @@ public class Aplicacion extends JFrame {
 			combo_filtro_Generac.setVisible(false);
 			switch(combo_filtro_tipoUsu.getSelectedItem().toString()) {
 			case "ANALISTA":
-				myModel.setDataVector(ListaUsuarios.getListaAnalistasStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);
+				construirTabla(ListaUsuarios.getListaAnalistasStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);
 				break;
 			case "ESTUDIANTE":
 				combo_filtro_Generac.setVisible(true);
-				myModel.setDataVector(ListaUsuarios.getListaEstudiantesStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString(),combo_filtro_Generac.getSelectedItem().toString()), titulos);
+				construirTabla(ListaUsuarios.getListaEstudiantesStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString(),combo_filtro_Generac.getSelectedItem().toString()), titulos);
 				break;
 			case "TUTOR":
-				myModel.setDataVector(ListaUsuarios.getListaTutoresStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);				
+				construirTabla(ListaUsuarios.getListaTutoresStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);				
 				break;
 			case "TODOS":
-				myModel.setDataVector(ListaUsuarios.getListaStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);
+				construirTabla(ListaUsuarios.getListaStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);
 				break;
 			}
-
-
-			for(int i = 0; i < tablaUsuarios.getColumnCount(); i++) {
-				tablaUsuarios.getColumnModel().getColumn(i).setCellRenderer(tcr);
-			}
-			columnaEditar = tablaUsuarios.getColumnModel().getColumn(tablaUsuarios.getColumnModel().getColumnCount()-1);
-			columnaEditar.setCellEditor(new myeditor(tablaUsuarios));
-			columnaEditar.setCellRenderer(new rendererButton());
 		}
+	}
+	
+	public static void filtros() throws ServicesException, NamingException {
+		combo_filtro_Generac.setVisible(false);
+		switch(combo_filtro_tipoUsu.getSelectedItem().toString()) {
+		case "ANALISTA":
+			construirTabla(ListaUsuarios.getListaAnalistasStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);
+			break;
+		case "ESTUDIANTE":
+			combo_filtro_Generac.setVisible(true);
+			construirTabla(ListaUsuarios.getListaEstudiantesStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString(),combo_filtro_Generac.getSelectedItem().toString()), titulos);
+			break;
+		case "TUTOR":
+			construirTabla(ListaUsuarios.getListaTutoresStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);				
+			break;
+		case "TODOS":
+			construirTabla(ListaUsuarios.getListaStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);
+			break;
+		}
+		
+	}
+	
+	public static void construirTabla(Object[][] datos, String[] titulos) {
+		
+		modelo = new ModeloTabla(datos,titulos);
+		tablaUsuarios.setModel(modelo);
+		
+		
+		for(int i = 0; i < titulos.length - 2; i++) {
+			tablaUsuarios.getColumnModel().getColumn(i).setCellRenderer(new GestionCeldas("texto"));
+		}
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.GENERACION).setCellRenderer(new GestionCeldas("numerico"));		
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.VER).setCellRenderer(new GestionCeldas("icono"));
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.ACTIVAR).setCellRenderer(new GestionCeldas("icono"));
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.ELIMINAR).setCellRenderer(new GestionCeldas("icono"));
+		
+		tablaUsuarios.getTableHeader().setReorderingAllowed(false);
+		tablaUsuarios.setRowHeight(25);
+		
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.ESTADO).setPreferredWidth(180);
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.USUARIO).setPreferredWidth(300);
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.TIPO).setPreferredWidth(250);
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.ITR).setPreferredWidth(360);
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.GENERACION).setPreferredWidth(130);
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.VER).setPreferredWidth(30);
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.ACTIVAR).setPreferredWidth(30);
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.ELIMINAR).setPreferredWidth(30);
+		
+		JTableHeader header = tablaUsuarios.getTableHeader();
+		header.setDefaultRenderer(new GestionEncabezadoTabla());
+		
+		scrollPaneTabla.setViewportView(tablaUsuarios);
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int fila = tablaUsuarios.rowAtPoint(e.getPoint());
+		int columna = tablaUsuarios.columnAtPoint(e.getPoint());
+				
+		if (columna==Utilidades.VER) {
+			
+			try {
+				OperacionUsuario.mostrar(fila);
+			} catch (ServicesException | NamingException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+		if (columna==Utilidades.ACTIVAR) {
+			if(!tablaUsuarios.getValueAt(fila, columna).toString().equals("")) {
+				try {
+					OperacionUsuario.activar(fila);
+				} catch (ServicesException | NamingException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
+		
+		if (columna==Utilidades.ELIMINAR) {
+			
+			try {
+				OperacionUsuario.eliminar(fila);
+			} catch (ServicesException | NamingException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+	}
+		
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

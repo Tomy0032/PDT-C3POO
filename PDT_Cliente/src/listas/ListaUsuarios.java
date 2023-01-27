@@ -7,12 +7,8 @@ import java.util.List;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.xnio.conduits.AbstractSynchronizedSourceConduit;
-
-import com.entities.Estudiante;
 import com.entities.Usuario;
 import com.exception.ServicesException;
-import com.services.EstudianteBean;
 import com.services.EstudianteBeanRemote;
 import com.services.UsuarioBeanRemote;
 
@@ -109,14 +105,23 @@ public class ListaUsuarios {
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}
-			linea.add(u.getNombre1());
-			linea.add(u.getApellido1());
 			linea.add(u.getItr().getNombre());
 			if(ComprobarTipoUsuario.is(u).equals("ESTUDIANTE")) {
 				String gen = estudianteBean.findForUser(u).getGeneracion().getAno().toString();
 				linea.add(gen);
 			}else {
 				linea.add("");
+			}
+			linea.add("VER");
+			if(u.getEstado().toString().equals("ACTIVO")){
+				linea.add("");
+			}else {
+				linea.add("ACTIVAR");
+			}
+			if(u.getEstado().toString().equals("ELIMINADO")){
+				linea.add("");
+			}else {
+				linea.add("ELIMINAR");
 			}
 			contenedor.add(linea.toArray(new String[0]));
 		}
@@ -157,14 +162,23 @@ public class ListaUsuarios {
 					} catch (NamingException e) {
 						e.printStackTrace();
 					}
-					linea.add(u.getNombre1());
-					linea.add(u.getApellido1());
 					linea.add(u.getItr().getNombre());
 					if(ComprobarTipoUsuario.is(u).equals("ESTUDIANTE")) {
 						String gen = estudianteBean.findForUser(u).getGeneracion().getAno().toString();
 						linea.add(gen);
 					}else {
 						linea.add("");
+					}
+					linea.add("VER");
+					if(u.getEstado().toString().equals("ACTIVO")){
+						linea.add("");
+					}else {
+						linea.add("ACTIVAR");
+					}
+					if(u.getEstado().toString().equals("ELIMINADO")){
+						linea.add("");
+					}else {
+						linea.add("ELIMINAR");
 					}
 					contenedor.add(linea.toArray(new String[0]));
 					
@@ -208,10 +222,19 @@ public class ListaUsuarios {
 					} catch (NamingException e) {
 						e.printStackTrace();
 					}
-					linea.add(u.getNombre1());
-					linea.add(u.getApellido1());
 					linea.add(u.getItr().getNombre());
 					linea.add("");
+					linea.add("VER");
+					if(u.getEstado().toString().equals("ACTIVO")){
+						linea.add("");
+					}else {
+						linea.add("ACTIVAR");
+					}
+					if(u.getEstado().toString().equals("ELIMINADO")){
+						linea.add("");
+					}else {
+						linea.add("ELIMINAR");
+					}
 					contenedor.add(linea.toArray(new String[0]));
 					
 				}
@@ -260,10 +283,19 @@ public class ListaUsuarios {
 						} catch (NamingException e) {
 							e.printStackTrace();
 						}
-						linea.add(u.getNombre1());
-						linea.add(u.getApellido1());
 						linea.add(u.getItr().getNombre());
 						linea.add(gen);
+						linea.add("VER");
+						if(u.getEstado().toString().equals("ACTIVO")){
+							linea.add("");
+						}else {
+							linea.add("ACTIVAR");
+						}
+						if(u.getEstado().toString().equals("ELIMINADO")){
+							linea.add("");
+						}else {
+							linea.add("ELIMINAR");
+						}
 						contenedor.add(linea.toArray(new String[0]));
 					}
 					
@@ -304,10 +336,19 @@ public class ListaUsuarios {
 					} catch (NamingException e) {
 						e.printStackTrace();
 					}
-					linea.add(u.getNombre1());
-					linea.add(u.getApellido1());
 					linea.add(u.getItr().getNombre());
 					linea.add("");
+					linea.add("VER");
+					if(u.getEstado().toString().equals("ACTIVO")){
+						linea.add("");
+					}else {
+						linea.add("ACTIVAR");
+					}
+					if(u.getEstado().toString().equals("ELIMINADO")){
+						linea.add("");
+					}else {
+						linea.add("ELIMINAR");
+					}
 					contenedor.add(linea.toArray(new String[0]));
 				}	
 			}

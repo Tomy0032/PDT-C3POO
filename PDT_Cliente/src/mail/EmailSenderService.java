@@ -78,5 +78,25 @@ public class EmailSenderService {
 		enviarConGMail(destinatario, asunto, cuerpo);
 		
 	}
+	
+public static void correoEliminacion(String destinatario) {
+		
+		String asunto = "Administración - Eliminación de cuenta";
+		String cuerpo = "<p style=\"font-size: 18px;margin-left: 30px;\">\r\n"
+	    		+ "		Su cuenta ha sido\r\n"
+	    		+ "		<font color=\"#00A7F0\"> \r\n"
+	    		+ "			eliminada \r\n"
+	    		+ "		</font>\r\n"
+	    		+ "		.\r\n"
+	    		+ "	<br>\r\n"
+	    		+ "		Si esto ha sido un error, comuníquese con la administración de UTEC\r\n"
+	    		+ "	</p>\r\n"
+	    		+ "	<div dir=\"ltr\"><td width=\"70\">\r\n"
+	    		+ "        <a href=\"https://mandrillapp.com/track/click/30706855/edu2.utec.edu.uy?p=eyJzIjoiX3JWLXJuWEd5UU1FcEJBOS1RaDZ0MDE1SFpFIiwidiI6MSwicCI6IntcInVcIjozMDcwNjg1NSxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL2VkdTIudXRlYy5lZHUudXlcXFwvP3V0bV9zb3VyY2U9c3R1ZGVudCZ1dG1fY2FtcGFpZ249YWNjb3VudGFjdGl2YXRpb24mdXRtX21lZGl1bT1lbWFpbCZ1dG1fY29udGVudD03MzU3ZDIxNi05MGVlLTRiNjYtODg0Ny0wNDdmM2MxODg1YzBcIixcImlkXCI6XCI5OTZlYWQzNDUxMzg0OWVjYTg0YmFhN2U0N2QyZDM0OFwiLFwidXJsX2lkc1wiOltcImQ3YTU5NmZkMGFlODgyNWE4NjU3Njk3ZWE1MWI5ZWZhYTczODM0ZTNcIl19In0\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=https://mandrillapp.com/track/click/30706855/edu2.utec.edu.uy?p%3DeyJzIjoiX3JWLXJuWEd5UU1FcEJBOS1RaDZ0MDE1SFpFIiwidiI6MSwicCI6IntcInVcIjozMDcwNjg1NSxcInZcIjoxLFwidXJsXCI6XCJodHRwczpcXFwvXFxcL2VkdTIudXRlYy5lZHUudXlcXFwvP3V0bV9zb3VyY2U9c3R1ZGVudCZ1dG1fY2FtcGFpZ249YWNjb3VudGFjdGl2YXRpb24mdXRtX21lZGl1bT1lbWFpbCZ1dG1fY29udGVudD03MzU3ZDIxNi05MGVlLTRiNjYtODg0Ny0wNDdmM2MxODg1YzBcIixcImlkXCI6XCI5OTZlYWQzNDUxMzg0OWVjYTg0YmFhN2U0N2QyZDM0OFwiLFwidXJsX2lkc1wiOltcImQ3YTU5NmZkMGFlODgyNWE4NjU3Njk3ZWE1MWI5ZWZhYTczODM0ZTNcIl19In0&amp;source=gmail&amp;ust=1673737947298000&amp;usg=AOvVaw0_qckE5f8UdqVvs5Oq_kAU\"><img src=\"https://ci3.googleusercontent.com/proxy/YUGSpIS9zBhslG7dk-qDEmzAX9aAh1wZBMMMkQo356LH90zYQiAusI01n6sQdDh-XZaFyFNUneClRFENyJNFqh6uwStesuHC10GDOvCoMzXidBw=s0-d-e1-ft#https://edx-utec-static.s3-sa-east-1.amazonaws.com/Logo_UTEC.png\" width=\"160\" height=\"86\" alt=\"Ve a la página principal de EDU \" class=\"CToWUd\" data-bit=\"iit\"></a>\r\n"
+	    		+ "    </div>";
+		
+		enviarConGMail(destinatario, asunto, cuerpo);
+		
+	}
 
 }
