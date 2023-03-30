@@ -33,6 +33,23 @@ public class ControlBotonEnviar implements ActionListener {
 			
 		}else {
 			
+			String nombreUsuario;
+			if(Registrarse.getTipo_usu_comboBox().getSelectedItem().toString().equals("ESTUDIANTE")) {
+				nombreUsuario = Registrarse.getMail_instit_field().getText().replaceAll("@estudiantes.utec.edu.uy", "");
+			}
+			else {
+				nombreUsuario = Registrarse.getMail_instit_field().getText().replaceAll("@utec.edu.uy", "");
+			}
+			
+			System.out.println(nombreUsuario);
+			
+			Control_bd_nombreUsuario bd_nombreUsuario = new Control_bd_nombreUsuario(nombreUsuario);
+			try {
+				bd_nombreUsuario.controlCampo();
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
+			
 			Control_bd_email_personal bd_email = new Control_bd_email_personal(Registrarse.getMail_pers_field().getText());
 			try {
 				bd_email.controlCampo();
@@ -60,8 +77,12 @@ public class ControlBotonEnviar implements ActionListener {
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}
-			
-			if(!bd_email.isOk()) {
+			if(!bd_nombreUsuario.isOk()) {
+				
+				Registrarse.setAviso("Ya existe un usuario registrado con ese nombre de usuario!");
+				
+			}
+			else if(!bd_email.isOk()) {
 				
 				Registrarse.setAviso("Ya existe un usuario registrado con ese correo personal!");
 				

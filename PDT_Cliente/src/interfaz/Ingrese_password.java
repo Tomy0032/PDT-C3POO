@@ -36,6 +36,7 @@ public class Ingrese_password extends JFrame {
 	private static JLabel lblAviso2;
 	private static JLabel lblAviso3;
 	private static JLabel lblAviso;
+	int iconStatus = 0;
 	
 	private boolean registro;
 	private RestrictedTextField r_password;
@@ -185,12 +186,14 @@ public class Ingrese_password extends JFrame {
 		JButton showPass = new JButton("");
 		showPass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(showPass.getIcon().toString().equals("file:/C:/Users/gonza/GitHub/PDT-C3POO/PDT_Cliente/bin/recursos/imagenes/eye.png")){
+				if(iconStatus == 0){
 					showPass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye2.png")));
 					password.setEchoChar((char)0);
+					iconStatus = 1;
 				}else {
 					showPass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye.png")));
 					password.setEchoChar((char)'•');
+					iconStatus = 0;
 				}
 			}
 		});

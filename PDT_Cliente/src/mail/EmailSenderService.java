@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage;
 public class EmailSenderService {
 	
 	final static String REMITENTE = "tomas.gonzalez@estudiantes.utec.edu.uy";
-	final static String CLAVE = "czbfhtsagogflrqd";
+	final static String CLAVE = "lgfgxeodczkvnisa";
 		
 	private static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
 		

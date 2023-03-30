@@ -36,6 +36,7 @@ public class Login extends JFrame{
 	private static JLabel lblAviso;
 	private static JLabel lblAviso2;
 	private static JLabel lblAviso3;
+	int iconStatus = 0;
 		
 	public Login() {
 		getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -88,14 +89,17 @@ public class Login extends JFrame{
 		getContentPane().add(passw_usuario_login);
 		
 		JButton showPass = new JButton("");
+		
 		showPass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(showPass.getIcon().toString().equals("file:/C:/Users/gonza/GitHub/PDT-C3POO/PDT_Cliente/bin/recursos/imagenes/eye.png")){
+				if(iconStatus == 0){
 					showPass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye2.png")));
 					passw_usuario_login.setEchoChar((char)0);
+					iconStatus = 1;
 				}else {
 					showPass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye.png")));
 					passw_usuario_login.setEchoChar((char)'•');
+					iconStatus = 0;
 				}
 			}
 		});

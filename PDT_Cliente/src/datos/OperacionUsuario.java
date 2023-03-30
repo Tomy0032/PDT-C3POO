@@ -62,7 +62,7 @@ public class OperacionUsuario {
 		if (JOptionPane.OK_OPTION == confirmado) {
 			ExecutorService exec = Executors.newSingleThreadExecutor();
 			exec.submit(() ->{
-				EmailSenderService.correoInicial(usuario.getCorreoInstitucional());
+				EmailSenderService.correoActivacion(usuario.getCorreoInstitucional());
 			});
 			usuario.setEstado(Estado.ACTIVO);
 			usuarioBean.update(usuario);
@@ -86,7 +86,7 @@ public class OperacionUsuario {
 		if (JOptionPane.OK_OPTION == confirmado) {
 			ExecutorService exec = Executors.newSingleThreadExecutor();
 			exec.submit(() ->{
-				EmailSenderService.correoInicial(usuario.getCorreoInstitucional());
+				EmailSenderService.correoEliminacion(usuario.getCorreoInstitucional());
 			});
 			usuario.setEstado(Estado.ELIMINADO);
 			usuarioBean.update(usuario);
