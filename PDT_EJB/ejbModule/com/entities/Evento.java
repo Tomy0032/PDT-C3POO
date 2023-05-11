@@ -2,6 +2,10 @@ package com.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.enums.Modalidad;
+import com.enums.TipoEvento;
+
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +36,12 @@ public class Evento implements Serializable {
 
 	@Column(nullable=false, length=20)
 	private String nombre;
+	
+	@Column(nullable=false)
+	private Modalidad modalidad;
+	
+	@Column(nullable=false)
+	private TipoEvento tipo;
 
 	//bi-directional many-to-one association to Constancia
 	@OneToMany(mappedBy="evento")
@@ -138,6 +148,22 @@ public class Evento implements Serializable {
 
 	public void setResponsabilidades(List<Responsabilidad> responsabilidades) {
 		this.responsabilidades = responsabilidades;
+	}
+	
+	public Modalidad getModalidad() {
+		return modalidad;
+	}
+
+	public void setModalidad(Modalidad modalidad) {
+		this.modalidad = modalidad;
+	}
+
+	public TipoEvento getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoEvento tipo) {
+		this.tipo = tipo;
 	}
 
 }

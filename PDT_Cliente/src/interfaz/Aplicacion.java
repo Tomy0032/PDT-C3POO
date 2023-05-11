@@ -15,8 +15,11 @@ import com.services.UsuarioBeanRemote;
 import componentes.PanelListadoEventos;
 import componentes.PanelNuevoEvento;
 import controladores.ControlBotonesAplicacion;
+import controladores.Control_username_aplicacion;
 import datos.ComprobarTipoUsuario;
 import datos.OperacionUsuario;
+import interfaces.Layout_para_aplicacion;
+import interfaces.Layout_para_botonera_aplicacion;
 import listas.ListaItrs;
 import listas.ListaUsuarios;
 import utilidades.GestionCeldas;
@@ -31,6 +34,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
@@ -41,6 +45,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Dimension;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JTabbedPane;
@@ -50,16 +55,19 @@ public class Aplicacion extends JFrame implements MouseListener{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel btn_container_panel;
+	private static JPanel btn_container_panel;
 	private static JButton btn_usuarios;
 	private static JButton btn_eventos;
 	private static JButton btn_constancias;
 	private static JButton btn_reclamos;
+	private static JButton btn_mant_listas;
+	private static JButton btn_cerrarSesion;
 	private JPanel panel_usuarios;
 	private JPanel panel_eventos;
 	private JPanel panel_constancias;
 	private JPanel panel_reclamos;
 	private static JPanel card_container_panel;
+	private static JLabel lblUserName;
 	private JLabel lbl_estado;
 	private static JLabel lbl_generacion;
 	private static JComboBox<String> combo_filtro_tipoUsu;
@@ -79,15 +87,17 @@ public class Aplicacion extends JFrame implements MouseListener{
 
 		setUsuario(idUsuario);
 		cerrar();
-		getContentPane().setLayout(null);
+		//getContentPane().setLayout(null);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		JPanel panel_principal = new JPanel();
+		panel_principal.setLayout(new Layout_para_aplicacion());
+		add(panel_principal);
 
 		btn_container_panel = new JPanel();
-		btn_container_panel.setBounds(0, 102, 169, 644);
-		getContentPane().add(btn_container_panel);
-		btn_container_panel.setLayout(null);
+		panel_principal.add(btn_container_panel);
+		btn_container_panel.setLayout(new Layout_para_botonera_aplicacion());
 
 		btn_usuarios = new JButton("USUARIOS");
-		btn_usuarios.setBounds(0, 5, 141, 25);
 		btn_usuarios.setMinimumSize(new Dimension(120, 23));
 		btn_usuarios.setMaximumSize(new Dimension(120, 23));
 		btn_usuarios.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -95,27 +105,32 @@ public class Aplicacion extends JFrame implements MouseListener{
 		btn_usuarios.addActionListener(new ControlBotonesAplicacion());
 
 		btn_eventos = new JButton("EVENTOS");
-		btn_eventos.setBounds(0, 41, 141, 25);
 		btn_eventos.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_container_panel.add(btn_eventos);
 		btn_eventos.addActionListener(new ControlBotonesAplicacion());
 
 		btn_constancias = new JButton("CONSTANCIAS");
-
-		btn_constancias.setBounds(0, 77, 141, 25);
 		btn_constancias.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_container_panel.add(btn_constancias);
 		btn_constancias.addActionListener(new ControlBotonesAplicacion());
 
 		btn_reclamos = new JButton("RECLAMOS");
-		btn_reclamos.setBounds(0, 113, 141, 25);
 		btn_reclamos.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_container_panel.add(btn_reclamos);
 		btn_reclamos.addActionListener(new ControlBotonesAplicacion());
 
+		btn_mant_listas = new JButton("MANTENIMIENTO DE LISTAS");
+		btn_mant_listas.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btn_container_panel.add(btn_mant_listas);
+		btn_mant_listas.addActionListener(new ControlBotonesAplicacion());
+		
+		btn_cerrarSesion = new JButton("CERRAR SESION");
+		btn_cerrarSesion.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btn_container_panel.add(btn_cerrarSesion);
+		
+//----------------------------------------------------------------------------------------		
 		card_container_panel = new JPanel();
-		card_container_panel.setBounds(144, 102, 878, 644);
-		getContentPane().add(card_container_panel);
+		panel_principal.add(card_container_panel);
 		card_container_panel.setLayout(new CardLayout(0, 0));
 
 		panel_usuarios = new JPanel();
@@ -222,17 +237,19 @@ public class Aplicacion extends JFrame implements MouseListener{
 		panel_usuarios.add(combo_filtro_estado);
 
 		panel_eventos = new JPanel();
-		panel_eventos.setForeground(new Color(0, 0, 0));
-		card_container_panel.add(panel_eventos, "Panel de Eventos");
+		card_container_panel.add(panel_eventos,"Panel de Eventos");
 
+		
+		
 		JTabbedPane tabbedPaneEventos = new JTabbedPane(JTabbedPane.TOP);
+		panel_eventos.setLayout(new BorderLayout());
 		panel_eventos.add(tabbedPaneEventos);
-
+		
 		PanelNuevoEvento panelNuevoEvento = new PanelNuevoEvento();
-		tabbedPaneEventos.add("Nuevo Evento", panelNuevoEvento);
+		tabbedPaneEventos.addTab("Nuevo Evento", panelNuevoEvento);
 
 		PanelListadoEventos panelListarEventos = new PanelListadoEventos();
-		tabbedPaneEventos.add("Listar Eventos", panelListarEventos);
+		tabbedPaneEventos.addTab("Listar Eventos", panelListarEventos);
 
 		panel_constancias = new JPanel();
 		panel_constancias.setBackground(new Color(0, 0, 255));
@@ -244,23 +261,30 @@ public class Aplicacion extends JFrame implements MouseListener{
 		panel_reclamos.setForeground(new Color(0, 0, 0));
 		card_container_panel.add(panel_reclamos, "Panel de Reclamos");
 
-		JLabel lblUserName = new JLabel(usuario.getNombreUsuario());
+		
+//----------------------------------------------------------		
+		
+		lblUserName = new JLabel(usuario.getNombreUsuario());
 		lblUserName.setBounds(0, 233, 130, 26);
-		btn_container_panel.add(lblUserName);
-		lblUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserName.setOpaque(true);
+		lblUserName.addMouseListener(new Control_username_aplicacion());
+		btn_container_panel.add(lblUserName);
+		
+		
 		btn_reclamos.addActionListener(new ControlBotonesAplicacion());
+
 
 		JLabel lblUserType = new JLabel(getTipoUsuario());
 		lblUserType.setBounds(0, 196, 130, 26);
 		btn_container_panel.add(lblUserType);
-		lblUserType.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblUserType.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblUserType.setHorizontalAlignment(SwingConstants.CENTER);
 
 		JPanel panel_arriba = new JPanel();
 		panel_arriba.setBackground(new Color(0, 0, 0));
-		panel_arriba.setBounds(0, 0, 1027, 104);
-		getContentPane().add(panel_arriba);
+		panel_principal.add(panel_arriba);
 		panel_arriba.setLayout(null);
 		PanelFondo logo = new PanelFondo("/recursos/imagenes/09-Isotipo-1.png");
 		PanelFondo logo_1 = new PanelFondo("/recursos/imagenes/banner2_utec.png");
@@ -273,6 +297,7 @@ public class Aplicacion extends JFrame implements MouseListener{
 		
 		construirTabla(ListaUsuarios.getListaStringListado(),titulos);
 
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Registrarse.class.getResource("/recursos/imagenes/09-Isotipo-1.png")));
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
@@ -538,4 +563,14 @@ public class Aplicacion extends JFrame implements MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public static JLabel getLblUserName() {
+		return lblUserName;
+	}
+	
+	public static JPanel getBtn_container_panel() {
+		return btn_container_panel;
+	}
+
+	
 }

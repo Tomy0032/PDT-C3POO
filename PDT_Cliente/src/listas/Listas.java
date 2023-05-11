@@ -10,6 +10,8 @@ public class Listas {
 		ListaItrs.getInstance();
 		ListaAreas.getInstance();
 		ListaUsuarios.getInstance();
+		ListaModalidades.getInstance();
+		ListaTiposEvento.getInstance();
 		
 	}
 	

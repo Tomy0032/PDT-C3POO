@@ -1,10 +1,5 @@
-/componentes/
-/controladores/
-/datos/
-/interfaces/
 /interfaz/
-/jndi.properties
 /listas/
 /mail/
-/recursos/
 /utilidades/
+/controladores/
