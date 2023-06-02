@@ -11,31 +11,27 @@ import javax.naming.NamingException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import com.entities.Analista;
 import com.entities.Area;
 import com.entities.Departamento;
 import com.entities.Documento;
-import com.entities.Estudiante;
 import com.entities.Generacion;
 import com.entities.Itr;
 import com.entities.Localidad;
-import com.entities.Tipo;
-import com.entities.Tutor;
+import com.entities.TipoTutor;
+import com.entities.TipoUsuario;
 import com.entities.Usuario;
-import com.enums.Estado;
+import com.enums.EstadoUsuario;
 import com.exception.ServicesException;
-import com.services.AnalistaBeanRemote;
 import com.services.AreaBeanRemote;
 import com.services.DepartamentoBeanRemote;
 import com.services.DocumentoBeanRemote;
-import com.services.EstudianteBeanRemote;
 import com.services.GeneracionBeanRemote;
 import com.services.GeneroBeanRemote;
 import com.services.ItrBeanRemote;
 import com.services.LocalidadBeanRemote;
 import com.services.PaisBeanRemote;
-import com.services.TipoBeanRemote;
-import com.services.TutorBeanRemote;
+import com.services.TipoTutorBeanRemote;
+import com.services.TipoUsuarioBeanRemote;
 import com.services.UsuarioBeanRemote;
 
 import listas.ListaUsuarios;
@@ -55,12 +51,10 @@ public class CrearUsuario {
 		ItrBeanRemote itrBean = (ItrBeanRemote) InitialContext.doLookup("PDT_EJB/ItrBean!com.services.ItrBeanRemote"); 
 		@SuppressWarnings("unused")
 		GeneroBeanRemote generoBean = (GeneroBeanRemote) InitialContext.doLookup("PDT_EJB/GeneroBean!com.services.GeneroBeanRemote"); 
-		EstudianteBeanRemote estudianteBean = (EstudianteBeanRemote) InitialContext.doLookup("PDT_EJB/EstudianteBean!com.services.EstudianteBeanRemote"); 
 		GeneracionBeanRemote generacionBean = (GeneracionBeanRemote) InitialContext.doLookup("PDT_EJB/GeneracionBean!com.services.GeneracionBeanRemote"); 
-		TutorBeanRemote tutorBean = (TutorBeanRemote) InitialContext.doLookup("PDT_EJB/TutorBean!com.services.TutorBeanRemote"); 
-		TipoBeanRemote tipoBean = (TipoBeanRemote) InitialContext.doLookup("PDT_EJB/TipoBean!com.services.TipoBeanRemote"); 
+		TipoTutorBeanRemote tipoTutorBean = (TipoTutorBeanRemote) InitialContext.doLookup("PDT_EJB/TipoTutorBean!com.services.TipoTutorBeanRemote"); 
 		AreaBeanRemote areaBean = (AreaBeanRemote) InitialContext.doLookup("PDT_EJB/AreaBean!com.services.AreaBeanRemote"); 
-		AnalistaBeanRemote analistaBean = (AnalistaBeanRemote) InitialContext.doLookup("PDT_EJB/AnalistaBean!com.services.AnalistaBeanRemote"); 
+		TipoUsuarioBeanRemote tipoUsuarioBean = (TipoUsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/TipoUsuarioBean!com.services.TipoUsuarioBeanRemote"); 
 		
 		usuario = new Usuario();
 					
@@ -104,7 +98,7 @@ public class CrearUsuario {
 			}
 			usuario.setLocalidad(localidad);
 
-			usuario.setEstado(Estado.SIN_VALIDAR);
+			usuario.setEstado(EstadoUsuario.SIN_VALIDAR);
 
 			
 			usuario.setContrasena(datos[16]);
@@ -115,48 +109,40 @@ public class CrearUsuario {
 			else {
 				usuario.setNombreUsuario(usuario.getCorreoInstitucional().replaceAll("@utec.edu.uy", "").toString());
 			}
-			
-			usuarioBean.create(usuario);
-			
-			ExecutorService exec = Executors.newSingleThreadExecutor();
-			exec.submit(() ->{
-				EmailSenderService.correoInicial(usuario.getCorreoInstitucional());
-			});
-						
-			usuario = usuarioBean.findAllForDocument(documento).get(0);
+
+			TipoUsuario tipo = tipoUsuarioBean.findAll(datos[0].toString()).get(0);
+			usuario.setTipoUsuario(tipo);
 			
 			if(datos[0].equals("ESTUDIANTE")) {
-								
-				BigDecimal ano = new BigDecimal(datos[13]);
-			
-				Generacion generacion = generacionBean.findAllForYear(ano).get(0);				
 				
-				Estudiante estudiante = new Estudiante();
-				estudiante.setUsuario(usuario);
-				estudiante.setGeneracion(generacion);
-				
-				estudianteBean.create(estudiante);
+				BigDecimal ano = new BigDecimal(datos[13]);			
+				try {
+					Generacion generacion = generacionBean.findAllForYear(ano).get(0);					
+					usuario.setGeneracion(generacion);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println(e.getMessage());
+					System.out.println(ano);
+				}
+											
+				usuarioBean.create(usuario);
 			
 			}
 			else if(datos[0].equals("TUTOR")) {
 				
-				Tipo tipo = tipoBean.findAll(datos[14]).get(0);
+				TipoTutor tipoTutor = tipoTutorBean.findAll(datos[14]).get(0);
 				Area area = areaBean.findAll(datos[15]).get(0);
-					
-				Tutor tutor = new Tutor();
-				tutor.setUsuario(usuario);
-				tutor.setTipo(tipo);
-				tutor.setArea(area);
+
+				usuario.setTipoTutor(tipoTutor);
+				usuario.setArea(area);
 						
-				tutorBean.create(tutor);
+				usuarioBean.create(usuario);
 			
 			}
 			else if(datos[0].equals("ANALISTA")) {
-						
-				Analista analista = new Analista();
-				analista.setUsuario(usuario);
 				
-				analistaBean.create(analista);
+				usuarioBean.create(usuario);
 
 			}
 			

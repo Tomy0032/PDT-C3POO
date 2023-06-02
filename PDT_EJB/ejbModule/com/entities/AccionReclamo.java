@@ -31,8 +31,8 @@ public class AccionReclamo implements Serializable {
 
 	//bi-directional many-to-one association to Analista
 	@ManyToOne
-	@JoinColumn(name="ID_ANALISTA", nullable=false)
-	private Analista analista;
+	@JoinColumn(name="ID_USUARIO", nullable=false)
+	private Usuario analista;
 
 	//bi-directional many-to-one association to Reclamo
 	@ManyToOne
@@ -66,11 +66,11 @@ public class AccionReclamo implements Serializable {
 		this.fechaHora = fechaHora;
 	}
 
-	public Analista getAnalista() {
+	public Usuario getAnalista() {
 		return this.analista;
 	}
 
-	public void setAnalista(Analista analista) {
+	public void setAnalista(Usuario analista) {
 		this.analista = analista;
 	}
 

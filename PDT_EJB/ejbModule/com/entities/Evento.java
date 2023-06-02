@@ -3,8 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.enums.Modalidad;
-import com.enums.TipoEvento;
+import com.entities.Modalidad;
+import com.entities.TipoEvento;
 
 import java.util.Date;
 import java.util.List;
@@ -37,10 +37,16 @@ public class Evento implements Serializable {
 	@Column(nullable=false, length=20)
 	private String nombre;
 	
-	@Column(nullable=false)
+	@ManyToOne
+	@JoinColumn(name="ID_MODALIDAD", nullable=false)
 	private Modalidad modalidad;
 	
-	@Column(nullable=false)
+	@ManyToOne
+	@JoinColumn(name="ID_ESTADO", nullable=false)
+	private EstadoEvento estado;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_TIPO_EVENTO", nullable=false)
 	private TipoEvento tipo;
 
 	//bi-directional many-to-one association to Constancia
@@ -164,6 +170,14 @@ public class Evento implements Serializable {
 
 	public void setTipo(TipoEvento tipo) {
 		this.tipo = tipo;
+	}
+
+	public EstadoEvento getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoEvento estado) {
+		this.estado = estado;
 	}
 
 }

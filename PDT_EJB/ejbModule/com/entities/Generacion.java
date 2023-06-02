@@ -30,7 +30,7 @@ public class Generacion implements Serializable {
 
 	//bi-directional many-to-one association to Estudiante
 	@OneToMany(mappedBy="generacion")
-	private List<Estudiante> estudiantes;
+	private List<Usuario> estudiantes;
 
 	public Generacion() {
 	}
@@ -59,22 +59,22 @@ public class Generacion implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public List<Estudiante> getEstudiantes() {
+	public List<Usuario> getEstudiantes() {
 		return this.estudiantes;
 	}
 
-	public void setEstudiantes(List<Estudiante> estudiantes) {
+	public void setEstudiantes(List<Usuario> estudiantes) {
 		this.estudiantes = estudiantes;
 	}
 
-	public Estudiante addEstudiante(Estudiante estudiante) {
+	public Usuario addEstudiante(Usuario estudiante) {
 		getEstudiantes().add(estudiante);
 		estudiante.setGeneracion(this);
 
 		return estudiante;
 	}
 
-	public Estudiante removeEstudiante(Estudiante estudiante) {
+	public Usuario removeEstudiante(Usuario estudiante) {
 		getEstudiantes().remove(estudiante);
 		estudiante.setGeneracion(null);
 

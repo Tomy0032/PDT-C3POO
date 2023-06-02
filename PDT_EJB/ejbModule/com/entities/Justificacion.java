@@ -7,11 +7,11 @@ import java.util.List;
 
 
 /**
- * The persistent class for the Justificacion database table.
+ * The persistent class for the JUSTIFICACION database table.
  * 
  */
 @Entity
-@Table(name="Justificacion")
+@Table(name="JUSTIFICACION")
 @NamedQuery(name="Justificacion.findAll", query="SELECT j FROM Justificacion j")
 public class Justificacion implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -36,8 +36,8 @@ public class Justificacion implements Serializable {
 
 	//bi-directional many-to-one association to Estudiante
 	@ManyToOne
-	@JoinColumn(name="ID_ESTUDIANTE", nullable=false)
-	private Estudiante estudiante;
+	@JoinColumn(name="ID_USUARIO", nullable=false)
+	private Usuario estudiante;
 
 	//bi-directional many-to-one association to Evento
 	@ManyToOne
@@ -79,11 +79,11 @@ public class Justificacion implements Serializable {
 		this.accionesJustificaciones = accionesJustificaciones;
 	}
 
-	public Estudiante getEstudiante() {
+	public Usuario getEstudiante() {
 		return estudiante;
 	}
 
-	public void setEstudiante(Estudiante estudiante) {
+	public void setEstudiante(Usuario estudiante) {
 		this.estudiante = estudiante;
 	}
 

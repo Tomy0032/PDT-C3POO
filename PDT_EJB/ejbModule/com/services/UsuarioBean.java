@@ -9,10 +9,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
-import com.entities.Analista;
 import com.entities.Documento;
-import com.entities.Estudiante;
-import com.entities.Tutor;
+import com.entities.TipoUsuario;
 import com.entities.Usuario;
 import com.exception.ServicesException;
 
@@ -63,76 +61,7 @@ public class UsuarioBean implements UsuarioBeanRemote {
 			throw new ServicesException("No se pudo eliminar el USUARIO");
 		}
 	}
-	
-	@Override
-	public void addAnalista(Long idUsuario, Analista analista) throws ServicesException {
-		try{
-			Usuario usuario = em.find(Usuario.class, idUsuario);
-			usuario.getAnalistas().add(analista);
-			em.flush();
-		}catch(PersistenceException e){
-			throw new ServicesException("No se pudo agregar el ANALISTA al USUARIO");
-		}		
-	}
-	
-	@Override
-	public void removeAnalista(Long idUsuario, Long idAnalista) throws ServicesException {
-		try{
-			Usuario usuario = em.find(Usuario.class, idUsuario);
-			Analista analista = em.find(Analista.class, idAnalista);
-			usuario.getAnalistas().remove(analista);
-			em.flush();
-		}catch(PersistenceException e){
-			throw new ServicesException("No se pudo remover el ANALISTA del USUARIO");
-		}		
-	}
-	
-	@Override
-	public void addEstudiante(Long idUsuario, Estudiante estudiante) throws ServicesException {
-		try{
-			Usuario usuario = em.find(Usuario.class, idUsuario);
-			usuario.getEstudiantes().add(estudiante);
-			em.flush();
-		}catch(PersistenceException e){
-			throw new ServicesException("No se pudo agregar el ESTUDIANTE al USUARIO");
-		}		
-	}
-	
-	@Override
-	public void removeEstudiante(Long idUsuario, Long idEstudiante) throws ServicesException {
-		try{
-			Usuario usuario = em.find(Usuario.class, idUsuario);
-			Estudiante estudiante = em.find(Estudiante.class, idEstudiante);
-			usuario.getEstudiantes().remove(estudiante);
-			em.flush();
-		}catch(PersistenceException e){
-			throw new ServicesException("No se pudo remover el ESTUDIANTE del USUARIO");
-		}		
-	}
-	
-	@Override
-	public void addTutor(Long idUsuario, Tutor tutor) throws ServicesException {
-		try{
-			Usuario usuario = em.find(Usuario.class, idUsuario);
-			usuario.getTutores().add(tutor);
-			em.flush();
-		}catch(PersistenceException e){
-			throw new ServicesException("No se pudo agregar el TUTOR al USUARIO");
-		}		
-	}
-	
-	@Override
-	public void removeTutor(Long idUsuario, Long idTutor) throws ServicesException {
-		try{
-			Usuario usuario = em.find(Usuario.class, idUsuario);
-			Tutor tutor = em.find(Tutor.class, idTutor);
-			usuario.getTutores().remove(tutor);
-			em.flush();
-		}catch(PersistenceException e){
-			throw new ServicesException("No se pudo remover el TUTOR del USUARIO");
-		}		
-	}
-
+			
 	@Override
 	public List<Usuario> findAll() throws ServicesException {
 		try {
@@ -219,5 +148,15 @@ public class UsuarioBean implements UsuarioBeanRemote {
 			throw new ServicesException("No se encontraron USUARIOS con esas CREDENCIALES");
 		}
 	}
-    
+
+	@Override
+	public List<Usuario> findAllForType(TipoUsuario tipo) throws ServicesException {
+		try {
+			TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.tipoUsuario LIKE :tipo",Usuario.class)
+					.setParameter("tipo", tipo); 
+			return query.getResultList();
+		}catch(PersistenceException e) {
+			throw new ServicesException("No se encontraron USUARIOS del tipo " + tipo.getNombre());
+		}
+	}    
 }

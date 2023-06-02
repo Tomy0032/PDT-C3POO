@@ -89,6 +89,11 @@ public class GestionCeldas extends DefaultTableCellRenderer{
            
             return label;
         }
+        
+        if( tipo.equals("editar"))
+        {
+        	
+        }
 
         if( tipo.equals("numerico"))
         {           

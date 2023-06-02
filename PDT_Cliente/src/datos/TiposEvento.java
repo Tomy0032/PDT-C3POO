@@ -8,19 +8,19 @@ import java.util.ArrayList;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import com.entities.Tipo;
+import com.entities.TipoEvento;
 import com.exception.ServicesException;
-import com.services.TipoBeanRemote;
+import com.services.TipoEventoBeanRemote;
 
-public class Tipos {
+public class TiposEvento {
 	
 	public static void cargarDatos() throws NamingException {
-		TipoBeanRemote tipoBean = (TipoBeanRemote) InitialContext.doLookup("PDT_EJB/TipoBean!com.services.TipoBeanRemote"); 
+		TipoEventoBeanRemote tipoBean = (TipoEventoBeanRemote) InitialContext.doLookup("PDT_EJB/TipoEventoBean!com.services.TipoEventoBeanRemote"); 
 		
 		ArrayList<String> lista;
 		String directorioRaiz = System.getProperty("user.dir");
 		try {
-			lista = new ArrayList<>(Files.readAllLines(Paths.get(directorioRaiz + "\\src\\recursos\\datos\\tipos.txt")));
+			lista = new ArrayList<>(Files.readAllLines(Paths.get(directorioRaiz + "\\src\\recursos\\datos\\tiposEvento.txt")));
 			cargarTipos(lista,tipoBean);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -29,11 +29,11 @@ public class Tipos {
 		
 	}
 
-	public static void cargarTipos(ArrayList<String> lista,TipoBeanRemote tipoBean) {
+	public static void cargarTipos(ArrayList<String> lista,TipoEventoBeanRemote tipoBean) {
 		
 		for(String s : lista) {
 			
-			Tipo tipo = new Tipo();
+			TipoEvento tipo = new TipoEvento();
 			try {
 				
 				tipo = tipoBean.findAll(s).get(0);

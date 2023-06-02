@@ -32,7 +32,8 @@ import listas.ListaAreas;
 import listas.ListaDepartamentos;
 import listas.ListaItrs;
 import listas.ListaLocalidades;
-import listas.ListaTipos;
+import listas.ListaTiposTutor;
+import listas.ListaTiposUsuario;
 
 import com.entities.Departamento;
 import com.toedter.calendar.JDateChooser;
@@ -149,9 +150,8 @@ public class Registrarse extends JFrame {
 		tipo_usu_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		tipo_usu_comboBox.setBounds(235, 43, 130, 22);
 		tipo_usu_comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		tipo_usu_comboBox.addItem("ANALISTA");
-		tipo_usu_comboBox.addItem("ESTUDIANTE");
-		tipo_usu_comboBox.addItem("TUTOR");
+		ComboBoxModel<String> modeloTipoUsuario = new DefaultComboBoxModel<>(ListaTiposUsuario.getListaString());
+		tipo_usu_comboBox.setModel(modeloTipoUsuario);
 		tipo_usu_comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == 2) {
@@ -436,7 +436,7 @@ public class Registrarse extends JFrame {
 		rol_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rol_comboBox.setBounds(454, 313, 130, 22);
 		rol_comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		ComboBoxModel<String> modeloTipos = new DefaultComboBoxModel<>(ListaTipos.getListaString());		
+		ComboBoxModel<String> modeloTipos = new DefaultComboBoxModel<>(ListaTiposTutor.getListaString());		
 		rol_comboBox.setModel(modeloTipos);	
 		panelFondo.add(rol_comboBox);
 		

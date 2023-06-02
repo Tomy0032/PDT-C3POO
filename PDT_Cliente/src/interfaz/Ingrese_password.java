@@ -204,12 +204,14 @@ public class Ingrese_password extends JFrame {
 		JButton showRePass = new JButton("");
 		showRePass.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(showRePass.getIcon().toString().equals("file:/C:/Users/gonza/GitHub/PDT-C3POO/PDT_Cliente/bin/recursos/imagenes/eye.png")){
+				if(iconStatus == 0){
 					showRePass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye2.png")));
 					rep_password.setEchoChar((char)0);
+					iconStatus = 1;
 				}else {
 					showRePass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye.png")));
 					rep_password.setEchoChar((char)'•');
+					iconStatus = 0;
 				}
 			}
 		});

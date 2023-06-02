@@ -1,18 +1,19 @@
 package listas;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import com.enums.Modalidad;
-
+import com.services.ModalidadBeanRemote;
+import com.entities.Modalidad;
+import com.exception.ServicesException;
 
 public class ListaModalidades {
 	
 	private static ListaModalidades listaModalidades = null;
-	private static List<Modalidad> lista = new LinkedList<>();
+	private static List<Modalidad> lista;
 	
 	private ListaModalidades() {
 		try {
@@ -32,12 +33,15 @@ public class ListaModalidades {
 	
 	public static void cargarLista() throws NamingException {
 		
-		for(Modalidad m : Modalidad.values()) {
-			
-			System.out.println(m);
-			lista.add(m);
-			
+		ModalidadBeanRemote modalidadBean = (ModalidadBeanRemote) InitialContext.doLookup("PDT_EJB/ModalidadBean!com.services.ModalidadBeanRemote"); 
+		
+		try {				
+			lista = modalidadBean.findAll();
+								
+		} catch (ServicesException e) {
+			System.out.println(e.getMessage());
 		}
+		
 	}
 	
 	public static String[] getListaString() {
@@ -46,7 +50,7 @@ public class ListaModalidades {
 		
 		for(Modalidad m : lista) {
 			
-			s.add(m.toString());
+			s.add(m.getNombre());
 			
 		}
 		
@@ -62,5 +66,5 @@ public class ListaModalidades {
 	public static void setLista(List<Modalidad> lista) {
 		ListaModalidades.lista = lista;
 	}
-
+	
 }

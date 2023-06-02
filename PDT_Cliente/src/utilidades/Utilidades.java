@@ -10,6 +10,7 @@ public class Utilidades {
 	public static final int VER = 5;
 	public static final int ACTIVAR = 6;
 	public static final int ELIMINAR = 7;
+	public static final int EDITAR = 8;
 	
 	public static int filaSeleccionada;
 

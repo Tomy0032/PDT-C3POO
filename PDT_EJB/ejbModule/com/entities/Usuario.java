@@ -3,7 +3,7 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-import com.enums.Estado;
+import com.enums.EstadoUsuario;
 
 import java.util.Date;
 import java.util.List;
@@ -24,6 +24,11 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQ_USUARIO")
 	@Column(name="ID_USUARIO", unique=true, nullable=false, precision=38)
 	private long idUsuario;
+	
+	//bi-directional many-to-one association to Genero
+	@ManyToOne
+	@JoinColumn(name="ID_TIPO_USUARIO", nullable=true)
+	private TipoUsuario tipoUsuario;
 
 	@Column(nullable=false, length=20)
 	private String apellido1;
@@ -55,18 +60,9 @@ public class Usuario implements Serializable {
 
 	@Column(unique=true, length=10)
 	private String telefono;
-
-	//bi-directional many-to-one association to Analista
-	@OneToMany(mappedBy="usuario")
-	private List<Analista> analistas;
-
-	//bi-directional many-to-one association to Estudiante
-	@OneToMany(mappedBy="usuario")
-	private List<Estudiante> estudiantes;
-
-	//bi-directional many-to-one association to Tutor
-	@OneToMany(mappedBy="usuario")
-	private List<Tutor> tutores;
+	
+	@Column(nullable=false)	
+	private EstadoUsuario estado;
 
 	//bi-directional many-to-one association to Documento
 	@ManyToOne
@@ -88,8 +84,65 @@ public class Usuario implements Serializable {
 	@JoinColumn(name="ID_LOCALIDAD", nullable=false)
 	private Localidad localidad;
 	
-	@Column(nullable=false)	
-	private Estado estado;
+	
+	//ESTUDIANTE
+	
+	//bi-directional many-to-one association to Constancia
+	@OneToMany(mappedBy="estudiante")
+	private List<Constancia> constancias;
+	
+	//bi-directional many-to-one association to ConvocatoriaAsistencia
+	@OneToMany(mappedBy="estudiante")
+	private List<ConvocatoriaAsistencia> convocatoriasAsistencias;
+	
+	//bi-directional many-to-one association to Generacion
+	@ManyToOne
+	@JoinColumn(name="ID_GENERACION", nullable=true)
+	private Generacion generacion;
+		
+	//bi-directional many-to-one association to Justificacion
+	@OneToMany(mappedBy="estudiante")
+	private List<Justificacion> justificaciones;
+	
+	//bi-directional many-to-one association to Reclamo
+	@OneToMany(mappedBy="estudiante")
+	private List<Reclamo> reclamos;
+
+	
+	//TUTOR
+	
+	
+	//bi-directional many-to-one association to Responsabilidad
+	@OneToMany(mappedBy="tutor")
+	private List<Responsabilidad> responsabilidades;
+
+	//bi-directional many-to-one association to Area
+	@ManyToOne
+	@JoinColumn(name="ID_AREA", nullable=true)
+	private Area area;
+
+	//bi-directional many-to-one association to Tipo
+	@ManyToOne
+	@JoinColumn(name="ID_TIPO", nullable=true)
+	private TipoTutor tipo;
+	
+	//ANALISTA
+	
+	//bi-directional many-to-one association to AccionConstancia
+	@OneToMany(mappedBy="analista")
+	private List<AccionConstancia> accionesConstancias;
+
+	//bi-directional many-to-one association to AccionGJustificacion
+	@OneToMany(mappedBy="analista")
+	private List<AccionJustificacion> accionesJustificaciones;
+
+	//bi-directional many-to-one association to AccionReclamo
+	@OneToMany(mappedBy="analista")
+	private List<AccionReclamo> accionesReclamos;
+
+	//bi-directional many-to-one association to Gestion
+	@OneToMany(mappedBy="analista")
+	private List<Gestion> gestiones;
 
 	public Usuario() {
 	}
@@ -182,72 +235,6 @@ public class Usuario implements Serializable {
 		this.telefono = telefono;
 	}
 
-	public List<Analista> getAnalistas() {
-		return this.analistas;
-	}
-
-	public void setAnalistas(List<Analista> analistas) {
-		this.analistas = analistas;
-	}
-
-	public Analista addAnalista(Analista analista) {
-		getAnalistas().add(analista);
-		analista.setUsuario(this);
-
-		return analista;
-	}
-
-	public Analista removeAnalista(Analista analista) {
-		getAnalistas().remove(analista);
-		analista.setUsuario(null);
-
-		return analista;
-	}
-
-	public List<Estudiante> getEstudiantes() {
-		return this.estudiantes;
-	}
-
-	public void setEstudiantes(List<Estudiante> estudiantes) {
-		this.estudiantes = estudiantes;
-	}
-
-	public Estudiante addEstudiante(Estudiante estudiante) {
-		getEstudiantes().add(estudiante);
-		estudiante.setUsuario(this);
-
-		return estudiante;
-	}
-
-	public Estudiante removeEstudiante(Estudiante estudiante) {
-		getEstudiantes().remove(estudiante);
-		estudiante.setUsuario(null);
-
-		return estudiante;
-	}
-
-	public List<Tutor> getTutores() {
-		return this.tutores;
-	}
-
-	public void setTutores(List<Tutor> tutores) {
-		this.tutores = tutores;
-	}
-
-	public Tutor addTutor(Tutor tutor) {
-		getTutores().add(tutor);
-		tutor.setUsuario(this);
-
-		return tutor;
-	}
-
-	public Tutor removeTutor(Tutor tutor) {
-		getTutores().remove(tutor);
-		tutor.setUsuario(null);
-
-		return tutor;
-	}
-
 	public Documento getDocumento() {
 		return this.documento;
 	}
@@ -280,12 +267,116 @@ public class Usuario implements Serializable {
 		this.localidad = localidad;
 	}
 
-	public Estado getEstado() {
+	public EstadoUsuario getEstado() {
 		return estado;
 	}
 
-	public void setEstado(Estado estado) {
+	public void setEstado(EstadoUsuario estado) {
 		this.estado = estado;
+	}
+
+	public List<Constancia> getConstancias() {
+		return constancias;
+	}
+
+	public void setConstancias(List<Constancia> constancias) {
+		this.constancias = constancias;
+	}
+
+	public List<ConvocatoriaAsistencia> getConvocatoriasAsistencias() {
+		return convocatoriasAsistencias;
+	}
+
+	public void setConvocatoriasAsistencias(List<ConvocatoriaAsistencia> convocatoriasAsistencias) {
+		this.convocatoriasAsistencias = convocatoriasAsistencias;
+	}
+
+	public Generacion getGeneracion() {
+		return generacion;
+	}
+
+	public void setGeneracion(Generacion generacion) {
+		this.generacion = generacion;
+	}
+
+	public List<Justificacion> getJustificaciones() {
+		return justificaciones;
+	}
+
+	public void setJustificaciones(List<Justificacion> justificaciones) {
+		this.justificaciones = justificaciones;
+	}
+
+	public List<Reclamo> getReclamos() {
+		return reclamos;
+	}
+
+	public void setReclamos(List<Reclamo> reclamos) {
+		this.reclamos = reclamos;
+	}
+
+	public List<Responsabilidad> getResponsabilidades() {
+		return responsabilidades;
+	}
+
+	public void setResponsabilidades(List<Responsabilidad> responsabilidades) {
+		this.responsabilidades = responsabilidades;
+	}
+
+	public Area getArea() {
+		return area;
+	}
+
+	public void setArea(Area area) {
+		this.area = area;
+	}
+
+	public TipoTutor getTipoTutor() {
+		return tipo;
+	}
+
+	public void setTipoTutor(TipoTutor tipo) {
+		this.tipo = tipo;
+	}
+
+	public List<AccionConstancia> getAccionesConstancias() {
+		return accionesConstancias;
+	}
+
+	public void setAccionesConstancias(List<AccionConstancia> accionesConstancias) {
+		this.accionesConstancias = accionesConstancias;
+	}
+
+	public List<AccionJustificacion> getAccionesJustificaciones() {
+		return accionesJustificaciones;
+	}
+
+	public void setAccionesJustificaciones(List<AccionJustificacion> accionesJustificaciones) {
+		this.accionesJustificaciones = accionesJustificaciones;
+	}
+
+	public List<AccionReclamo> getAccionesReclamos() {
+		return accionesReclamos;
+	}
+
+	public void setAccionesReclamos(List<AccionReclamo> accionesReclamos) {
+		this.accionesReclamos = accionesReclamos;
+	}
+
+	public List<Gestion> getGestiones() {
+		return gestiones;
+	}
+
+	public void setGestiones(List<Gestion> gestiones) {
+		this.gestiones = gestiones;
+	}
+
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
 	}
 	
 }

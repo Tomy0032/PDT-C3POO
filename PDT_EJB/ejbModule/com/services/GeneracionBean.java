@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
-import com.entities.Estudiante;
+import com.entities.Usuario;
 import com.entities.Generacion;
 import com.exception.ServicesException;
 
@@ -63,7 +63,7 @@ public class GeneracionBean implements GeneracionBeanRemote {
    	}
    	
    	@Override
-   	public void addEstudiante(Long idGeneracion, Estudiante estudiante) throws ServicesException {
+   	public void addEstudiante(Long idGeneracion, Usuario estudiante) throws ServicesException {
    		try{
    			Generacion generacion = em.find(Generacion.class, idGeneracion);
    			generacion.getEstudiantes().add(estudiante);
@@ -77,7 +77,7 @@ public class GeneracionBean implements GeneracionBeanRemote {
    	public void removeEstudiante(Long idGeneracion, Long idEstudiante) throws ServicesException {
    		try{
    			Generacion generacion = em.find(Generacion.class, idGeneracion);
-   			Estudiante estudiante = em.find(Estudiante.class, idEstudiante);
+   			Usuario estudiante = em.find(Usuario.class, idEstudiante);
    			generacion.getEstudiantes().remove(estudiante);
    			em.flush();
    		}catch(PersistenceException e){

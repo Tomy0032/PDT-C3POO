@@ -8,7 +8,7 @@ import javax.naming.NamingException;
 import javax.swing.JOptionPane;
 
 import com.entities.Usuario;
-import com.enums.Estado;
+import com.enums.EstadoUsuario;
 import com.exception.ServicesException;
 import com.services.UsuarioBeanRemote;
 
@@ -64,7 +64,7 @@ public class OperacionUsuario {
 			exec.submit(() ->{
 				EmailSenderService.correoActivacion(usuario.getCorreoInstitucional());
 			});
-			usuario.setEstado(Estado.ACTIVO);
+			usuario.setEstado(EstadoUsuario.ACTIVO);
 			usuarioBean.update(usuario);
 			ListaUsuarios.cargarLista();
 			Aplicacion.filtros();			
@@ -88,7 +88,7 @@ public class OperacionUsuario {
 			exec.submit(() ->{
 				EmailSenderService.correoEliminacion(usuario.getCorreoInstitucional());
 			});
-			usuario.setEstado(Estado.ELIMINADO);
+			usuario.setEstado(EstadoUsuario.ELIMINADO);
 			usuarioBean.update(usuario);
 			ListaUsuarios.cargarLista();
 			Aplicacion.filtros();

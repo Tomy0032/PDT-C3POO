@@ -1,18 +1,19 @@
 package listas;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
+import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import com.enums.TipoEvento;
-
+import com.services.TipoEventoBeanRemote;
+import com.entities.TipoEvento;
+import com.exception.ServicesException;
 
 public class ListaTiposEvento {
 	
-	private static ListaTiposEvento listaTiposEvento = null;
-	private static List<TipoEvento> lista = new LinkedList<>();
+	private static ListaTiposEvento listaTipos = null;
+	private static List<TipoEvento> lista;
 	
 	private ListaTiposEvento() {
 		try {
@@ -24,19 +25,23 @@ public class ListaTiposEvento {
 	}
 	
 	public static ListaTiposEvento getInstance() {
-		if(listaTiposEvento == null) {
-			listaTiposEvento = new ListaTiposEvento(); 
+		if(listaTipos == null) {
+			listaTipos = new ListaTiposEvento(); 
 		}
-		return listaTiposEvento;
+		return listaTipos;
 	}
 	
 	public static void cargarLista() throws NamingException {
 		
-		for(TipoEvento t : TipoEvento.values()) {
-			
-			lista.add(t);
-			
+		TipoEventoBeanRemote tipoBean = (TipoEventoBeanRemote) InitialContext.doLookup("PDT_EJB/TipoEventoBean!com.services.TipoEventoBeanRemote"); 
+		
+		try {				
+			lista = tipoBean.findAll();
+								
+		} catch (ServicesException e) {
+			System.out.println(e.getMessage());
 		}
+		
 	}
 	
 	public static String[] getListaString() {
@@ -49,8 +54,8 @@ public class ListaTiposEvento {
 			
 		}
 		
-		String[] tiposEventos = s.toArray(new String[0]);
-		return tiposEventos;
+		String[] tipos = s.toArray(new String[0]);
+		return tipos;
 		
 	}
 
@@ -61,5 +66,5 @@ public class ListaTiposEvento {
 	public static void setLista(List<TipoEvento> lista) {
 		ListaTiposEvento.lista = lista;
 	}
-
+	
 }

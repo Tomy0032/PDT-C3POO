@@ -3,29 +3,7 @@
 	<persistence-unit name="PDT_EJB">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:/PDT_DS</jta-data-source>
-		<class>com.entities.AccionConstancia</class>
-		<class>com.entities.AccionJustificacion</class>
-		<class>com.entities.AccionReclamo</class>
-		<class>com.entities.Analista</class>
-		<class>com.entities.Area</class>
-		<class>com.entities.Constancia</class>
-		<class>com.entities.ConvocatoriaAsistencia</class>
-		<class>com.entities.Departamento</class>
-		<class>com.entities.Documento</class>
-		<class>com.entities.Estudiante</class>
-		<class>com.entities.Evento</class>
-		<class>com.entities.Generacion</class>
-		<class>com.entities.Genero</class>
-		<class>com.entities.Gestion</class>
-		<class>com.entities.Itr</class>
-		<class>com.entities.Justificacion</class>
-		<class>com.entities.Localidad</class>
-		<class>com.entities.Pais</class>
-		<class>com.entities.Reclamo</class>
-		<class>com.entities.Responsabilidad</class>
-		<class>com.entities.Tipo</class>
-		<class>com.entities.Tutor</class>
-		<class>com.entities.Usuario</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
 			<property name="hibernate.show_sql" value="true"/>

@@ -6,11 +6,11 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the ACCION_Generacion database table.
+ * The persistent class for the ACCION_GENERACION database table.
  * 
  */
 @Entity
-@Table(name="ACCION_Generacion")
+@Table(name="ACCION_GENERACION")
 @NamedQuery(name="AccionJustificacion.findAll", query="SELECT a FROM AccionJustificacion a")
 public class AccionJustificacion implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,8 +31,8 @@ public class AccionJustificacion implements Serializable {
 
 	//bi-directional many-to-one association to Analista
 	@ManyToOne
-	@JoinColumn(name="ID_ANALISTA", nullable=false)
-	private Analista analista;
+	@JoinColumn(name="ID_USUARIO", nullable=false)
+	private Usuario analista;
 
 	//bi-directional many-to-one association to Justificacion
 	@ManyToOne
@@ -66,11 +66,11 @@ public class AccionJustificacion implements Serializable {
 		this.fechaHora = fechaHora;
 	}
 
-	public Analista getAnalista() {
+	public Usuario getAnalista() {
 		return analista;
 	}
 
-	public void setAnalista(Analista analista) {
+	public void setAnalista(Usuario analista) {
 		this.analista = analista;
 	}
 

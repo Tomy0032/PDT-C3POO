@@ -16,7 +16,6 @@ import componentes.PanelListadoEventos;
 import componentes.PanelNuevoEvento;
 import controladores.ControlBotonesAplicacion;
 import controladores.Control_username_aplicacion;
-import datos.ComprobarTipoUsuario;
 import datos.OperacionUsuario;
 import interfaces.Layout_para_aplicacion;
 import interfaces.Layout_para_botonera_aplicacion;
@@ -78,14 +77,16 @@ public class Aplicacion extends JFrame implements MouseListener{
 	private static String tipoUsuario;
 	
 	private static String[] titulos = new String[] {
-			"Estado", "Nombre de usuario", "Usuario", "ITR", "Generación", "", "", ""};
+			"Estado", "Nombre de usuario", "Usuario", "ITR", "Generación", "", "", "", ""};
 	private static JTable tablaUsuarios;
 	private static ModeloTabla modelo;
 	private static JScrollPane scrollPaneTabla;
 
 	public Aplicacion(Long idUsuario) throws NamingException, ServicesException {
 
-		setUsuario(idUsuario);
+		if(idUsuario!=0L) {
+			setUsuario(idUsuario);
+		}
 		cerrar();
 		//getContentPane().setLayout(null);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -264,7 +265,10 @@ public class Aplicacion extends JFrame implements MouseListener{
 		
 //----------------------------------------------------------		
 		
-		lblUserName = new JLabel(usuario.getNombreUsuario());
+		if(idUsuario!=0L) {
+			lblUserName = new JLabel(usuario.getNombreUsuario());
+		}
+		lblUserName = new JLabel("admin");
 		lblUserName.setBounds(0, 233, 130, 26);
 		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblUserName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -376,11 +380,7 @@ public class Aplicacion extends JFrame implements MouseListener{
 		}
 
 		Aplicacion.usuario = user;
-		try {
-			setTipoUsuario(ComprobarTipoUsuario.is(getUsuario()));
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
+		setTipoUsuario(user.getTipoUsuario().getNombre());
 	}
 
 	private void cerrar() {
@@ -485,7 +485,8 @@ public class Aplicacion extends JFrame implements MouseListener{
 		tablaUsuarios.getColumnModel().getColumn(Utilidades.VER).setCellRenderer(new GestionCeldas("icono"));
 		tablaUsuarios.getColumnModel().getColumn(Utilidades.ACTIVAR).setCellRenderer(new GestionCeldas("icono"));
 		tablaUsuarios.getColumnModel().getColumn(Utilidades.ELIMINAR).setCellRenderer(new GestionCeldas("icono"));
-		
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.EDITAR).setCellRenderer(new GestionCeldas("icono"));
+
 		tablaUsuarios.getTableHeader().setReorderingAllowed(false);
 		tablaUsuarios.setRowHeight(25);
 		
@@ -497,6 +498,7 @@ public class Aplicacion extends JFrame implements MouseListener{
 		tablaUsuarios.getColumnModel().getColumn(Utilidades.VER).setPreferredWidth(30);
 		tablaUsuarios.getColumnModel().getColumn(Utilidades.ACTIVAR).setPreferredWidth(30);
 		tablaUsuarios.getColumnModel().getColumn(Utilidades.ELIMINAR).setPreferredWidth(30);
+		tablaUsuarios.getColumnModel().getColumn(Utilidades.EDITAR).setPreferredWidth(30);
 		
 		JTableHeader header = tablaUsuarios.getTableHeader();
 		header.setDefaultRenderer(new GestionEncabezadoTabla());

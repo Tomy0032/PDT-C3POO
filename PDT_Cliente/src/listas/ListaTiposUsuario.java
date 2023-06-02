@@ -6,16 +6,16 @@ import java.util.List;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import com.services.TipoBeanRemote;
-import com.entities.Tipo;
+import com.services.TipoUsuarioBeanRemote;
+import com.entities.TipoUsuario;
 import com.exception.ServicesException;
 
-public class ListaTipos {
+public class ListaTiposUsuario {
 	
-	private static ListaTipos listaTipos = null;
-	private static List<Tipo> lista;
+	private static ListaTiposUsuario listaTipos = null;
+	private static List<TipoUsuario> lista;
 	
-	private ListaTipos() {
+	private ListaTiposUsuario() {
 		try {
 			cargarLista();
 		} catch (NamingException e) {
@@ -24,16 +24,16 @@ public class ListaTipos {
 		}
 	}
 	
-	public static ListaTipos getInstance() {
+	public static ListaTiposUsuario getInstance() {
 		if(listaTipos == null) {
-			listaTipos = new ListaTipos(); 
+			listaTipos = new ListaTiposUsuario(); 
 		}
 		return listaTipos;
 	}
 	
 	public static void cargarLista() throws NamingException {
 		
-		TipoBeanRemote tipoBean = (TipoBeanRemote) InitialContext.doLookup("PDT_EJB/TipoBean!com.services.TipoBeanRemote"); 
+		TipoUsuarioBeanRemote tipoBean = (TipoUsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/TipoUsuarioBean!com.services.TipoUsuarioBeanRemote"); 
 		
 		try {				
 			lista = tipoBean.findAll();
@@ -48,7 +48,7 @@ public class ListaTipos {
 		
 		ArrayList<String> s = new ArrayList<>();
 		
-		for(Tipo t : lista) {
+		for(TipoUsuario t : lista) {
 			
 			s.add(t.getNombre());
 			
@@ -59,12 +59,12 @@ public class ListaTipos {
 		
 	}
 
-	public static List<Tipo> getLista() {
+	public static List<TipoUsuario> getLista() {
 		return lista;
 	}
 
-	public static void setLista(List<Tipo> lista) {
-		ListaTipos.lista = lista;
+	public static void setLista(List<TipoUsuario> lista) {
+		ListaTiposUsuario.lista = lista;
 	}
 	
 }

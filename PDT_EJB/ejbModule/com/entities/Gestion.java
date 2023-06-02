@@ -22,8 +22,8 @@ public class Gestion implements Serializable {
 
 	//bi-directional many-to-one association to Analista
 	@ManyToOne
-	@JoinColumn(name="ID_ANALISTA", nullable=false)
-	private Analista analista;
+	@JoinColumn(name="ID_USUARIO", nullable=false)
+	private Usuario analista;
 
 	//bi-directional many-to-one association to Evento
 	@ManyToOne
@@ -41,11 +41,11 @@ public class Gestion implements Serializable {
 		this.idGestion = idGestion;
 	}
 
-	public Analista getAnalista() {
+	public Usuario getAnalista() {
 		return this.analista;
 	}
 
-	public void setAnalista(Analista analista) {
+	public void setAnalista(Usuario analista) {
 		this.analista = analista;
 	}
 

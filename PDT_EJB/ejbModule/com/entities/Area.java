@@ -26,7 +26,7 @@ public class Area implements Serializable {
 
 	//bi-directional many-to-one association to Tutor
 	@OneToMany(mappedBy="area")
-	private List<Tutor> tutores;
+	private List<Usuario> tutores;
 
 	public Area() {
 	}
@@ -47,22 +47,22 @@ public class Area implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public List<Tutor> getTutores() {
+	public List<Usuario> getTutores() {
 		return this.tutores;
 	}
 
-	public void setTutores(List<Tutor> tutors) {
+	public void setTutores(List<Usuario> tutors) {
 		this.tutores = tutors;
 	}
 
-	public Tutor addTutor(Tutor tutor) {
+	public Usuario addTutor(Usuario tutor) {
 		getTutores().add(tutor);
 		tutor.setArea(this);
 
 		return tutor;
 	}
 
-	public Tutor removeTutor(Tutor tutor) {
+	public Usuario removeTutor(Usuario tutor) {
 		getTutores().remove(tutor);
 		tutor.setArea(null);
 

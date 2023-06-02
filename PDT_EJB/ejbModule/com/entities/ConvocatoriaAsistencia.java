@@ -29,8 +29,8 @@ public class ConvocatoriaAsistencia implements Serializable {
 
 	//bi-directional many-to-one association to Estudiante
 	@ManyToOne
-	@JoinColumn(name="ID_ESTUDIANTE", nullable=false)
-	private Estudiante estudiante;
+	@JoinColumn(name="ID_USUARIO", nullable=false)
+	private Usuario estudiante;
 
 	//bi-directional many-to-one association to Evento
 	@ManyToOne
@@ -64,11 +64,11 @@ public class ConvocatoriaAsistencia implements Serializable {
 		this.calificacion = calificacion;
 	}
 
-	public Estudiante getEstudiante() {
+	public Usuario getEstudiante() {
 		return this.estudiante;
 	}
 
-	public void setEstudiante(Estudiante estudiante) {
+	public void setEstudiante(Usuario estudiante) {
 		this.estudiante = estudiante;
 	}
 

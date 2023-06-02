@@ -10,7 +10,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import com.entities.Area;
-import com.entities.Tutor;
+import com.entities.Usuario;
 import com.exception.ServicesException;
 
 /**
@@ -62,7 +62,7 @@ public class AreaBean implements AreaBeanRemote {
    	}
    	
    	@Override
-   	public void addTutor(Long idArea, Tutor tutor) throws ServicesException {
+   	public void addTutor(Long idArea, Usuario tutor) throws ServicesException {
    		try{
    			Area area = em.find(Area.class, idArea);
    			area.getTutores().add(tutor);
@@ -76,7 +76,7 @@ public class AreaBean implements AreaBeanRemote {
    	public void removeTutor(Long idArea, Long idTutor) throws ServicesException {
    		try{
    			Area area = em.find(Area.class, idArea);
-   			Tutor tutor = em.find(Tutor.class, idTutor);
+   			Usuario tutor = em.find(Usuario.class, idTutor);
    			area.getTutores().remove(tutor);
    			em.flush();
    		}catch(PersistenceException e){

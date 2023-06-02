@@ -9,10 +9,7 @@ import javax.naming.NamingException;
 
 import com.entities.Usuario;
 import com.exception.ServicesException;
-import com.services.EstudianteBeanRemote;
 import com.services.UsuarioBeanRemote;
-
-import datos.ComprobarTipoUsuario;
 
 public class ListaUsuarios {
 	
@@ -42,6 +39,7 @@ public class ListaUsuarios {
 		
 		UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
 		
+		
 		try {				
 			lista = usuarioBean.findAll();
 								
@@ -51,7 +49,7 @@ public class ListaUsuarios {
 		
 		for(Usuario u : lista) {
 			
-			String tipo = ComprobarTipoUsuario.is(u);
+			String tipo = u.getTipoUsuario().getNombre();
 			
 			switch(tipo) {
 			case "ANALISTA":
@@ -84,13 +82,26 @@ public class ListaUsuarios {
 		
 	}
 	
+	public static String[] getListaTutoresEventoString() {
+		
+		ArrayList<String> s = new ArrayList<>();
+		
+		for(Usuario t : listaTutores) {
+			
+			s.add(t.getNombre1() + " " + t.getApellido1());
+			
+		}
+		
+		String[] tipos = s.toArray(new String[0]);
+		return tipos;
+		
+	}
+	
 	public static Object[][] getListaStringListado() throws NamingException, ServicesException {
 		
 		ArrayList<String> linea = null;
 		ArrayList<String[]> contenedor = new ArrayList<>();
-		
-		EstudianteBeanRemote estudianteBean = (EstudianteBeanRemote) InitialContext.doLookup("PDT_EJB/EstudianteBean!com.services.EstudianteBeanRemote");
-		
+							
 		for(Usuario u : lista) {
 						
 			linea = new ArrayList<>();
@@ -100,14 +111,10 @@ public class ListaUsuarios {
 				linea.add(u.getEstado().toString());
 			}			
 			linea.add(u.getNombreUsuario());
-			try {
-				linea.add(ComprobarTipoUsuario.is(u));
-			} catch (NamingException e) {
-				e.printStackTrace();
-			}
+			linea.add(u.getTipoUsuario().getNombre());
 			linea.add(u.getItr().getNombre());
-			if(ComprobarTipoUsuario.is(u).equals("ESTUDIANTE")) {
-				String gen = estudianteBean.findForUser(u).getGeneracion().getAno().toString();
+			if(u.getTipoUsuario().getNombre().equals("ESTUDIANTE")) {
+				String gen = u.getGeneracion().getAno().toString();
 				linea.add(gen);
 			}else {
 				linea.add("");
@@ -137,9 +144,6 @@ public class ListaUsuarios {
 		ArrayList<String> linea = null;
 		ArrayList<String[]> contenedor = new ArrayList<>();
 		
-		EstudianteBeanRemote estudianteBean = (EstudianteBeanRemote) InitialContext.doLookup("PDT_EJB/EstudianteBean!com.services.EstudianteBeanRemote");
-
-		
 		if(estado.equals("SIN VALIDAR")) {
 			estado = "SIN_VALIDAR";
 		}
@@ -157,14 +161,10 @@ public class ListaUsuarios {
 						linea.add(u.getEstado().toString());
 					}			
 					linea.add(u.getNombreUsuario());
-					try {
-						linea.add(ComprobarTipoUsuario.is(u));
-					} catch (NamingException e) {
-						e.printStackTrace();
-					}
+					linea.add(u.getTipoUsuario().getNombre());
 					linea.add(u.getItr().getNombre());
-					if(ComprobarTipoUsuario.is(u).equals("ESTUDIANTE")) {
-						String gen = estudianteBean.findForUser(u).getGeneracion().getAno().toString();
+					if(u.getTipoUsuario().getNombre().equals("ESTUDIANTE")) {
+						String gen = u.getGeneracion().getAno().toString();
 						linea.add(gen);
 					}else {
 						linea.add("");
@@ -217,11 +217,7 @@ public class ListaUsuarios {
 						linea.add(u.getEstado().toString());
 					}			
 					linea.add(u.getNombreUsuario());
-					try {
-						linea.add(ComprobarTipoUsuario.is(u));
-					} catch (NamingException e) {
-						e.printStackTrace();
-					}
+					linea.add(u.getTipoUsuario().getNombre());
 					linea.add(u.getItr().getNombre());
 					linea.add("");
 					linea.add("VER");
@@ -252,8 +248,6 @@ public class ListaUsuarios {
 	
 	public static Object[][] getListaEstudiantesStringListado(String itr, String estado, String generacion) throws ServicesException, NamingException {
 		
-		EstudianteBeanRemote estudianteBean = (EstudianteBeanRemote) InitialContext.doLookup("PDT_EJB/EstudianteBean!com.services.EstudianteBeanRemote");
-	
 		ArrayList<String> linea = null;
 		ArrayList<String[]> contenedor = new ArrayList<>();
 		
@@ -263,7 +257,7 @@ public class ListaUsuarios {
 						
 		for(Usuario u : listaEstudiantes) {
 			
-			String gen = estudianteBean.findForUser(u).getGeneracion().getAno().toString();
+			String gen = u.getGeneracion().getAno().toString();
 			
 			if(u.getEstado().toString().equals(estado) || estado.equals("TODOS")) {
 				
@@ -278,11 +272,7 @@ public class ListaUsuarios {
 							linea.add(u.getEstado().toString());
 						}			
 						linea.add(u.getNombreUsuario());
-						try {
-							linea.add(ComprobarTipoUsuario.is(u));
-						} catch (NamingException e) {
-							e.printStackTrace();
-						}
+						linea.add(u.getTipoUsuario().getNombre());
 						linea.add(u.getItr().getNombre());
 						linea.add(gen);
 						linea.add("VER");
@@ -331,11 +321,7 @@ public class ListaUsuarios {
 						linea.add(u.getEstado().toString());
 					}			
 					linea.add(u.getNombreUsuario());
-					try {
-						linea.add(ComprobarTipoUsuario.is(u));
-					} catch (NamingException e) {
-						e.printStackTrace();
-					}
+					linea.add(u.getTipoUsuario().getNombre());
 					linea.add(u.getItr().getNombre());
 					linea.add("");
 					linea.add("VER");

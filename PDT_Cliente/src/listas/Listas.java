@@ -6,12 +6,14 @@ public class Listas {
 		
 		ListaDepartamentos.getInstance();
 		ListaLocalidades.getInstance();
-		ListaTipos.getInstance();
+		ListaTiposTutor.getInstance();
+		ListaTiposUsuario.getInstance();
 		ListaItrs.getInstance();
 		ListaAreas.getInstance();
 		ListaUsuarios.getInstance();
-		ListaModalidades.getInstance();
 		ListaTiposEvento.getInstance();
+		ListaModalidades.getInstance();
+		ListaEstadosEvento.getInstance();
 		
 	}
 	
