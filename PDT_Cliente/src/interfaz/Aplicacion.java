@@ -12,7 +12,9 @@ import com.entities.Usuario;
 import com.exception.ServicesException;
 import com.services.UsuarioBeanRemote;
 
+import componentes.PanelListaSolicitudesDeConstancias;
 import componentes.PanelListadoEventos;
+import componentes.PanelNuevaConstancia;
 import componentes.PanelNuevoEvento;
 import controladores.ControlBotonesAplicacion;
 import controladores.Control_username_aplicacion;
@@ -237,11 +239,11 @@ public class Aplicacion extends JFrame implements MouseListener{
 		});
 		panel_usuarios.add(combo_filtro_estado);
 
+		
+		
 		panel_eventos = new JPanel();
 		card_container_panel.add(panel_eventos,"Panel de Eventos");
 
-		
-		
 		JTabbedPane tabbedPaneEventos = new JTabbedPane(JTabbedPane.TOP);
 		panel_eventos.setLayout(new BorderLayout());
 		panel_eventos.add(tabbedPaneEventos);
@@ -252,11 +254,22 @@ public class Aplicacion extends JFrame implements MouseListener{
 		PanelListadoEventos panelListarEventos = new PanelListadoEventos();
 		tabbedPaneEventos.addTab("Listar Eventos", panelListarEventos);
 
+		
+		
+		
 		panel_constancias = new JPanel();
-		panel_constancias.setBackground(new Color(0, 0, 255));
-		panel_constancias.setForeground(new Color(0, 0, 0));
+		panel_constancias.setLayout(new BorderLayout());
 		card_container_panel.add(panel_constancias, "Panel de Constancias");
 
+		JTabbedPane tabbedPaneConstancia = new JTabbedPane(JTabbedPane.TOP);
+		panel_constancias.add(tabbedPaneConstancia);
+		
+		PanelNuevaConstancia nueva_constancia = new PanelNuevaConstancia();
+		tabbedPaneConstancia.add("Pedir Constancia",nueva_constancia);
+		
+		PanelListaSolicitudesDeConstancias listaSolicitudes = new PanelListaSolicitudesDeConstancias();
+		tabbedPaneConstancia.add("Lista solicitudes constancias",listaSolicitudes);
+		
 		panel_reclamos = new JPanel();
 		panel_reclamos.setBackground(new Color(64, 0, 64));
 		panel_reclamos.setForeground(new Color(0, 0, 0));

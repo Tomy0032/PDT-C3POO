@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) throws NamingException, ServicesException{
 				
-		Datos.cargar();
+//		Datos.cargar();
 		Listas.cargar();
 		
 		MensajeConsola.Iniciar();
@@ -20,6 +20,8 @@ public class Main {
 //		new Login();
 
 		new Aplicacion(0L);
+		
+//		new Registrarse();
 		
 	}
 

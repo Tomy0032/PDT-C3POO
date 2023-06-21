@@ -158,5 +158,16 @@ public class UsuarioBean implements UsuarioBeanRemote {
 		}catch(PersistenceException e) {
 			throw new ServicesException("No se encontraron USUARIOS del tipo " + tipo.getNombre());
 		}
+	}
+
+	@Override
+	public List<Usuario> findAllTutoresEvento(String text) throws ServicesException {
+		try {
+			TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.nombre1 LIKE :text OR u.apellido1 u.area LIKE :text OR u.documento LIKE :text OR u.tipotutor LIKE :text",Usuario.class)
+					.setParameter("text", text); 
+			return query.getResultList();
+		}catch(PersistenceException e) {
+			throw new ServicesException("No se encontraron TUTORES con ese criterio de busqueda");
+		}
 	}    
 }

@@ -11,7 +11,8 @@ public class MensajeConsola {
 		System.out.println("   #                 #  #       #    #  #    #");
 		System.out.println("    ####         ####   #        ####    ####");
 		System.out.println("");
-		System.out.println("    v0.4.0");
+		System.out.println("    v0.4.1");
+	
 	}
 
 }

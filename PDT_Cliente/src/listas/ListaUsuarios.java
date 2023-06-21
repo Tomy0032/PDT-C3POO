@@ -88,15 +88,31 @@ public class ListaUsuarios {
 		
 		for(Usuario t : listaTutores) {
 			
-			s.add(t.getNombre1() + " " + t.getApellido1());
+			s.add(t.getDocumento().getCaracteres() + " - " + t.getNombre1() + " " + t.getApellido1() + " - " + t.getArea().getNombre());
 			
+		}
+		
+		String[] tutores = s.toArray(new String[0]);
+		return tutores;
+		
+	}
+	
+	public static String[] getListaTutoresEventoFiltroString(String text) throws NamingException, ServicesException {
+		
+		ArrayList<String> s = new ArrayList<>();
+		
+		for(String t : getListaTutoresEventoString()) {
+			
+			if(t.toUpperCase().contains(text.toUpperCase())) {
+				s.add(t);
+			}
 		}
 		
 		String[] tipos = s.toArray(new String[0]);
 		return tipos;
 		
 	}
-	
+		
 	public static Object[][] getListaStringListado() throws NamingException, ServicesException {
 		
 		ArrayList<String> linea = null;

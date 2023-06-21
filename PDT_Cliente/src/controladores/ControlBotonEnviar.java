@@ -27,9 +27,25 @@ public class ControlBotonEnviar implements ActionListener {
 		Control_anio_ingreso ingreso = new Control_anio_ingreso(Registrarse.getYearChooser().getYear());
 		ingreso.controlCampo();
 		
-		if(!ci.isOk() || !email.isOk() || !email_instit.isOk() || !edad.isOk() || !ingreso.isOk()) {
+		if(!ci.isOk()) {
 			
-			Registrarse.setAviso("Hay algo mal con tus datos!");
+			Registrarse.setAviso("Cédula inválida");
+			
+		}else if(!email.isOk()) {
+			
+			Registrarse.setAviso("Formato de correo personal incorrecto");
+			
+		}else if(!email_instit.isOk()) {
+			
+			Registrarse.setAviso("Formato de correo institucional incorrecto");
+			
+		}else if(!edad.isOk()) {
+			
+			Registrarse.setAviso("Debe ser mayor de edad");
+			
+		}else if(!ingreso.isOk()) {
+			
+			Registrarse.setAviso("El año de ingreso no puede ser menor de 2014 o mayor al año actual");
 			
 		}else {
 			
