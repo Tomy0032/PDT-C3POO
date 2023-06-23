@@ -54,7 +54,7 @@ public class Control_fecha_fin_evento implements ControlCampo{
 		if(!ok) {
 			ok = (hora_fin > hora_inicio);
 			if(!ok) {
-				ok = (minuto_inicio > minuto_inicio);
+				ok = (minuto_fin > minuto_inicio);
 			}
 		}
 			

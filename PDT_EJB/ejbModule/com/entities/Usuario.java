@@ -126,6 +126,10 @@ public class Usuario implements Serializable {
 	@JoinColumn(name="ID_TIPO", nullable=true)
 	private TipoTutor tipo;
 	
+	//bi-directional many-to-many association to Evento
+	@ManyToMany(mappedBy="tutores")
+	private List<Evento> eventosAsignados;
+	
 	//ANALISTA
 	
 	//bi-directional many-to-one association to AccionConstancia
@@ -143,6 +147,8 @@ public class Usuario implements Serializable {
 	//bi-directional many-to-one association to Gestion
 	@OneToMany(mappedBy="analista")
 	private List<Gestion> gestiones;
+	
+	
 
 	public Usuario() {
 	}
@@ -378,5 +384,33 @@ public class Usuario implements Serializable {
 	public void setTipoUsuario(TipoUsuario tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
 	}
+
+	public TipoTutor getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoTutor tipo) {
+		this.tipo = tipo;
+	}
+
+	public List<Evento> getEventosAsignados() {
+		return eventosAsignados;
+	}
+	
+	public Evento addEvento(Evento evento) {
+		getEventosAsignados().add(evento);
+		return evento;
+	}
+
+	public Evento removeEvento(Evento evento) {
+		getEventosAsignados().remove(evento);
+		return evento;
+	}
+
+	public void setEventosAsignados(List<Evento> eventosAsignados) {
+		this.eventosAsignados = eventosAsignados;
+	}
+	
+	
 	
 }

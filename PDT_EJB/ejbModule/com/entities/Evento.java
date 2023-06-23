@@ -46,6 +46,10 @@ public class Evento implements Serializable {
 	private EstadoEvento estado;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_ITR", nullable=false)
+	private Itr itr;
+	
+	@ManyToOne
 	@JoinColumn(name="ID_TIPO_EVENTO", nullable=false)
 	private TipoEvento tipo;
 
@@ -72,6 +76,15 @@ public class Evento implements Serializable {
 	//bi-directional many-to-one association to Responsabilidad
 	@OneToMany(mappedBy="evento")
 	private List<Responsabilidad> responsabilidades;
+	
+	//bi-directional many-to-many association to Usuario
+	@ManyToMany
+	@JoinTable(
+		name = "evento_tutores", 
+		joinColumns = @JoinColumn(name = "ID_EVENTO"),
+		inverseJoinColumns = @JoinColumn(name = "ID_USUARIO")
+	)
+	private List<Usuario> tutores;
 
 	public Evento() {
 	}
@@ -180,4 +193,30 @@ public class Evento implements Serializable {
 		this.estado = estado;
 	}
 
+	public List<Usuario> getTutores() {
+		return tutores;
+	}
+
+	public void setTutores(List<Usuario> tutores) {
+		this.tutores = tutores;
+	}
+
+	public Itr getItr() {
+		return itr;
+	}
+
+	public void setItr(Itr itr) {
+		this.itr = itr;
+	}
+	
+	public Usuario addTutor(Usuario usuario) {
+		getTutores().add(usuario);
+		return usuario;
+	}
+
+	public Usuario removeTutor(Usuario usuario) {
+		getTutores().remove(usuario);
+		return usuario;
+	}
+	
 }

@@ -78,9 +78,9 @@ public class PanelNuevoEvento extends JPanel {
 	private String[] listaTutores;
 	private ArrayList<String> arrayTutores = new ArrayList<String>();
 	private DefaultListModel modeloTutores;
-	private JTable tutoresTable;
+	private static JTable tutoresTable;
 	private DefaultTableModel modeloTablaTutores;
-	private ArrayList<String> tutoresAgregados = new ArrayList<String>();
+	private static ArrayList<String> tutoresAgregados = new ArrayList<String>();
 	private static JButton btnCrearEvento;
 	private static JLabel aviso;
 	private static LinkedList<ControlCampo> listaCampos;
@@ -131,6 +131,30 @@ public class PanelNuevoEvento extends JPanel {
 
 	public static JButton getBtnCrearEvento() {
 		return btnCrearEvento;
+	}
+	
+	public static ArrayList<String> getTutoresAgregados() {
+		return tutoresAgregados;
+	}
+
+	public static void setTutoresAgregados(ArrayList<String> tutoresAgregados) {
+		PanelNuevoEvento.tutoresAgregados = tutoresAgregados;
+	}
+	
+	public static void setDateChooserInicioEvento(JDateChooser dateChooserInicioEvento) {
+		PanelNuevoEvento.dateChooserInicioEvento = dateChooserInicioEvento;
+	}
+
+	public static void setHoraInicioSpinner(JSpinner horaInicioSpinner) {
+		PanelNuevoEvento.horaInicioSpinner = horaInicioSpinner;
+	}
+
+	public static void setHoraFinSpinner(TimeSpinner horaFinSpinner) {
+		PanelNuevoEvento.horaFinSpinner = horaFinSpinner;
+	}
+
+	public static void setDateChooserFinEvento(JDateChooser dateChooserFinEvento) {
+		PanelNuevoEvento.dateChooserFinEvento = dateChooserFinEvento;
 	}
 
 	public PanelNuevoEvento() {
@@ -413,5 +437,24 @@ public class PanelNuevoEvento extends JPanel {
 
 	public static void setAviso(String aviso) {
 		PanelNuevoEvento.aviso.setText(aviso);
+	}
+
+	public static void limpiar() {
+		tituloEventoField.setText("");
+		ITREventocomboBox.setSelectedIndex(0);
+		ModalidadEventocomboBox.setSelectedIndex(0);
+		tipoEventocomboBox.setSelectedIndex(0);
+		
+		tutoresTable.setModel(new ModeloTabla(
+				new Object[][] {
+				},
+				new String[] {
+					"New column", "New column"
+				}
+			));
+		tutoresAgregados.clear();
+		dateChooserFinEvento.setDate(null);
+		dateChooserInicioEvento.setDate(null);
+		localizacionEventoField.setText("");
 	}
 }

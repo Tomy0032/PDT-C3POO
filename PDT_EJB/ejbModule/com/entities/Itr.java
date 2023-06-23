@@ -32,6 +32,10 @@ public class Itr implements Serializable {
 	//bi-directional many-to-one association to Usuario
 	@OneToMany(mappedBy="itr")
 	private List<Usuario> usuarios;
+	
+	//bi-directional many-to-one association to Evento
+	@OneToMany(mappedBy="itr")
+	private List<Evento> eventos;
 
 	public Itr() {
 	}
@@ -82,4 +86,27 @@ public class Itr implements Serializable {
 		return usuario;
 	}
 
+	public List<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
+	}
+	
+	public Evento addEvento(Evento evento) {
+		getEventos().add(evento);
+		evento.setItr(this);
+
+		return evento;
+	}
+
+	public Evento removeEvento(Evento evento) {
+		getEventos().remove(evento);
+		evento.setItr(null);
+
+		return evento;
+	}
+	
+	
 }
