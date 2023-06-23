@@ -15,30 +15,24 @@ import com.exception.ServicesException;
 import com.toedter.calendar.JDateChooser;
 
 import controladores.ControlBotonCrearEvento;
-import controladores.ControlBotonEnviar;
-import datos.OperacionUsuario;
-import interfaz.Registrarse;
+import controladores.Control_longit_min_evento;
+import interfaces.ControlCampo;
+
 import listas.ListaItrs;
 import listas.ListaModalidades;
 import listas.ListaTiposEvento;
 import listas.ListaUsuarios;
 import utilidades.GestionCeldas;
-import utilidades.GestionEncabezadoTabla;
 import utilidades.ModeloTabla;
-import utilidades.Utilidades;
 
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -46,20 +40,18 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import javax.swing.JTextArea;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.Date;
+import java.util.LinkedList;
 
-
+//CREAR LA LISTA DE CONTROLADORES
 public class PanelNuevoEvento extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static JComboBox<String> tipoEventocomboBox;
 	private static JDateChooser dateChooserInicioEvento;
 	private static JSpinner horaInicioSpinner;
@@ -68,7 +60,7 @@ public class PanelNuevoEvento extends JPanel {
 	private static JComboBox<String> ITREventocomboBox;
 	private static JDateChooser dateChooserFinEvento;
 	private static JTextField tituloEventoField;
-	private static JTextField LocalizacionEventoField;
+	private static JTextField localizacionEventoField;
 	private static JTable eventoTutores_table;
 	private JTextField tutorField;
 	private JLabel lblLocalizacionEvento;
@@ -89,8 +81,13 @@ public class PanelNuevoEvento extends JPanel {
 	private JTable tutoresTable;
 	private DefaultTableModel modeloTablaTutores;
 	private ArrayList<String> tutoresAgregados = new ArrayList<String>();
-	private JButton btnCrearEvento;
+	private static JButton btnCrearEvento;
 	private static JLabel aviso;
+	private static LinkedList<ControlCampo> listaCampos;
+
+	public static LinkedList<ControlCampo> getListaCampos() {
+		return listaCampos;
+	}
 
 	public static JTable getEventoTutores_table() {
 		return eventoTutores_table;
@@ -129,7 +126,11 @@ public class PanelNuevoEvento extends JPanel {
 	}
 
 	public static JTextField getLocalizacionEventoField() {
-		return LocalizacionEventoField;
+		return localizacionEventoField;
+	}
+
+	public static JButton getBtnCrearEvento() {
+		return btnCrearEvento;
 	}
 
 	public PanelNuevoEvento() {
@@ -137,7 +138,7 @@ public class PanelNuevoEvento extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				tutorField.setFocusable(false);
-//				tutorField.setFocusable(true);
+				tutorField.setFocusable(true);
 			}
 		});
 		setLayout(null);
@@ -244,10 +245,10 @@ public class PanelNuevoEvento extends JPanel {
 		lblLocalizacionEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblLocalizacionEvento);
 
-		LocalizacionEventoField = new JTextField();
-		LocalizacionEventoField.setBounds(170, 167, 686, 20);
-		LocalizacionEventoField.setColumns(10);
-		add(LocalizacionEventoField);
+		localizacionEventoField = new JTextField();
+		localizacionEventoField.setBounds(170, 167, 686, 20);
+		localizacionEventoField.setColumns(10);
+		add(localizacionEventoField);
 
 		lblTutoresEvento = new JLabel("Tutor/es");
 		lblTutoresEvento.setBounds(10, 200, 150, 14);
@@ -323,11 +324,14 @@ public class PanelNuevoEvento extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int fila = tutoresTable.rowAtPoint(e.getPoint());
-				if(fila >= 0) {
-					modeloTablaTutores.removeRow(fila);
-					tutoresAgregados.remove(fila);
-					for(int i = fila+1; i < tutoresAgregados.size(); i++) {
-						tutoresAgregados.set(i-1, tutoresAgregados.get(i));
+				int columna = tutoresTable.columnAtPoint(e.getPoint());
+				if(columna == 1) {
+					if(fila >= 0) {
+						modeloTablaTutores.removeRow(fila);
+						tutoresAgregados.remove(fila);
+						for(int i = fila+1; i < tutoresAgregados.size(); i++) {
+							tutoresAgregados.set(i-1, tutoresAgregados.get(i));
+						}
 					}
 				}
 			}
@@ -350,6 +354,7 @@ public class PanelNuevoEvento extends JPanel {
 		btnCrearEvento = new JButton("Crear");
 		btnCrearEvento.addActionListener(new ControlBotonCrearEvento());
 		btnCrearEvento.setBounds(170, 402, 85, 21);
+		btnCrearEvento.setEnabled(false);
 		add(btnCrearEvento);
 		
 		aviso = new JLabel("");
@@ -358,7 +363,19 @@ public class PanelNuevoEvento extends JPanel {
 		aviso.setFont(new Font("Tahoma", Font.BOLD, 10));
 		aviso.setBounds(170, 378, 594, 21);
 		add(aviso);
-
+		
+		
+		
+		listaCampos = new LinkedList<ControlCampo>();
+		
+		Control_longit_min_evento controlTitulo = new Control_longit_min_evento(tituloEventoField,3);
+		tituloEventoField.getDocument().addDocumentListener(controlTitulo);
+		
+		Control_longit_min_evento controlLocalizacion = new Control_longit_min_evento(localizacionEventoField,3);
+		localizacionEventoField.getDocument().addDocumentListener(controlLocalizacion);
+				
+		listaCampos.add(controlTitulo);
+		listaCampos.add(controlLocalizacion);
 	}
 
 	protected void buscarTutor(String texto){

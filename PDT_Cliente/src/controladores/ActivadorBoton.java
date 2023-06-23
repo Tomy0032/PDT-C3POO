@@ -11,24 +11,32 @@ public class ActivadorBoton {
 	public ActivadorBoton(LinkedList<ControlCampo> c) {
 		
 		listaControladores = c;
-	}	
+	}
+	
+	protected void habilitarBoton(Boolean habilitador,Cursor cursor) {
+		Registrarse.getBtn_enviar().setEnabled(habilitador);
+		Registrarse.getBtn_enviar().setCursor(cursor);
+		
+	}
+	
+	
 	
 	public void activarBoton() {
 		
 		
-		Registrarse.getBtn_enviar().setEnabled(true);
+		habilitarBoton(true,new Cursor(Cursor.HAND_CURSOR));
 		
 		for (ControlCampo campoAVerificar : listaControladores) {
 								
 			if(! campoAVerificar.isOk()) {
 				
-				Registrarse.getBtn_enviar().setEnabled(false);
-				Registrarse.getBtn_enviar().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				habilitarBoton(false,new Cursor(Cursor.DEFAULT_CURSOR));
+				
 				break;
 			}else {
 				
-				Registrarse.getBtn_enviar().setEnabled(true);
-				Registrarse.getBtn_enviar().setCursor(new Cursor(Cursor.HAND_CURSOR));
+				habilitarBoton(true,new Cursor(Cursor.HAND_CURSOR));
+			
 
 			}
 			

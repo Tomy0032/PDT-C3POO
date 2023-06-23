@@ -1,6 +1,7 @@
 package controladores;
 
 import java.awt.Color;
+import java.util.LinkedList;
 
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -14,7 +15,11 @@ public class Control_longit_min implements DocumentListener,ControlCampo{
 	private int min;
 	private JTextField campo;
 	private boolean ok = false;
-	private ActivadorBoton activador; 
+	protected ActivadorBoton activador;
+	private final String AVISO_ERROR = "Longitud de la entrada o caracter no permitido.",
+			                AVISO_OK = "Los campos marcados con (*) son obligatorios";
+	
+	
 	
 	
 	public Control_longit_min(JTextField campo,int min) {
@@ -23,20 +28,29 @@ public class Control_longit_min implements DocumentListener,ControlCampo{
 		this.campo = campo;
 	}
 	
+	protected void setAviso(String aviso) {
+		Registrarse.setAviso(aviso);
+	}
 	
+	
+	protected void instanciarActivador() {	
+		activador = new ActivadorBoton(Registrarse.getListaCampos());
+	}
+	
+	//
 	
 	public void controlCampo() {
 		
 		if(campo.getText().length() < min) {
 			
 			campo.setForeground(Color.RED);
-			Registrarse.setAviso("Longitud de la entrada o caracter no permitido.");
+			setAviso(AVISO_ERROR);
 			ok = false;
 	
 		}else {
 			
 			campo.setForeground(Color.BLACK);
-			Registrarse.setAviso("Los campos marcados con (*) son obligatorios");
+			setAviso(AVISO_OK);
 			ok = true;
 			
 		}
@@ -52,7 +66,7 @@ public class Control_longit_min implements DocumentListener,ControlCampo{
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
-		activador = new ActivadorBoton(Registrarse.getListaCampos());
+		instanciarActivador();
 
 		controlCampo();
 		activador.activarBoton();
@@ -61,7 +75,7 @@ public class Control_longit_min implements DocumentListener,ControlCampo{
 	@Override
 	public void removeUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
-		activador = new ActivadorBoton(Registrarse.getListaCampos());
+		instanciarActivador();
 
 		controlCampo();
 		activador.activarBoton();
