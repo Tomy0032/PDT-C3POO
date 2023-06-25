@@ -294,7 +294,7 @@ public class Registrarse extends JFrame {
 		departam_comboBox.setBounds(217, 231, 130, 22);
 		departam_comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		ComboBoxModel<String> modeloDepartamentos = new DefaultComboBoxModel<>(ListaDepartamentos.getListaString());
-		departam_comboBox.setModel(modeloDepartamentos);		
+		departam_comboBox.setModel(modeloDepartamentos);
 		panelFondo.add(departam_comboBox);
 
 		localidad_comboBox = new JComboBox<String>();

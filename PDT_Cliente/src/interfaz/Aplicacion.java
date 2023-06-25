@@ -13,6 +13,7 @@ import com.exception.ServicesException;
 import com.services.UsuarioBeanRemote;
 
 import componentes.PanelListaSolicitudesDeConstancias;
+import componentes.PanelEditarUsuario;
 import componentes.PanelListadoEventos;
 import componentes.PanelNuevaConstancia;
 import componentes.PanelNuevoEvento;
@@ -70,6 +71,7 @@ public class Aplicacion extends JFrame implements MouseListener{
 	private static JPanel card_container_panel;
 	private static JLabel lblUserName;
 	private JLabel lbl_estado;
+	private JPanel panel_editar_usuario;
 	private static JLabel lbl_generacion;
 	private static JComboBox<String> combo_filtro_tipoUsu;
 	private static JComboBox<String> combo_filtro_itr;
@@ -141,7 +143,7 @@ public class Aplicacion extends JFrame implements MouseListener{
 		panel_usuarios.setForeground(new Color(0, 0, 0));
 		card_container_panel.add(panel_usuarios, "Panel de Usuarios");
 		panel_usuarios.setLayout(null);
-		
+				
 		scrollPaneTabla = new JScrollPane();
 		scrollPaneTabla.setBounds(60, 146, 780, 400);
 		panel_usuarios.add(scrollPaneTabla);
@@ -254,8 +256,9 @@ public class Aplicacion extends JFrame implements MouseListener{
 		PanelListadoEventos panelListarEventos = new PanelListadoEventos();
 		tabbedPaneEventos.addTab("Listar Eventos", panelListarEventos);
 
-		
-		
+		PanelEditarUsuario panel_editar_usuario = new PanelEditarUsuario();
+		card_container_panel.add(panel_editar_usuario, "Panel Editar usuario");
+
 		
 		panel_constancias = new JPanel();
 		panel_constancias.setLayout(new BorderLayout());
@@ -267,8 +270,8 @@ public class Aplicacion extends JFrame implements MouseListener{
 		PanelNuevaConstancia nueva_constancia = new PanelNuevaConstancia();
 		tabbedPaneConstancia.add("Pedir Constancia",nueva_constancia);
 		
-		PanelListaSolicitudesDeConstancias listaSolicitudes = new PanelListaSolicitudesDeConstancias();
-		tabbedPaneConstancia.add("Lista solicitudes constancias",listaSolicitudes);
+//		PanelListaSolicitudesDeConstancias listaSolicitudes = new PanelListaSolicitudesDeConstancias();
+//		tabbedPaneConstancia.add("Lista solicitudes constancias",listaSolicitudes);
 		
 		panel_reclamos = new JPanel();
 		panel_reclamos.setBackground(new Color(64, 0, 64));

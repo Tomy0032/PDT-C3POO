@@ -56,9 +56,7 @@ public class ControlBotonEnviar implements ActionListener {
 			else {
 				nombreUsuario = Registrarse.getMail_instit_field().getText().replaceAll("@utec.edu.uy", "");
 			}
-			
-			System.out.println(nombreUsuario);
-			
+						
 			Control_bd_nombreUsuario bd_nombreUsuario = new Control_bd_nombreUsuario(nombreUsuario);
 			try {
 				bd_nombreUsuario.controlCampo();

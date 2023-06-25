@@ -1,6 +1,8 @@
 package controladores;
 import java.awt.Cursor;
 import java.util.LinkedList;
+
+import componentes.PanelEditarUsuario;
 import interfaces.ControlCampo;
 import interfaz.Registrarse;
 
@@ -14,9 +16,13 @@ public class ActivadorBoton {
 	}
 	
 	protected void habilitarBoton(Boolean habilitador,Cursor cursor) {
-		Registrarse.getBtn_enviar().setEnabled(habilitador);
-		Registrarse.getBtn_enviar().setCursor(cursor);
-		
+		try {
+			Registrarse.getBtn_enviar().setEnabled(habilitador);
+			Registrarse.getBtn_enviar().setCursor(cursor);
+		}catch(Exception e) {
+			PanelEditarUsuario.getBtn_reg_siguiente().setEnabled(habilitador);
+			PanelEditarUsuario.getBtn_reg_siguiente().setCursor(cursor);
+		}
 	}
 	
 	

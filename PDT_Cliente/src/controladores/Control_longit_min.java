@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import componentes.PanelEditarUsuario;
 import interfaces.ControlCampo;
 import interfaz.Registrarse;
 
@@ -29,12 +30,21 @@ public class Control_longit_min implements DocumentListener,ControlCampo{
 	}
 	
 	protected void setAviso(String aviso) {
-		Registrarse.setAviso(aviso);
+		try{
+			Registrarse.setAviso(aviso);
+		}catch(Exception e) {
+			PanelEditarUsuario.setAviso(aviso);
+		}
+		
 	}
 	
 	
 	protected void instanciarActivador() {	
-		activador = new ActivadorBoton(Registrarse.getListaCampos());
+		if(!(Registrarse.getListaCampos()==null)) {
+			activador = new ActivadorBoton(Registrarse.getListaCampos());
+		}else {
+			activador = new ActivadorBoton(PanelEditarUsuario.getListaCampos());
+		}
 	}
 	
 	//

@@ -1,5 +1,6 @@
 package controladores;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -26,14 +27,8 @@ public class Control_username_aplicacion implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		try {
-			Registrarse abreRegistrarse = new Registrarse();
-		
-		} catch (NamingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		CardLayout c = (CardLayout)Aplicacion.getCard_container_panel().getLayout();
+		c.show(Aplicacion.getCard_container_panel(), "Panel Editar usuario");
 	}
 
 	@Override
