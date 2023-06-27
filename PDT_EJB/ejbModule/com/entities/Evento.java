@@ -37,6 +37,17 @@ public class Evento implements Serializable {
 	@Column(nullable=false, length=20)
 	private String nombre;
 	
+	@Column(length=50)
+	private String localizacion;
+	
+	public String getLocalizacion() {
+		return localizacion;
+	}
+
+	public void setLocalizacion(String localizacion) {
+		this.localizacion = localizacion;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="ID_MODALIDAD", nullable=false)
 	private Modalidad modalidad;
@@ -78,7 +89,7 @@ public class Evento implements Serializable {
 	private List<Responsabilidad> responsabilidades;
 	
 	//bi-directional many-to-many association to Usuario
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 		name = "evento_tutores", 
 		joinColumns = @JoinColumn(name = "ID_EVENTO"),

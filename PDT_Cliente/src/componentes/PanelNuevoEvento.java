@@ -146,6 +146,7 @@ public class PanelNuevoEvento extends JPanel {
 	}
 
 	public PanelNuevoEvento() {
+		setBackground(Color.WHITE);
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -157,47 +158,47 @@ public class PanelNuevoEvento extends JPanel {
 
 		
 		lblNewLabel = new JLabel("T\u00EDtulo del evento");
-		lblNewLabel.setBounds(10, 11, 150, 14);
+		lblNewLabel.setBounds(10, 37, 150, 14);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblNewLabel);
 
 		tituloEventoField = new JTextField();
-		tituloEventoField.setBounds(170, 10, 686, 20);
+		tituloEventoField.setBounds(170, 36, 686, 20);
 		add(tituloEventoField);
 		tituloEventoField.setColumns(10);
 
 		lblTpoDeEvento = new JLabel("Tipo de evento");
-		lblTpoDeEvento.setBounds(10, 47, 150, 14);
+		lblTpoDeEvento.setBounds(10, 73, 150, 14);
 		lblTpoDeEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblTpoDeEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblTpoDeEvento);
 
 		tipoEventocomboBox = new JComboBox<String>();
-		tipoEventocomboBox.setBounds(170, 43, 227, 22);
+		tipoEventocomboBox.setBounds(170, 69, 227, 22);
 		tipoEventocomboBox.setFont(new Font("Tahoma", Font.BOLD, 12));
 		ComboBoxModel<String> modeloTipoEvento = new DefaultComboBoxModel<>(ListaTiposEvento.getListaString());
 		tipoEventocomboBox.setModel(modeloTipoEvento);
 		add(tipoEventocomboBox);
 
 		lblFechaDelEvento = new JLabel("Fecha Inicio");
-		lblFechaDelEvento.setBounds(10, 82, 150, 14);
+		lblFechaDelEvento.setBounds(10, 108, 150, 14);
 		lblFechaDelEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblFechaDelEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblFechaDelEvento);
 
 		dateChooserInicioEvento = new JDateChooser();
-		dateChooserInicioEvento.setBounds(170, 76, 121, 20);
+		dateChooserInicioEvento.setBounds(170, 102, 121, 20);
 		add(dateChooserInicioEvento);
 
 		lblHoraInicioEvento = new JLabel("Hora");
-		lblHoraInicioEvento.setBounds(288, 79, 37, 14);
+		lblHoraInicioEvento.setBounds(288, 105, 37, 14);
 		lblHoraInicioEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblHoraInicioEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblHoraInicioEvento);
 
 		horaInicioSpinner = new TimeSpinner();
-		horaInicioSpinner.setBounds(335, 76, 62, 20);
+		horaInicioSpinner.setBounds(335, 102, 62, 20);
 		JSpinner.DateEditor editorHoraInicio = new JSpinner.DateEditor(horaInicioSpinner, "HH:mm");
 		horaInicioSpinner.setEditor(editorHoraInicio);
 		SpinnerModel modeloHoraInicio = new SpinnerDateModel();
@@ -205,23 +206,23 @@ public class PanelNuevoEvento extends JPanel {
 		add(horaInicioSpinner);
 
 		lblFinalizacinFecha = new JLabel("Fecha Finalizaci\u00F3n ");
-		lblFinalizacinFecha.setBounds(10, 113, 150, 14);
+		lblFinalizacinFecha.setBounds(10, 139, 150, 14);
 		lblFinalizacinFecha.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblFinalizacinFecha.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblFinalizacinFecha);
 
 		dateChooserFinEvento = new JDateChooser();
-		dateChooserFinEvento.setBounds(170, 107, 121, 20);
+		dateChooserFinEvento.setBounds(170, 133, 121, 20);
 		add(dateChooserFinEvento);
 
 		lblHoraFinEvento = new JLabel("Hora");
-		lblHoraFinEvento.setBounds(288, 111, 37, 14);
+		lblHoraFinEvento.setBounds(288, 137, 37, 14);
 		lblHoraFinEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblHoraFinEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblHoraFinEvento);
 
 		horaFinSpinner = new TimeSpinner();
-		horaFinSpinner.setBounds(335, 107, 62, 20);
+		horaFinSpinner.setBounds(335, 133, 62, 20);
 		JSpinner.DateEditor editorHoraFin = new JSpinner.DateEditor(horaFinSpinner, "HH:mm");
 		horaFinSpinner.setEditor(editorHoraFin);
 		SpinnerModel modeloHoraFin = new SpinnerDateModel();
@@ -229,44 +230,44 @@ public class PanelNuevoEvento extends JPanel {
 		add(horaFinSpinner);
 
 		lblModalidad = new JLabel("Modalidad");
-		lblModalidad.setBounds(10, 141, 150, 14);
+		lblModalidad.setBounds(10, 167, 150, 14);
 		lblModalidad.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblModalidad.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblModalidad);
 
 		ModalidadEventocomboBox = new JComboBox<String>();
-		ModalidadEventocomboBox.setBounds(170, 137, 121, 22);
+		ModalidadEventocomboBox.setBounds(170, 163, 121, 22);
 		ModalidadEventocomboBox.setFont(new Font("Tahoma", Font.BOLD, 12));
 		ComboBoxModel<String> modeloModalidad = new DefaultComboBoxModel<>(ListaModalidades.getListaString());
 		ModalidadEventocomboBox.setModel(modeloModalidad);
 		add(ModalidadEventocomboBox);
 
 		lblEventoITR = new JLabel("ITR");
-		lblEventoITR.setBounds(651, 142, 27, 14);
+		lblEventoITR.setBounds(651, 168, 27, 14);
 		lblEventoITR.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblEventoITR.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblEventoITR);
 
 		ITREventocomboBox = new JComboBox<String>();
-		ITREventocomboBox.setBounds(688, 138, 131, 22);
+		ITREventocomboBox.setBounds(688, 164, 131, 22);
 		ITREventocomboBox.setFont(new Font("Tahoma", Font.BOLD, 12));
 		ComboBoxModel<String> modeloItr = new DefaultComboBoxModel<>(ListaItrs.getListaString());
 		ITREventocomboBox.setModel(modeloItr);
 		add(ITREventocomboBox);
 
 		lblLocalizacionEvento = new JLabel("Localizaci\u00F3n");
-		lblLocalizacionEvento.setBounds(10, 168, 150, 14);
+		lblLocalizacionEvento.setBounds(10, 194, 150, 14);
 		lblLocalizacionEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblLocalizacionEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblLocalizacionEvento);
 
 		localizacionEventoField = new JTextField();
-		localizacionEventoField.setBounds(170, 167, 686, 20);
+		localizacionEventoField.setBounds(170, 193, 686, 20);
 		localizacionEventoField.setColumns(10);
 		add(localizacionEventoField);
 
 		lblTutoresEvento = new JLabel("Tutor/es");
-		lblTutoresEvento.setBounds(10, 200, 150, 14);
+		lblTutoresEvento.setBounds(10, 226, 150, 14);
 		lblTutoresEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblTutoresEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblTutoresEvento);
@@ -281,7 +282,7 @@ public class PanelNuevoEvento extends JPanel {
 		});
 
 
-		tutorField.setBounds(170, 199, 344, 19);
+		tutorField.setBounds(170, 225, 344, 19);
 		tutorField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -308,7 +309,7 @@ public class PanelNuevoEvento extends JPanel {
 		}
 		
 		tutoresScrollPane = new JScrollPane();
-		tutoresScrollPane.setBounds(170, 217, 344, count);
+		tutoresScrollPane.setBounds(170, 243, 344, count);
 		add(tutoresScrollPane);
 		tutoresScrollPane.setVisible(false);
 		
@@ -363,12 +364,12 @@ public class PanelNuevoEvento extends JPanel {
 		TableColumnModel columnModel = tutoresTable.getColumnModel();
 		columnModel.getColumn(1).setMaxWidth(25);
 		columnModel.getColumn(1).setCellRenderer(new GestionCeldas("icono"));
-		tutoresTable.setBounds(170, 228, 344, 140);
+		tutoresTable.setBounds(170, 254, 344, 140);
 		add(tutoresTable);
 		
 		btnCrearEvento = new JButton("Crear");
 		btnCrearEvento.addActionListener(new ControlBotonCrearEvento());
-		btnCrearEvento.setBounds(170, 402, 110, 25);
+		btnCrearEvento.setBounds(170, 428, 110, 25);
 		btnCrearEvento.setFont(new Font("Tahoma",Font.BOLD,12));
 		btnCrearEvento.setEnabled(false);
 		add(btnCrearEvento);
@@ -377,7 +378,7 @@ public class PanelNuevoEvento extends JPanel {
 		aviso.setHorizontalAlignment(SwingConstants.LEFT);
 		aviso.setForeground(Color.RED);
 		aviso.setFont(new Font("Tahoma", Font.BOLD, 10));
-		aviso.setBounds(170, 378, 594, 21);
+		aviso.setBounds(170, 404, 594, 21);
 		add(aviso);
 		
 		

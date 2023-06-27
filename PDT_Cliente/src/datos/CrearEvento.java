@@ -38,6 +38,8 @@ import com.services.TipoTutorBeanRemote;
 import com.services.TipoEventoBeanRemote;
 import com.services.UsuarioBeanRemote;
 
+import componentes.PanelListadoEventos;
+import listas.ListaEventos;
 import listas.ListaUsuarios;
 import mail.EmailSenderService;
 
@@ -83,6 +85,8 @@ public class CrearEvento {
 			Itr itr = itrBean.findAll(datos[7]).get(0);
 			evento.setItr(itr);
 			
+			evento.setLocalizacion(datos[8]);
+			
 			List<Usuario> tutoresList = new LinkedList<Usuario>();
 			
 			for(String s : tutores) {
@@ -98,8 +102,12 @@ public class CrearEvento {
 			evento.setTutores(tutoresList);
 			eventoBean.create(evento);	
 			
-			JOptionPane.showMessageDialog(new JFrame(), "Evento creado correctamente");
+			ListaEventos.cargarLista();
 			ListaUsuarios.cargarLista();
+			PanelListadoEventos.construirTabla(ListaEventos.getListaStringListado(),PanelListadoEventos.getTitulos());
+			
+			JOptionPane.showMessageDialog(new JFrame(), "Evento creado correctamente");
+			
 			return true;
 			
 		} catch (ServicesException | ParseException e) {

@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -27,7 +28,10 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
+import com.entities.Evento;
+import com.entities.Usuario;
 import com.exception.ServicesException;
 import com.toedter.calendar.JDateChooser;
 
@@ -70,12 +74,24 @@ public class PanelFichaEvento extends JPanel{
 	private ArrayList<String> arrayTutores = new ArrayList<String>();
 	private DefaultListModel modeloTutores;
 	private static JTable tutoresTable;
-	private DefaultTableModel modeloTablaTutores;
+	private static DefaultTableModel modeloTablaTutores;
 	private static ArrayList<String> tutoresAgregados = new ArrayList<String>();
 	private static JLabel aviso;
 	private static LinkedList<ControlCampo> listaCampos;
 	private JLabel titulo;
 	private JTable tableEstudiantes;
+	private static JTextField fechaFinField;
+	private static DefaultComboBoxModel<String> modeloModalidad;
+	private static DefaultComboBoxModel<String> modeloItr;
+	private static DefaultComboBoxModel<String> modeloTipoEvento;
+	private static JTextField tipoEventoField;
+	private static JTextField fechaInicioField;
+	private static JTextField horaInicioField;
+	private static JTextField horaFinField;
+	private static JTextField modalidadField;
+	private static JTextField itrField;
+	private static JTable tutoresTable2;
+	private static DefaultTableModel modeloTablaTutores2;
 
 	public static LinkedList<ControlCampo> getListaCampos() {
 		return listaCampos;
@@ -133,6 +149,206 @@ public class PanelFichaEvento extends JPanel{
 		PanelFichaEvento.dateChooserInicioEvento = dateChooserInicioEvento;
 	}
 
+	public JTextField getTutorField() {
+		return tutorField;
+	}
+
+	public void setTutorField(JTextField tutorField) {
+		this.tutorField = tutorField;
+	}
+
+	public JLabel getLblLocalizacionEvento() {
+		return lblLocalizacionEvento;
+	}
+
+	public void setLblLocalizacionEvento(JLabel lblLocalizacionEvento) {
+		this.lblLocalizacionEvento = lblLocalizacionEvento;
+	}
+
+	public JLabel getLblModalidad() {
+		return lblModalidad;
+	}
+
+	public void setLblModalidad(JLabel lblModalidad) {
+		this.lblModalidad = lblModalidad;
+	}
+
+	public JLabel getLblNewLabel() {
+		return lblNewLabel;
+	}
+
+	public void setLblNewLabel(JLabel lblNewLabel) {
+		this.lblNewLabel = lblNewLabel;
+	}
+
+	public JLabel getLblTpoDeEvento() {
+		return lblTpoDeEvento;
+	}
+
+	public void setLblTpoDeEvento(JLabel lblTpoDeEvento) {
+		this.lblTpoDeEvento = lblTpoDeEvento;
+	}
+
+	public JLabel getLblFechaDelEvento() {
+		return lblFechaDelEvento;
+	}
+
+	public void setLblFechaDelEvento(JLabel lblFechaDelEvento) {
+		this.lblFechaDelEvento = lblFechaDelEvento;
+	}
+
+	public JLabel getLblHoraInicioEvento() {
+		return lblHoraInicioEvento;
+	}
+
+	public void setLblHoraInicioEvento(JLabel lblHoraInicioEvento) {
+		this.lblHoraInicioEvento = lblHoraInicioEvento;
+	}
+
+	public JLabel getLblFinalizacinFecha() {
+		return lblFinalizacinFecha;
+	}
+
+	public void setLblFinalizacinFecha(JLabel lblFinalizacinFecha) {
+		this.lblFinalizacinFecha = lblFinalizacinFecha;
+	}
+
+	public JLabel getLblHoraFinEvento() {
+		return lblHoraFinEvento;
+	}
+
+	public void setLblHoraFinEvento(JLabel lblHoraFinEvento) {
+		this.lblHoraFinEvento = lblHoraFinEvento;
+	}
+
+	public JLabel getLblEventoITR() {
+		return lblEventoITR;
+	}
+
+	public void setLblEventoITR(JLabel lblEventoITR) {
+		this.lblEventoITR = lblEventoITR;
+	}
+
+	public JLabel getLblTutoresEvento() {
+		return lblTutoresEvento;
+	}
+
+	public void setLblTutoresEvento(JLabel lblTutoresEvento) {
+		this.lblTutoresEvento = lblTutoresEvento;
+	}
+
+	public JList getTutoresList() {
+		return tutoresList;
+	}
+
+	public void setTutoresList(JList tutoresList) {
+		this.tutoresList = tutoresList;
+	}
+
+	public JScrollPane getTutoresScrollPane() {
+		return tutoresScrollPane;
+	}
+
+	public void setTutoresScrollPane(JScrollPane tutoresScrollPane) {
+		this.tutoresScrollPane = tutoresScrollPane;
+	}
+
+	public String[] getListaTutores() {
+		return listaTutores;
+	}
+
+	public void setListaTutores(String[] listaTutores) {
+		this.listaTutores = listaTutores;
+	}
+
+	public ArrayList<String> getArrayTutores() {
+		return arrayTutores;
+	}
+
+	public void setArrayTutores(ArrayList<String> arrayTutores) {
+		this.arrayTutores = arrayTutores;
+	}
+
+	public DefaultListModel getModeloTutores() {
+		return modeloTutores;
+	}
+
+	public void setModeloTutores(DefaultListModel modeloTutores) {
+		this.modeloTutores = modeloTutores;
+	}
+
+	public static JTable getTutoresTable() {
+		return tutoresTable;
+	}
+
+	public static void setTutoresTable(JTable tutoresTable) {
+		PanelFichaEvento.tutoresTable = tutoresTable;
+	}
+
+	public DefaultTableModel getModeloTablaTutores() {
+		return modeloTablaTutores;
+	}
+
+	public void setModeloTablaTutores(DefaultTableModel modeloTablaTutores) {
+		this.modeloTablaTutores = modeloTablaTutores;
+	}
+
+	public static JLabel getAviso() {
+		return aviso;
+	}
+
+	public static void setAviso(JLabel aviso) {
+		PanelFichaEvento.aviso = aviso;
+	}
+
+	public JLabel getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(JLabel titulo) {
+		this.titulo = titulo;
+	}
+
+	public JTable getTableEstudiantes() {
+		return tableEstudiantes;
+	}
+
+	public void setTableEstudiantes(JTable tableEstudiantes) {
+		this.tableEstudiantes = tableEstudiantes;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public static void setTipoEventocomboBox(JComboBox<String> tipoEventocomboBox) {
+		PanelFichaEvento.tipoEventocomboBox = tipoEventocomboBox;
+	}
+
+	public static void setModalidadEventocomboBox(JComboBox<String> modalidadEventocomboBox) {
+		ModalidadEventocomboBox = modalidadEventocomboBox;
+	}
+
+	public static void setITREventocomboBox(JComboBox<String> iTREventocomboBox) {
+		ITREventocomboBox = iTREventocomboBox;
+	}
+
+	public static void setTituloEventoField(JTextField tituloEventoField) {
+		PanelFichaEvento.tituloEventoField = tituloEventoField;
+	}
+
+	public static void setLocalizacionEventoField(JTextField localizacionEventoField) {
+		PanelFichaEvento.localizacionEventoField = localizacionEventoField;
+	}
+
+	public static void setEventoTutores_table(JTable eventoTutores_table) {
+		PanelFichaEvento.eventoTutores_table = eventoTutores_table;
+	}
+
+	public static void setListaCampos(LinkedList<ControlCampo> listaCampos) {
+		PanelFichaEvento.listaCampos = listaCampos;
+	}
+
 	public static void setHoraInicioSpinner(JSpinner horaInicioSpinner) {
 		PanelFichaEvento.horaInicioSpinner = horaInicioSpinner;
 	}
@@ -157,47 +373,51 @@ public class PanelFichaEvento extends JPanel{
 
 		
 		lblNewLabel = new JLabel("T\u00EDtulo del evento");
-		lblNewLabel.setBounds(10, 34, 113, 14);
+		lblNewLabel.setBounds(10, 33, 133, 14);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblNewLabel);
 
 		tituloEventoField = new JTextField();
-		tituloEventoField.setBounds(133, 33, 413, 20);
+		tituloEventoField.setEditable(false);
+		tituloEventoField.setBounds(153, 32, 344, 20);
 		add(tituloEventoField);
 		tituloEventoField.setColumns(10);
 
 		lblTpoDeEvento = new JLabel("Tipo de evento");
-		lblTpoDeEvento.setBounds(10, 70, 113, 14);
+		lblTpoDeEvento.setBounds(10, 70, 133, 14);
 		lblTpoDeEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblTpoDeEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblTpoDeEvento);
 
 		tipoEventocomboBox = new JComboBox<String>();
-		tipoEventocomboBox.setBounds(133, 66, 227, 22);
+		tipoEventocomboBox.setVisible(false);
+		tipoEventocomboBox.setBounds(153, 65, 227, 22);
 		tipoEventocomboBox.setFont(new Font("Tahoma", Font.BOLD, 12));
-		ComboBoxModel<String> modeloTipoEvento = new DefaultComboBoxModel<>(ListaTiposEvento.getListaString());
+		modeloTipoEvento = new DefaultComboBoxModel<>(ListaTiposEvento.getListaString());
 		tipoEventocomboBox.setModel(modeloTipoEvento);
 		add(tipoEventocomboBox);
 
 		lblFechaDelEvento = new JLabel("Fecha Inicio");
-		lblFechaDelEvento.setBounds(10, 105, 113, 14);
+		lblFechaDelEvento.setBounds(10, 105, 133, 14);
 		lblFechaDelEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblFechaDelEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblFechaDelEvento);
 
 		dateChooserInicioEvento = new JDateChooser();
-		dateChooserInicioEvento.setBounds(133, 99, 121, 20);
+		dateChooserInicioEvento.setVisible(false);
+		dateChooserInicioEvento.setBounds(153, 98, 121, 20);
 		add(dateChooserInicioEvento);
 
 		lblHoraInicioEvento = new JLabel("Hora");
-		lblHoraInicioEvento.setBounds(251, 102, 37, 14);
+		lblHoraInicioEvento.setBounds(308, 100, 37, 14);
 		lblHoraInicioEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblHoraInicioEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblHoraInicioEvento);
 
 		horaInicioSpinner = new TimeSpinner();
-		horaInicioSpinner.setBounds(298, 99, 62, 20);
+		horaInicioSpinner.setVisible(false);
+		horaInicioSpinner.setBounds(355, 97, 62, 20);
 		SpinnerDateModel modeloHora = new SpinnerDateModel();
 		JSpinner.DateEditor editorHora = new JSpinner.DateEditor(horaInicioSpinner, "HH:mm");
 		horaInicioSpinner.setEditor(editorHora);
@@ -205,70 +425,76 @@ public class PanelFichaEvento extends JPanel{
 		add(horaInicioSpinner);
 
 		lblFinalizacinFecha = new JLabel("Fecha Finalizaci\u00F3n ");
-		lblFinalizacinFecha.setBounds(10, 136, 113, 14);
+		lblFinalizacinFecha.setBounds(10, 136, 133, 14);
 		lblFinalizacinFecha.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblFinalizacinFecha.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblFinalizacinFecha);
 
 		dateChooserFinEvento = new JDateChooser();
-		dateChooserFinEvento.setBounds(133, 130, 121, 20);
+		dateChooserFinEvento.setVisible(false);
+		dateChooserFinEvento.setBounds(153, 129, 121, 20);
 		add(dateChooserFinEvento);
 
 		lblHoraFinEvento = new JLabel("Hora");
-		lblHoraFinEvento.setBounds(251, 134, 37, 14);
+		lblHoraFinEvento.setBounds(308, 132, 37, 14);
 		lblHoraFinEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblHoraFinEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblHoraFinEvento);
 
 		horaFinSpinner = new TimeSpinner();
-		horaFinSpinner.setBounds(298, 130, 62, 20);
+		horaFinSpinner.setVisible(false);
+		horaFinSpinner.setBounds(355, 128, 62, 20);
 		horaFinSpinner.setFormat("HH:mm");
 		add(horaFinSpinner);
 
 		lblModalidad = new JLabel("Modalidad");
-		lblModalidad.setBounds(10, 164, 113, 14);
+		lblModalidad.setBounds(10, 164, 133, 14);
 		lblModalidad.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblModalidad.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblModalidad);
 
 		ModalidadEventocomboBox = new JComboBox<String>();
-		ModalidadEventocomboBox.setBounds(133, 160, 121, 22);
+		ModalidadEventocomboBox.setVisible(false);
+		ModalidadEventocomboBox.setBounds(153, 159, 121, 22);
 		ModalidadEventocomboBox.setFont(new Font("Tahoma", Font.BOLD, 12));
-		ComboBoxModel<String> modeloModalidad = new DefaultComboBoxModel<>(ListaModalidades.getListaString());
+		modeloModalidad = new DefaultComboBoxModel<>(ListaModalidades.getListaString());
 		ModalidadEventocomboBox.setModel(modeloModalidad);
 		add(ModalidadEventocomboBox);
 
 		lblEventoITR = new JLabel("ITR");
-		lblEventoITR.setBounds(298, 164, 27, 14);
+		lblEventoITR.setBounds(318, 163, 27, 14);
 		lblEventoITR.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblEventoITR.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblEventoITR);
 
 		ITREventocomboBox = new JComboBox<String>();
-		ITREventocomboBox.setBounds(335, 160, 131, 22);
+		ITREventocomboBox.setVisible(false);
+		ITREventocomboBox.setBounds(355, 159, 131, 22);
 		ITREventocomboBox.setFont(new Font("Tahoma", Font.BOLD, 12));
-		ComboBoxModel<String> modeloItr = new DefaultComboBoxModel<>(ListaItrs.getListaString());
+		modeloItr = new DefaultComboBoxModel<>(ListaItrs.getListaString());
 		ITREventocomboBox.setModel(modeloItr);
 		add(ITREventocomboBox);
 
 		lblLocalizacionEvento = new JLabel("Localizaci\u00F3n");
-		lblLocalizacionEvento.setBounds(10, 191, 113, 14);
+		lblLocalizacionEvento.setBounds(10, 191, 133, 14);
 		lblLocalizacionEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblLocalizacionEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblLocalizacionEvento);
 
 		localizacionEventoField = new JTextField();
-		localizacionEventoField.setBounds(133, 190, 413, 20);
+		localizacionEventoField.setEditable(false);
+		localizacionEventoField.setBounds(153, 189, 344, 20);
 		localizacionEventoField.setColumns(10);
 		add(localizacionEventoField);
 
 		lblTutoresEvento = new JLabel("Tutor/es");
-		lblTutoresEvento.setBounds(51, 216, 72, 14);
+		lblTutoresEvento.setBounds(51, 216, 92, 14);
 		lblTutoresEvento.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblTutoresEvento.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblTutoresEvento);
 		
 		tutorField = new JTextField();
+		tutorField.setVisible(false);
 		tutorField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -278,7 +504,7 @@ public class PanelFichaEvento extends JPanel{
 		});
 
 
-		tutorField.setBounds(133, 215, 344, 19);
+		tutorField.setBounds(153, 214, 344, 20);
 		tutorField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -305,7 +531,7 @@ public class PanelFichaEvento extends JPanel{
 		}
 		
 		tutoresScrollPane = new JScrollPane();
-		tutoresScrollPane.setBounds(188, 265, 326, -48);
+		tutoresScrollPane.setBounds(153, 288, 344, -54);
 		add(tutoresScrollPane);
 		tutoresScrollPane.setVisible(false);
 		
@@ -332,6 +558,7 @@ public class PanelFichaEvento extends JPanel{
 		tutoresList.setModel(modeloTutores);
 		
 		tutoresTable = new JTable();
+		tutoresTable.setVisible(false);
 		tutoresTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -360,7 +587,7 @@ public class PanelFichaEvento extends JPanel{
 		TableColumnModel columnModel = tutoresTable.getColumnModel();
 		columnModel.getColumn(1).setMaxWidth(25);
 		columnModel.getColumn(1).setCellRenderer(new GestionCeldas("icono"));
-		tutoresTable.setBounds(133, 244, 344, 72);
+		tutoresTable.setBounds(153, 213, 344, 20);
 		add(tutoresTable);
 		
 		aviso = new JLabel("");
@@ -395,6 +622,53 @@ public class PanelFichaEvento extends JPanel{
 		tableEstudiantes.setRowHeight(25);
 		tableEstudiantes.setBounds(638, 30, 344, 177);
 		add(tableEstudiantes);
+		
+		tipoEventoField = new JTextField();
+		tipoEventoField.setEditable(false);
+		tipoEventoField.setBounds(153, 65, 227, 22);
+		add(tipoEventoField);
+		tipoEventoField.setColumns(10);
+		
+		fechaInicioField = new JTextField();
+		fechaInicioField.setEditable(false);
+		fechaInicioField.setBounds(153, 98, 121, 20);
+		add(fechaInicioField);
+		fechaInicioField.setColumns(10);
+		
+		fechaFinField = new JTextField();
+		fechaFinField.setEditable(false);
+		fechaFinField.setBounds(153, 129, 121, 20);
+		add(fechaFinField);
+		fechaFinField.setColumns(10);
+		
+		horaInicioField = new JTextField();
+		horaInicioField.setEditable(false);
+		horaInicioField.setBounds(355, 97, 62, 20);
+		add(horaInicioField);
+		horaInicioField.setColumns(10);
+		
+		horaFinField = new JTextField();
+		horaFinField.setEditable(false);
+		horaFinField.setBounds(355, 128, 62, 20);
+		add(horaFinField);
+		
+		modalidadField = new JTextField();
+		modalidadField.setEditable(false);
+		modalidadField.setBounds(153, 159, 121, 22);
+		add(modalidadField);
+		modalidadField.setColumns(10);
+		
+		itrField = new JTextField();
+		itrField.setEditable(false);
+		itrField.setBounds(355, 159, 131, 22);
+		add(itrField);
+		itrField.setColumns(10);
+		
+		tutoresTable2 = new JTable();
+		tutoresTable2.setRowHeight(25);
+		tutoresTable2.setBounds(153, 214, 344, 77);
+		add(tutoresTable2);
+		
 		localizacionEventoField.getDocument().addDocumentListener(controlLocalizacion);
 				
 		listaCampos.add(controlTitulo);
@@ -455,5 +729,81 @@ public class PanelFichaEvento extends JPanel{
 		dateChooserFinEvento.setDate(null);
 		dateChooserInicioEvento.setDate(null);
 		localizacionEventoField.setText("");
+	}
+
+	public static void cargarDatos(Evento evento) {
+		
+		tituloEventoField.setText(evento.getNombre());
+		
+		int select = 0;
+		for(int i = 0; i < ListaTiposEvento.getListaString().length; i ++) {
+			if(ListaTiposEvento.getListaString()[i].equals(evento.getTipo().getNombre())) {
+				select=i;
+			}
+		}
+		modeloTipoEvento.setSelectedItem(modeloTipoEvento.getElementAt(select));
+		tipoEventoField.setText(evento.getTipo().getNombre());
+		
+		for(int i = 0; i < ListaModalidades.getListaString().length; i ++) {
+			if(ListaModalidades.getListaString()[i].equals(evento.getModalidad().getNombre())) {
+				select=i;
+			}
+		}
+		modeloModalidad.setSelectedItem(modeloModalidad.getElementAt(select));
+		
+		for(int i = 0; i < ListaItrs.getListaString().length; i ++) {
+			if(ListaItrs.getListaString()[i].equals(evento.getItr().getNombre())) {
+				select=i;
+			}
+		}
+		modeloItr.setSelectedItem(modeloItr.getElementAt(select));
+		
+		localizacionEventoField.setText(evento.getLocalizacion());
+		
+		dateChooserInicioEvento.setDate(evento.getFechaHoraInicio());
+		dateChooserFinEvento.setDate(evento.getFechaHoraFinal());
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("d MMM y");
+		
+        String dateInicio = sdf.format(evento.getFechaHoraInicio());
+        String dateFin = sdf.format(evento.getFechaHoraFinal());
+        
+        sdf = new SimpleDateFormat("HH:mm");
+        
+        String horaInicio = sdf.format(evento.getFechaHoraInicio());
+        String horaFin = sdf.format(evento.getFechaHoraFinal());
+        
+		fechaInicioField.setText(dateInicio);
+		fechaFinField.setText(dateFin);
+		horaInicioField.setText(horaInicio);
+		horaFinField.setText(horaFin);
+		
+		modalidadField.setText(evento.getModalidad().getNombre());
+		itrField.setText(evento.getItr().getNombre());
+		
+		crearModeloTablaTutores(evento);
+		
+	}
+	
+	public static void crearModeloTablaTutores(Evento evento) {
+		
+		tutoresTable2.setModel(new ModeloTabla(
+				new Object[][] {
+				},
+				new String[] {
+					"New column"
+				}
+			));
+		modeloTablaTutores2 = (ModeloTabla) tutoresTable2.getModel();
+		tutoresTable2.setRowHeight(25);
+		for(Usuario u : evento.getTutores()) {
+			String[] datos = {
+					u.getDocumento().getCaracteres() + " - " + u.getNombre1() + " " + u.getApellido1() + " - " + u.getArea().getNombre()
+					};
+			modeloTablaTutores2.addRow(datos);
+		}
+		
+		
+		
 	}
 }

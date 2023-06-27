@@ -86,7 +86,8 @@ public class ControlBotonCrearEvento implements ActionListener {
 							dateFin,
 							horaFinString,
 							PanelNuevoEvento.getModalidadEventocomboBox().getSelectedItem().toString(),
-							PanelNuevoEvento.getITREventocomboBox().getSelectedItem().toString()
+							PanelNuevoEvento.getITREventocomboBox().getSelectedItem().toString(),
+							PanelNuevoEvento.getLocalizacionEventoField().getText()
 					};
 					
 					if(CrearEvento.crear(datos,tutores)) {

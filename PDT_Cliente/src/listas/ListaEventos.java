@@ -1,5 +1,6 @@
 package listas;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,6 +71,7 @@ public class ListaEventos {
 			linea.add(e.getModalidad().getNombre());
 			linea.add(e.getItr().getNombre());
 			linea.add(e.getEstado().getNombre());
+			linea.add(Long.toString(e.getIdEvento()));
 			
 			contenedor.add(linea.toArray(new String[0]));
 		}
@@ -80,30 +82,46 @@ public class ListaEventos {
 		
 	}
 	
-	public static Object[][] getListaStringListado(String itr, String estado, String modalidad, String fecha) throws NamingException, ServicesException {
+	public static Object[][] getListaStringListado(String tipo, String itr, String estado, String modalidad, String fecha) throws NamingException, ServicesException {
 		
 		ArrayList<String> linea = null;
 		ArrayList<String[]> contenedor = new ArrayList<>();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("d MMM y");
+		String fecha2;
 				
 		for(Evento e : lista) {
 			
-			if(e.getEstado().toString().equals(estado) || estado.equals("TODOS")) {
+			fecha2 = sdf.format(e.getFechaHoraInicio());
+			
+			if(e.getEstado().getNombre().equals(estado) || estado.equals("TODOS")) {
 				
 				if(e.getItr().getNombre().toString().equals(itr) || itr.equals("TODOS")) {
-				
-					linea = new ArrayList<>();
-					linea.add(e.getNombre());
-					linea.add(e.getFechaHoraInicio().toString());
-					linea.add(e.getModalidad().getNombre());
-					linea.add(e.getItr().getNombre());
-					linea.add(e.getEstado().getNombre());
 					
-					contenedor.add(linea.toArray(new String[0]));
+					if(e.getTipo().getNombre().equals(tipo) || tipo.equals("TODOS")) {
+						
+						if(fecha.equals(fecha2) || fecha.equals("TODAS")) {
+							
+							if(e.getModalidad().getNombre().equals(modalidad) || modalidad.equals("TODAS")) {
+										
+								linea = new ArrayList<>();
+								linea.add(e.getNombre());
+								linea.add(e.getFechaHoraInicio().toString());
+								linea.add(e.getModalidad().getNombre());
+								linea.add(e.getItr().getNombre());
+								linea.add(e.getEstado().getNombre());
+					
+								contenedor.add(linea.toArray(new String[0]));
+								
+							}
+						
+						}
+					
+					}
 					
 				}
 				
 			}
-			
 			
 		}
 		
