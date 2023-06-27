@@ -64,9 +64,13 @@ public class CrearEvento {
 			TipoEvento tipoEvento = tipoEventoBean.findAll(datos[1]).get(0);
 			evento.setTipo(tipoEvento);
 		
-			Date inicio = new SimpleDateFormat("yyyy-MM-yyyy HH:mm").parse(datos[2] + " " + datos[3]);
-			Date fin = new SimpleDateFormat("yyyy-MM-yyyy HH:mm").parse(datos[4] + " " + datos[5]);
+			Date inicio = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(datos[2] + " " + datos[3]);
+			Date fin = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(datos[4] + " " + datos[5]);
 		
+			
+			System.out.println(inicio);
+			System.out.println(fin);
+			
 			evento.setFechaHoraInicio(inicio);
 			evento.setFechaHoraFinal(fin);
 			

@@ -17,9 +17,9 @@ public class Main {
 		
 		MensajeConsola.Iniciar();
 				
-		new Login();
+//		new Login();
 
-//		new Aplicacion(2L);
+		new Aplicacion(1L);
 		
 //		new Registrarse();
 		

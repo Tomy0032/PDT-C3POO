@@ -28,7 +28,7 @@ public class Control_username_aplicacion implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		CardLayout c = (CardLayout)Aplicacion.getCard_container_panel().getLayout();
-		c.show(Aplicacion.getCard_container_panel(), "Panel Editar usuario");
+		c.show(Aplicacion.getCard_container_panel(), "Panel Editar mis datos");
 	}
 
 	@Override

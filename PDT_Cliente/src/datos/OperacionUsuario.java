@@ -12,6 +12,7 @@ import com.enums.EstadoUsuario;
 import com.exception.ServicesException;
 import com.services.UsuarioBeanRemote;
 
+import componentes.PanelEditarUsuario;
 import interfaz.Aplicacion;
 import listas.ListaUsuarios;
 import mail.EmailSenderService;
@@ -94,6 +95,17 @@ public class OperacionUsuario {
 			Aplicacion.filtros();
 		}			
 
+	}
+
+	public static void editar(int fila) throws ServicesException, NamingException {
+		Utilidades.filaSeleccionada=fila;
+		
+		UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
+
+		Usuario usuario = usuarioBean.findAllForUsername(Aplicacion.getTablaUsuarios().getValueAt(fila, Utilidades.USUARIO).toString()).get(0);
+		PanelEditarUsuario.setUsuario(usuario);
+		PanelEditarUsuario.estasblecerDadtos();
+		
 	}
 
 }

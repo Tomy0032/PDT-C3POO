@@ -5,7 +5,10 @@ import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
+import java.text.SimpleDateFormat;
+
 
 import javax.naming.NamingException;
 import javax.swing.SpinnerDateModel;
@@ -58,12 +61,11 @@ public class ControlBotonCrearEvento implements ActionListener {
 				}else {
 					
 					Date fechaInicio = PanelNuevoEvento.getDateChooserInicioEvento().getDate();
-					long f = fechaInicio.getTime();
-					java.sql.Date dateInicio = new java.sql.Date(f);
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			        String dateInicio = sdf.format(fechaInicio);
 					
 					Date fechaFin = PanelNuevoEvento.getDateChooserFinEvento().getDate();
-					f = fechaFin.getTime();
-					java.sql.Date dateFin = new java.sql.Date(f);
+			        String dateFin = sdf.format(fechaFin);
 					
 					LocalTime hora_inicio = LocalTime.ofInstant(((SpinnerDateModel) PanelNuevoEvento.getHoraInicioSpinner().getModel()).getDate().toInstant(), TimeZone.getDefault().toZoneId());
 					String horaInicioString = hora_inicio.toString();
@@ -79,9 +81,9 @@ public class ControlBotonCrearEvento implements ActionListener {
 					String[] datos = {
 							PanelNuevoEvento.getTituloEventoField().getText(),
 							PanelNuevoEvento.getTipoEventocomboBox().getSelectedItem().toString(),
-							dateInicio.toString(),
+							dateInicio,
 							horaInicioString,
-							dateFin.toString(),
+							dateFin,
 							horaFinString,
 							PanelNuevoEvento.getModalidadEventocomboBox().getSelectedItem().toString(),
 							PanelNuevoEvento.getITREventocomboBox().getSelectedItem().toString()

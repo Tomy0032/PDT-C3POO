@@ -1,4 +1,5 @@
 package controladores;
+import componentes.PanelEditarUsuario;
 import interfaz.Aplicacion;
 import interfaz.Registrarse;
 
@@ -58,6 +59,46 @@ public class VisibilidadCampos {
 				Aplicacion.getCombo_filtro_Generac().setVisible(false);
 				break;
 		}
+	}
+
+	public static void cambiarVisibilidadEditarUsuario() {
+		String tipo = PanelEditarUsuario.getTipo_usu_comboBox().getSelectedItem().toString();
+		switch(tipo) {
+		case "ANALISTA":
+			PanelEditarUsuario.getYearChooser().setVisible(false);
+			PanelEditarUsuario.getRol_comboBox().setVisible(false);
+			PanelEditarUsuario.getArea_comboBox().setVisible(false);
+						
+			PanelEditarUsuario.getFec_ingreso_label().setVisible(false);
+			PanelEditarUsuario.getRol_label().setVisible(false);
+			PanelEditarUsuario.getArea_label().setVisible(false);
+			
+			break;
+			
+		case "ESTUDIANTE":
+			PanelEditarUsuario.getYearChooser().setVisible(true);
+			PanelEditarUsuario.getRol_comboBox().setVisible(false);
+			PanelEditarUsuario.getArea_comboBox().setVisible(false);
+			
+		
+			PanelEditarUsuario.getFec_ingreso_label().setVisible(true);
+			PanelEditarUsuario.getRol_label().setVisible(false);
+			PanelEditarUsuario.getArea_label().setVisible(false);
+			
+			break;
+		
+		case "TUTOR":
+			PanelEditarUsuario.getYearChooser().setVisible(false);
+			PanelEditarUsuario.getRol_comboBox().setVisible(true);
+			PanelEditarUsuario.getArea_comboBox().setVisible(true);
+						
+			PanelEditarUsuario.getFec_ingreso_label().setVisible(false);
+			PanelEditarUsuario.getRol_label().setVisible(true);
+			PanelEditarUsuario.getArea_label().setVisible(true);
+			
+			break;
+		}
+				
 	}
 
 }

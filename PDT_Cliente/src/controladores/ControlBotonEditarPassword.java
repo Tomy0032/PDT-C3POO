@@ -5,8 +5,9 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.naming.NamingException;
+import javax.swing.JOptionPane;
 
-import componentes.PanelEditarUsuario;
+import componentes.PanelEditarMisDatos;
 import datos.CrearUsuario;
 import interfaz.Aplicacion;
 import interfaz.Ingrese_password;
@@ -18,43 +19,51 @@ public class ControlBotonEditarPassword implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 		
-		if(PanelEditarUsuario.getPasswordField().getText().equals("")|| PanelEditarUsuario.getNewPasswordField().getText().equals("") || PanelEditarUsuario.getRepNewPasswordField().getText().equals("")) {
-			
-			PanelEditarUsuario.setAviso2("Debe llenar todos los campos");
-			
-		}else if(PanelEditarUsuario.getPasswordField().getText() == null || PanelEditarUsuario.getNewPasswordField().getText() == null || PanelEditarUsuario.getRepNewPasswordField().getText() == null) {
-			
-			PanelEditarUsuario.setAviso2("Debe llenar todos los campos");
-			
-		}else if(!(Aplicacion.getUsuario().getContrasena().equals(PanelEditarUsuario.getPasswordField().getText()))) {
+		String info="EDITAR CONTRASEÑA\n";
+		info+="¿Desea editar su contraseña?";	
+		
+		int confirmado = JOptionPane.showConfirmDialog(null, info, "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-			
-			PanelEditarUsuario.setAviso2("La contraseña ingresada no es correcta");
-			
-		}else if(!(PanelEditarUsuario.getNewPasswordField().getText().equals(PanelEditarUsuario.getRepNewPasswordField().getText()))) {
-			
-			PanelEditarUsuario.setAviso2("Las constraseñas no coinciden");
-			
-		}else if(PanelEditarUsuario.getPasswordField().getText().equals(PanelEditarUsuario.getNewPasswordField().getText())) {
-			
-			PanelEditarUsuario.setAviso2("La nueva contraseña no puede ser igual que la anterior");
-			
-		}else {
-							
-				try {
-					if(CrearUsuario.editarPassword(PanelEditarUsuario.getNewPasswordField().getText())) {
-						PanelEditarUsuario.getPasswordField().setText("");
-						PanelEditarUsuario.getNewPasswordField().setText("");
-						PanelEditarUsuario.getRepNewPasswordField().setText("");
+		if (JOptionPane.OK_OPTION == confirmado) {
+		
+			if(PanelEditarMisDatos.getPasswordField().getText().equals("")|| PanelEditarMisDatos.getNewPasswordField().getText().equals("") || PanelEditarMisDatos.getRepNewPasswordField().getText().equals("")) {
+				
+				PanelEditarMisDatos.setAviso2("Debe llenar todos los campos");
+				
+			}else if(PanelEditarMisDatos.getPasswordField().getText() == null || PanelEditarMisDatos.getNewPasswordField().getText() == null || PanelEditarMisDatos.getRepNewPasswordField().getText() == null) {
+				
+				PanelEditarMisDatos.setAviso2("Debe llenar todos los campos");
+				
+			}else if(!(Aplicacion.getUsuario().getContrasena().equals(PanelEditarMisDatos.getPasswordField().getText()))) {
+	
+				
+				PanelEditarMisDatos.setAviso2("La contraseña ingresada no es correcta");
+				
+			}else if(!(PanelEditarMisDatos.getNewPasswordField().getText().equals(PanelEditarMisDatos.getRepNewPasswordField().getText()))) {
+				
+				PanelEditarMisDatos.setAviso2("Las constraseñas no coinciden");
+				
+			}else if(PanelEditarMisDatos.getPasswordField().getText().equals(PanelEditarMisDatos.getNewPasswordField().getText())) {
+				
+				PanelEditarMisDatos.setAviso2("La nueva contraseña no puede ser igual que la anterior");
+				
+			}else {
+								
+					try {
+						if(CrearUsuario.editarPassword(PanelEditarMisDatos.getNewPasswordField().getText())) {
+							PanelEditarMisDatos.getPasswordField().setText("");
+							PanelEditarMisDatos.getNewPasswordField().setText("");
+							PanelEditarMisDatos.getRepNewPasswordField().setText("");
+						}
+						
+						
+					} catch (NamingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					
-					
-				} catch (NamingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
-			
+				
+				
+			}
 		}
 	}
 

@@ -26,7 +26,7 @@ public class GestionCeldas extends DefaultTableCellRenderer{
 	private ImageIcon iconoBuscar = new ImageIcon(getClass().getResource("/recursos/imagenes/ico_buscar.png"));
 	private ImageIcon iconoActivar = new ImageIcon(getClass().getResource("/recursos/imagenes/ico_activar.png"));
 	private ImageIcon iconoEliminar = new ImageIcon(getClass().getResource("/recursos/imagenes/ico_eliminar.png"));
-	   
+	private ImageIcon iconoEditar = new ImageIcon(getClass().getResource("/recursos/imagenes/ico_editar.png"));
 	
 	
 	public GestionCeldas(){
@@ -78,6 +78,9 @@ public class GestionCeldas extends DefaultTableCellRenderer{
         		else if(String.valueOf(value).equals("ELIMINAR")) {
             		label.setIcon(iconoEliminar);
             	}
+        		else if(String.valueOf(value).equals("EDITAR")) {
+            		label.setIcon(iconoEditar);
+            	}
         		 label.setHorizontalAlignment( JLabel.LEFT );
                  label.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         	}else {
@@ -90,11 +93,6 @@ public class GestionCeldas extends DefaultTableCellRenderer{
             return label;
         }
         
-        if( tipo.equals("editar"))
-        {
-        	
-        }
-
         if( tipo.equals("numerico"))
         {           
         	if (focused) {

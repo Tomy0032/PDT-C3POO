@@ -13,10 +13,11 @@ import com.exception.ServicesException;
 import com.services.UsuarioBeanRemote;
 
 import componentes.PanelListaSolicitudesDeConstancias;
-import componentes.PanelEditarUsuario;
+import componentes.PanelEditarMisDatos;
 import componentes.PanelListadoEventos;
 import componentes.PanelNuevaConstancia;
 import componentes.PanelNuevoEvento;
+import componentes.PanelEditarUsuario;
 import controladores.ControlBotonesAplicacion;
 import controladores.Control_username_aplicacion;
 import datos.OperacionUsuario;
@@ -72,6 +73,7 @@ public class Aplicacion extends JFrame implements MouseListener{
 	private static JLabel lblUserName;
 	private JLabel lbl_estado;
 	private JPanel panel_editar_usuario;
+	private static JLabel lblUserType;
 	private static JLabel lbl_generacion;
 	private static JComboBox<String> combo_filtro_tipoUsu;
 	private static JComboBox<String> combo_filtro_itr;
@@ -256,6 +258,9 @@ public class Aplicacion extends JFrame implements MouseListener{
 		PanelListadoEventos panelListarEventos = new PanelListadoEventos();
 		tabbedPaneEventos.addTab("Listar Eventos", panelListarEventos);
 
+		PanelEditarMisDatos panel_editar_mis_datos = new PanelEditarMisDatos();
+		card_container_panel.add(panel_editar_mis_datos, "Panel Editar mis datos");
+		
 		PanelEditarUsuario panel_editar_usuario = new PanelEditarUsuario();
 		card_container_panel.add(panel_editar_usuario, "Panel Editar usuario");
 
@@ -296,7 +301,7 @@ public class Aplicacion extends JFrame implements MouseListener{
 		btn_reclamos.addActionListener(new ControlBotonesAplicacion());
 
 
-		JLabel lblUserType = new JLabel(getTipoUsuario());
+		lblUserType = new JLabel(getTipoUsuario());
 		lblUserType.setBounds(0, 196, 130, 26);
 		btn_container_panel.add(lblUserType);
 		lblUserType.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -334,6 +339,169 @@ public class Aplicacion extends JFrame implements MouseListener{
 
 	public static JButton getBtnConstancias() {
 		return btn_constancias;
+	}
+
+	public static JButton getBtn_constancias() {
+		return btn_constancias;
+	}
+
+	public static void setBtn_constancias(JButton btn_constancias) {
+		Aplicacion.btn_constancias = btn_constancias;
+	}
+
+	public static JButton getBtn_reclamos() {
+		return btn_reclamos;
+	}
+
+	public static void setBtn_reclamos(JButton btn_reclamos) {
+		Aplicacion.btn_reclamos = btn_reclamos;
+	}
+
+	public static JButton getBtn_mant_listas() {
+		return btn_mant_listas;
+	}
+
+	public static void setBtn_mant_listas(JButton btn_mant_listas) {
+		Aplicacion.btn_mant_listas = btn_mant_listas;
+	}
+
+	public static JButton getBtn_cerrarSesion() {
+		return btn_cerrarSesion;
+	}
+
+	public static void setBtn_cerrarSesion(JButton btn_cerrarSesion) {
+		Aplicacion.btn_cerrarSesion = btn_cerrarSesion;
+	}
+
+	public JPanel getPanel_usuarios() {
+		return panel_usuarios;
+	}
+
+	public void setPanel_usuarios(JPanel panel_usuarios) {
+		this.panel_usuarios = panel_usuarios;
+	}
+
+	public JPanel getPanel_eventos() {
+		return panel_eventos;
+	}
+
+	public void setPanel_eventos(JPanel panel_eventos) {
+		this.panel_eventos = panel_eventos;
+	}
+
+	public JPanel getPanel_constancias() {
+		return panel_constancias;
+	}
+
+	public void setPanel_constancias(JPanel panel_constancias) {
+		this.panel_constancias = panel_constancias;
+	}
+
+	public JPanel getPanel_reclamos() {
+		return panel_reclamos;
+	}
+
+	public void setPanel_reclamos(JPanel panel_reclamos) {
+		this.panel_reclamos = panel_reclamos;
+	}
+
+	public JLabel getLbl_estado() {
+		return lbl_estado;
+	}
+
+	public void setLbl_estado(JLabel lbl_estado) {
+		this.lbl_estado = lbl_estado;
+	}
+
+	public JPanel getPanel_editar_usuario() {
+		return panel_editar_usuario;
+	}
+
+	public void setPanel_editar_usuario(JPanel panel_editar_usuario) {
+		this.panel_editar_usuario = panel_editar_usuario;
+	}
+
+	public static JLabel getLblUserType() {
+		return lblUserType;
+	}
+
+	public static void setLblUserType(JLabel lblUserType) {
+	}
+
+	public static String[] getTitulos() {
+		return titulos;
+	}
+
+	public static void setTitulos(String[] titulos) {
+		Aplicacion.titulos = titulos;
+	}
+
+	public static ModeloTabla getModelo() {
+		return modelo;
+	}
+
+	public static void setModelo(ModeloTabla modelo) {
+		Aplicacion.modelo = modelo;
+	}
+
+	public static JScrollPane getScrollPaneTabla() {
+		return scrollPaneTabla;
+	}
+
+	public static void setScrollPaneTabla(JScrollPane scrollPaneTabla) {
+		Aplicacion.scrollPaneTabla = scrollPaneTabla;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public static void setBtn_container_panel(JPanel btn_container_panel) {
+		Aplicacion.btn_container_panel = btn_container_panel;
+	}
+
+	public static void setBtn_usuarios(JButton btn_usuarios) {
+		Aplicacion.btn_usuarios = btn_usuarios;
+	}
+
+	public static void setBtn_eventos(JButton btn_eventos) {
+		Aplicacion.btn_eventos = btn_eventos;
+	}
+
+	public static void setCard_container_panel(JPanel card_container_panel) {
+		Aplicacion.card_container_panel = card_container_panel;
+	}
+
+	public static void setLblUserName(JLabel lblUserName) {
+		Aplicacion.lblUserName = lblUserName;
+	}
+
+	public static void setLbl_generacion(JLabel lbl_generacion) {
+		Aplicacion.lbl_generacion = lbl_generacion;
+	}
+
+	public static void setCombo_filtro_tipoUsu(JComboBox<String> combo_filtro_tipoUsu) {
+		Aplicacion.combo_filtro_tipoUsu = combo_filtro_tipoUsu;
+	}
+
+	public static void setCombo_filtro_itr(JComboBox<String> combo_filtro_itr) {
+		Aplicacion.combo_filtro_itr = combo_filtro_itr;
+	}
+
+	public static void setCombo_filtro_Generac(JComboBox<Object> combo_filtro_Generac) {
+		Aplicacion.combo_filtro_Generac = combo_filtro_Generac;
+	}
+
+	public static void setCombo_filtro_estado(JComboBox<String> combo_filtro_estado) {
+		Aplicacion.combo_filtro_estado = combo_filtro_estado;
+	}
+
+	public static void setUsuario(Usuario usuario) {
+		Aplicacion.usuario = usuario;
+	}
+
+	public static void setTablaUsuarios(JTable tablaUsuarios) {
+		Aplicacion.tablaUsuarios = tablaUsuarios;
 	}
 
 	public static JButton getBtnReclamos() {
@@ -450,12 +618,14 @@ public class Aplicacion extends JFrame implements MouseListener{
 	private void filtros(ItemEvent e) throws ServicesException, NamingException {
 		if (e.getStateChange() == 2) {
 			combo_filtro_Generac.setVisible(false);
+			lbl_generacion.setVisible(false);
 			switch(combo_filtro_tipoUsu.getSelectedItem().toString()) {
 			case "ANALISTA":
 				construirTabla(ListaUsuarios.getListaAnalistasStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);
 				break;
 			case "ESTUDIANTE":
 				combo_filtro_Generac.setVisible(true);
+				lbl_generacion.setVisible(true);
 				construirTabla(ListaUsuarios.getListaEstudiantesStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString(),combo_filtro_Generac.getSelectedItem().toString()), titulos);
 				break;
 			case "TUTOR":
@@ -470,12 +640,14 @@ public class Aplicacion extends JFrame implements MouseListener{
 	
 	public static void filtros() throws ServicesException, NamingException {
 		combo_filtro_Generac.setVisible(false);
+		lbl_generacion.setVisible(false);
 		switch(combo_filtro_tipoUsu.getSelectedItem().toString()) {
 		case "ANALISTA":
 			construirTabla(ListaUsuarios.getListaAnalistasStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString()), titulos);
 			break;
 		case "ESTUDIANTE":
 			combo_filtro_Generac.setVisible(true);
+			lbl_generacion.setVisible(true);
 			construirTabla(ListaUsuarios.getListaEstudiantesStringListado(combo_filtro_itr.getSelectedItem().toString(),combo_filtro_estado.getSelectedItem().toString(),combo_filtro_Generac.getSelectedItem().toString()), titulos);
 			break;
 		case "TUTOR":
@@ -556,6 +728,17 @@ public class Aplicacion extends JFrame implements MouseListener{
 			}
 		}
 		
+		if (columna==Utilidades.EDITAR) {
+			
+			try {
+				OperacionUsuario.editar(fila);
+				CardLayout c = (CardLayout)Aplicacion.getCard_container_panel().getLayout();
+				c.show(Aplicacion.getCard_container_panel(), "Panel Editar usuario");
+			} catch (ServicesException | NamingException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 	}
 		
 	@Override
@@ -590,5 +773,8 @@ public class Aplicacion extends JFrame implements MouseListener{
 		return btn_container_panel;
 	}
 
+	public static void setUsuario2(Usuario usuario2) {
+		usuario = usuario2;
+	}
 	
 }

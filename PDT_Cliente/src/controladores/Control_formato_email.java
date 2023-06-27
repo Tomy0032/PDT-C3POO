@@ -2,7 +2,7 @@ package controladores;
 
 import java.util.regex.Pattern;
 
-import componentes.PanelEditarUsuario;
+import componentes.PanelEditarMisDatos;
 import interfaces.ControlCampo;
 import interfaz.Registrarse;
 
@@ -31,7 +31,7 @@ public class Control_formato_email implements ControlCampo{
 				Registrarse.setAviso("Los campos marcados con (*) son obligatorios");
 
 			}catch(Exception e) {
-				PanelEditarUsuario.setAviso("Los campos marcados con (*) son obligatorios");
+				PanelEditarMisDatos.setAviso("Los campos marcados con (*) son obligatorios");
 
 			}
 		}else {
@@ -41,7 +41,7 @@ public class Control_formato_email implements ControlCampo{
 				Registrarse.setAviso("Hay algo mal con tus datos!");
 
 			}catch(Exception e) {
-				PanelEditarUsuario.setAviso("Los campos marcados con (*) son obligatorios");
+				PanelEditarMisDatos.setAviso("Los campos marcados con (*) son obligatorios");
 	
 			}
 		}

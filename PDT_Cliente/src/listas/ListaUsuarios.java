@@ -146,6 +146,7 @@ public class ListaUsuarios {
 			}else {
 				linea.add("ELIMINAR");
 			}
+			linea.add("EDITAR");
 			contenedor.add(linea.toArray(new String[0]));
 		}
 		
@@ -196,6 +197,7 @@ public class ListaUsuarios {
 					}else {
 						linea.add("ELIMINAR");
 					}
+					linea.add("EDITAR");
 					contenedor.add(linea.toArray(new String[0]));
 					
 				}
@@ -247,6 +249,7 @@ public class ListaUsuarios {
 					}else {
 						linea.add("ELIMINAR");
 					}
+					linea.add("EDITAR");
 					contenedor.add(linea.toArray(new String[0]));
 					
 				}
@@ -302,6 +305,7 @@ public class ListaUsuarios {
 						}else {
 							linea.add("ELIMINAR");
 						}
+						linea.add("EDITAR");
 						contenedor.add(linea.toArray(new String[0]));
 					}
 					
@@ -351,6 +355,7 @@ public class ListaUsuarios {
 					}else {
 						linea.add("ELIMINAR");
 					}
+					linea.add("EDITAR");
 					contenedor.add(linea.toArray(new String[0]));
 				}	
 			}

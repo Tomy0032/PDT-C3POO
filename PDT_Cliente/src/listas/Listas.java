@@ -14,6 +14,7 @@ public class Listas {
 		ListaTiposEvento.getInstance();
 		ListaModalidades.getInstance();
 		ListaEstadosEvento.getInstance();
+		ListaEventos.getInstance();
 		
 	}
 	

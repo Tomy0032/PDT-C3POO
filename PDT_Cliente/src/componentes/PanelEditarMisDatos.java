@@ -1,27 +1,32 @@
 package componentes;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 
 import java.awt.Color;
-import java.awt.Cursor;
 
 import javax.swing.JComboBox;
 
 import com.entities.Departamento;
-import com.entities.Usuario;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Font;
 
+import interfaz.Aplicacion;
+import interfaz.Ingrese_password;
 import interfaz.PanelFondo;
+import interfaz.Registrarse;
 import listas.ListaAreas;
 import listas.ListaDepartamentos;
 import listas.ListaItrs;
 import listas.ListaLocalidades;
 import listas.ListaTiposTutor;
-import listas.ListaTiposUsuario;
 
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.LinkedList;
@@ -32,21 +37,19 @@ import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import com.toedter.calendar.JYearChooser;
 
 import Atxy2k.CustomTextField.RestrictedTextField;
+import controladores.ControlBotonEditarPassword;
 import controladores.ControlBotonEditarMisDatos;
-import controladores.ControlBotonEditarUsuario;
+import controladores.ControlBotonEnviar;
 import controladores.Control_longit_min;
-import controladores.VisibilidadCampos;
 import interfaces.ControlCampo;
+import javax.swing.JPasswordField;
 
-public class PanelEditarUsuario extends JPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class PanelEditarMisDatos extends JPanel {
 	private static JTextField nombre1Field;
 	private static JTextField nombre2Field;
 	private static JTextField apellido1Field;
@@ -54,6 +57,7 @@ public class PanelEditarUsuario extends JPanel {
 	private static JTextField ciField;
 	private static JTextField personalField;
 	private static JTextField institucionalField;
+	private static JTextField tipo_usuario_field;
 	private static LinkedList<ControlCampo> listaCampos;
 	private RestrictedTextField r_nom1;
 	private RestrictedTextField r_nom2;
@@ -70,31 +74,34 @@ public class PanelEditarUsuario extends JPanel {
 	private static JButton btn_reg_siguiente;
 
 	private static JLabel aviso_1;
-	protected static DefaultComboBoxModel<String> modeloLocalidades;
+	protected static DefaultComboBoxModel modeloLocalidades;
 	private static JYearChooser yearChooser;
 	private static JComboBox<String> itr_comboBox;
 	private static JComboBox<String> rol_comboBox;
 	private static JComboBox<String> area_comboBox;
-	private static Usuario usuario;
+	private static JLabel aviso_2;
+	private static JPasswordField newPasswordField;
+	private static JPasswordField repNewPasswordField;
+	private static JPasswordField passwordField;
 	int iconStatus = 0;
-	private static JComboBox<String> tipo_usu_comboBox;
-	private static DefaultComboBoxModel<String> modeloTipoUsuario;
-	private static DefaultComboBoxModel<String> modeloItr;
-	private static DefaultComboBoxModel<String> modeloTipos;
-	private static DefaultComboBoxModel<String> modeloDepartamentos;
-	private static DefaultComboBoxModel<String> modeloAreas;
+	private JLabel nom1_label;
+	private static DefaultComboBoxModel modeloTipos;
+	private static DefaultComboBoxModel modeloItr;
+	private static DefaultComboBoxModel modeloDepartamentos;
+	private static DefaultComboBoxModel modeloAreas;
+	private static JLabel fec_ingreso_label;
 	private static JLabel rol_label;
 	private static JLabel area_label;
-	private static JLabel fec_ingreso_label;
 	
 	
-	public PanelEditarUsuario() {
+	@SuppressWarnings("unlikely-arg-type")
+	public PanelEditarMisDatos() {
 		setLayout(null);
 		
 		PanelFondo panelFondo = new PanelFondo("");
 		panelFondo.setLayout(null);
 		panelFondo.setBackground(SystemColor.menu);
-		panelFondo.setBounds(0, 0, 927, 698);
+		panelFondo.setBounds(0, 0, 941, 698);
 		add(panelFondo);
 		
 		JLabel label = new JLabel("New label");
@@ -107,7 +114,7 @@ public class PanelEditarUsuario extends JPanel {
 		tipo_usu_label.setBounds(367, 41, 116, 22);
 		panelFondo.add(tipo_usu_label);
 		
-		JLabel nom1_label = new JLabel("Primer nombre *");
+		nom1_label = new JLabel("Primer nombre *");
 		nom1_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		nom1_label.setFont(new Font("Tahoma", Font.BOLD, 12));
 		nom1_label.setBounds(81, 97, 126, 21);
@@ -235,7 +242,7 @@ public class PanelEditarUsuario extends JPanel {
 						}
 					}
 					try {
-						PanelEditarUsuario.modeloLocalidades = new DefaultComboBoxModel<>(ListaLocalidades.getListaString(id));
+						PanelEditarMisDatos.modeloLocalidades = new DefaultComboBoxModel<>(ListaLocalidades.getListaString(id));
 						localidad_comboBox.setModel(modeloLocalidades);
 					}catch(Exception e1) {
 					}
@@ -244,6 +251,7 @@ public class PanelEditarUsuario extends JPanel {
 		});
 		modeloDepartamentos = new DefaultComboBoxModel<>(ListaDepartamentos.getListaString());
 		departam_comboBox.setModel(modeloDepartamentos);
+		
 		panelFondo.add(departam_comboBox);
 		
 		localidad_comboBox = new JComboBox<String>();
@@ -257,7 +265,7 @@ public class PanelEditarUsuario extends JPanel {
 		localidad_label.setHorizontalAlignment(SwingConstants.TRAILING);
 		localidad_label.setFont(new Font("Tahoma", Font.BOLD, 12));
 		localidad_label.setBounds(532, 231, 116, 21);
-		ComboBoxModel<String> modeloLocalidades = new DefaultComboBoxModel<>(ListaLocalidades.getListaString(departam_comboBox.getSelectedIndex()+1));
+		modeloLocalidades = new DefaultComboBoxModel<>(ListaLocalidades.getListaString(departam_comboBox.getSelectedIndex()+1));
 		localidad_comboBox.setModel(modeloLocalidades);
 		panelFondo.add(localidad_label);
 		
@@ -326,6 +334,7 @@ public class PanelEditarUsuario extends JPanel {
 		area_comboBox.setBounds(217, 315, 190, 20);
 		modeloAreas = new DefaultComboBoxModel<>(ListaAreas.getListaString());
 		area_comboBox.setModel(modeloAreas);
+		
 		panelFondo.add(area_comboBox);
 		
 		JLabel aviso = new JLabel("");
@@ -346,7 +355,7 @@ public class PanelEditarUsuario extends JPanel {
 		btn_reg_siguiente.setBounds(447, 394, 130, 23);
 		panelFondo.add(btn_reg_siguiente);
 		
-		btn_reg_siguiente.addActionListener(new ControlBotonEditarUsuario());
+		btn_reg_siguiente.addActionListener(new ControlBotonEditarMisDatos());
 		
 		nacimientoDateChooser = new JDateChooser();
 		nacimientoDateChooser.setDateFormatString("dd/MM/yyyy");
@@ -364,23 +373,14 @@ public class PanelEditarUsuario extends JPanel {
 		obligatorio_label.setBounds(78, 348, 162, 21);
 		panelFondo.add(obligatorio_label);
 		
-		tipo_usu_comboBox = new JComboBox<String>();
-		tipo_usu_comboBox.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
-		tipo_usu_comboBox
-				.setToolTipText("Te registras como estudiante? Como tutor? O como analista?. Elige aqu\u00ED.");
-		tipo_usu_comboBox.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		tipo_usu_comboBox.setBounds(497, 41, 162, 22);
-		tipo_usu_comboBox.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		modeloTipoUsuario = new DefaultComboBoxModel<>(ListaTiposUsuario.getListaString());
-		tipo_usu_comboBox.setModel(modeloTipoUsuario);
-		tipo_usu_comboBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == 2) {
-					VisibilidadCampos.cambiarVisibilidadEditarUsuario();
-				}
-			}
-		});
-		panelFondo.add(tipo_usu_comboBox);
+		tipo_usuario_field = new JTextField();
+		tipo_usuario_field.setEditable(false);
+		tipo_usuario_field.setBounds(493, 41, 155, 22);
+		tipo_usuario_field.setText(Aplicacion.getTipoUsuario());
+		panelFondo.add(tipo_usuario_field);
+		tipo_usuario_field.setColumns(10);
+
+		
 		
 		r_nom1 = new RestrictedTextField(nombre2Field);
 		r_nom1.setOnlyText(true);
@@ -433,26 +433,163 @@ public class PanelEditarUsuario extends JPanel {
 		listaCampos.add(c_ape1);
 		listaCampos.add(c_mail_pers);
 		listaCampos.add(c_telef);
-						
-	}
-	
-	public static void estasblecerDadtos() {
 		
-		if(usuario.getTipoUsuario().getNombre().equals("TUTOR")) {
+		JLabel actualizar_pass_label = new JLabel("Actualizar contrase\u00F1a");
+		actualizar_pass_label.setForeground(Color.GRAY);
+		actualizar_pass_label.setHorizontalAlignment(SwingConstants.LEFT);
+		actualizar_pass_label.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		actualizar_pass_label.setBounds(81, 438, 175, 32);
+		panelFondo.add(actualizar_pass_label);
+		
+		JLabel pass_label = new JLabel("Contrase\u00F1a anterior");
+		pass_label.setHorizontalAlignment(SwingConstants.LEFT);
+		pass_label.setFont(new Font("Tahoma", Font.BOLD, 12));
+		pass_label.setBounds(81, 480, 186, 21);
+		panelFondo.add(pass_label);
+		
+		JLabel new_pass_label = new JLabel("Nueva contrase\u00F1a");
+		new_pass_label.setHorizontalAlignment(SwingConstants.LEFT);
+		new_pass_label.setFont(new Font("Tahoma", Font.BOLD, 12));
+		new_pass_label.setBounds(81, 522, 186, 21);
+		panelFondo.add(new_pass_label);
+		
+		JLabel new_pass2_label = new JLabel("Repetie nueva contrase\u00F1a");
+		new_pass2_label.setHorizontalAlignment(SwingConstants.LEFT);
+		new_pass2_label.setFont(new Font("Tahoma", Font.BOLD, 12));
+		new_pass2_label.setBounds(81, 560, 186, 21);
+		panelFondo.add(new_pass2_label);
+		
+		JButton btn_newpass = new JButton("Actualizar contrase\u00F1a");
+		btn_newpass.setToolTipText("El bot\u00F3n se activa cuando los campos obligatorios est\u00E9n completos y correctos.");
+		btn_newpass.setForeground(Color.WHITE);
+		btn_newpass.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btn_newpass.setFocusable(false);
+		btn_newpass.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
+		btn_newpass.setBackground(new Color(0, 178, 240));
+		btn_newpass.setBounds(175, 601, 190, 23);
+		panelFondo.add(btn_newpass);
+		
+		btn_newpass.addActionListener(new ControlBotonEditarPassword());
+
+		
+		newPasswordField = new JPasswordField();
+		newPasswordField.setToolTipText("Ingresa aqu\u00ED tu contrase\u00F1a");
+		newPasswordField.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		newPasswordField.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
+		newPasswordField.setBounds(277, 516, 145, 22);
+		newPasswordField.setEchoChar((char)'•');
+		panelFondo.add(newPasswordField);
+		
+		JButton showNewPass = new JButton("");
+		showNewPass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye.png")));
+		showNewPass.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(iconStatus == 0){
+					showNewPass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye2.png")));
+					newPasswordField.setEchoChar((char)0);
+					iconStatus = 1;
+				}else {
+					showNewPass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye.png")));
+					newPasswordField.setEchoChar((char)'•');
+					iconStatus = 0;
+				}
+			}
+		});
+		showNewPass.setBounds(421, 516, 22, 22);
+		panelFondo.add(showNewPass);
+		
+		repNewPasswordField = new JPasswordField();
+		repNewPasswordField.setToolTipText("Ingresa aqu\u00ED tu contrase\u00F1a");
+		repNewPasswordField.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		repNewPasswordField.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
+		repNewPasswordField.setBounds(277, 559, 145, 22);
+		repNewPasswordField.setEchoChar((char)'•');
+		panelFondo.add(repNewPasswordField);
+		
+		JButton showRePass = new JButton("");
+		showRePass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye.png")));
+		showRePass.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(iconStatus == 0){
+					showRePass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye2.png")));
+					repNewPasswordField.setEchoChar((char)0);
+					iconStatus = 1;
+				}else {
+					showRePass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye.png")));
+					repNewPasswordField.setEchoChar((char)'•');
+					iconStatus = 0;
+				}
+			}
+		});
+		showRePass.setBounds(421, 559, 22, 22);
+		panelFondo.add(showRePass);
+		
+		passwordField = new JPasswordField();
+		passwordField.setToolTipText("Ingresa aqu\u00ED tu contrase\u00F1a");
+		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		passwordField.setBorder(new LineBorder(new Color(0, 178, 240), 1, true));
+		passwordField.setBounds(277, 480, 145, 22);
+		passwordField.setEchoChar((char)'•');
+		panelFondo.add(passwordField);
+		
+		JButton showPass = new JButton("");
+		showPass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye.png")));
+		showPass.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(iconStatus == 0){
+					showPass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye2.png")));
+					passwordField.setEchoChar((char)0);
+					iconStatus = 1;
+				}else {
+					showPass.setIcon(new ImageIcon(Ingrese_password.class.getResource("/recursos/imagenes/eye.png")));
+					passwordField.setEchoChar((char)'•');
+					iconStatus = 0;
+				}
+			}
+		});
+		showPass.setBounds(421, 480, 22, 22);
+		panelFondo.add(showPass);
+		
+		aviso_2 = new JLabel("");
+		aviso_2.setHorizontalAlignment(SwingConstants.CENTER);
+		aviso_2.setForeground(Color.RED);
+		aviso_2.setFont(new Font("Tahoma", Font.BOLD, 10));
+		aviso_2.setBounds(0, 642, 554, 21);
+		panelFondo.add(aviso_2);
+		
+		cargarDatos();
+				
+	}
+
+	public static void cargarDatos() {
+		
+		tipo_usuario_field.setText(Aplicacion.getUsuario().getTipoUsuario().getNombre());
+		nombre1Field.setText(Aplicacion.getUsuario().getNombre1());
+		nacimientoDateChooser.setDate(Aplicacion.getUsuario().getFechaNacimiento());
+		institucionalField.setText(Aplicacion.getUsuario().getCorreoInstitucional());
+		personalField.setText(Aplicacion.getUsuario().getCorreoPersonal());
+		telefonoField.setText(Aplicacion.getUsuario().getTelefono());
+		ciField.setText(Aplicacion.getUsuario().getDocumento().getCaracteres());
+		apellido2Field.setText(Aplicacion.getUsuario().getApellido2());
+		apellido1Field.setText(Aplicacion.getUsuario().getApellido1());
+		nombre2Field.setText(Aplicacion.getUsuario().getNombre2());
+		
+		
+		if(Aplicacion.getTipoUsuario().equals("TUTOR")) {
 			area_label.setVisible(true);
 			area_comboBox.setVisible(true);
 			rol_comboBox.setVisible(true);
 			rol_label.setVisible(true);
 			int area = 0;
 			for(int i = 0; i < ListaAreas.getListaString().length; i ++) {
-				if(ListaAreas.getListaString()[i].equals(usuario.getArea().getNombre())) {
+				if(ListaAreas.getListaString()[i].equals(Aplicacion.getUsuario().getArea().getNombre())) {
 					area=i;
 				}
 			}
 			modeloAreas.setSelectedItem(modeloAreas.getElementAt(area));
 			int tipos = 0;
 			for(int i = 0; i < ListaTiposTutor.getListaString().length; i ++) {
-				if(ListaTiposTutor.getListaString()[i].equals(usuario.getTipoTutor().getNombre())) {
+				if(ListaTiposTutor.getListaString()[i].equals(Aplicacion.getUsuario().getTipoTutor().getNombre())) {
 					tipos=i;
 				}
 			}
@@ -463,68 +600,54 @@ public class PanelEditarUsuario extends JPanel {
 			rol_comboBox.setVisible(false);
 			rol_label.setVisible(false);
 		}
-		if(usuario.getTipoUsuario().getNombre().equals("ESTUDIANTE")) {
+		if(Aplicacion.getTipoUsuario().equals("ESTUDIANTE")) {
 			fec_ingreso_label.setVisible(true);
 			yearChooser.setVisible(true);
-			yearChooser.setYear(usuario.getGeneracion().getAno().intValue());
+			yearChooser.setYear(Aplicacion.getUsuario().getGeneracion().getAno().intValue());
 		}else{
 			fec_ingreso_label.setVisible(false);
 			yearChooser.setVisible(false);
 		}
-		
-		
-		nombre1Field.setText(usuario.getNombre1());
-		nacimientoDateChooser.setDate(usuario.getFechaNacimiento());
-		institucionalField.setText(usuario.getCorreoInstitucional());
-		personalField.setText(usuario.getCorreoPersonal());
-		telefonoField.setText(usuario.getTelefono());
-		ciField.setText(usuario.getDocumento().getCaracteres());
-		apellido2Field.setText(usuario.getApellido2());
-		apellido1Field.setText(usuario.getApellido1());
-		nombre2Field.setText(usuario.getNombre2());
-				
 		int dep = 0;
 		for(int i = 0; i < ListaDepartamentos.getListaString().length; i ++) {
-			if(ListaDepartamentos.getListaString()[i].equals(usuario.getLocalidad().getDepartamento().getNombre())) {
+			if(ListaDepartamentos.getListaString()[i].equals(Aplicacion.getUsuario().getLocalidad().getDepartamento().getNombre())) {
 				dep=i;
 			}
 		}
 		modeloDepartamentos.setSelectedItem(modeloDepartamentos.getElementAt(dep));
 		localidad = 0;
 		for(int i = 0; i < ListaLocalidades.getListaString(dep+1).length; i ++) {
-			if(ListaLocalidades.getListaString(dep+1)[i].equals(usuario.getLocalidad().getNombre())) {
+			if(ListaLocalidades.getListaString(dep+1)[i].equals(Aplicacion.getUsuario().getLocalidad().getNombre())) {
 				localidad=i;
 			}
 		}
 		
 		int itr = 0;
 		for(int i = 0; i < ListaItrs.getListaString().length; i ++) {
-			if(ListaItrs.getListaString()[i].equals(usuario.getItr().getNombre())) {
+			if(ListaItrs.getListaString()[i].equals(Aplicacion.getUsuario().getItr().getNombre())) {
 				itr=i;
 			}
 		}
 		modeloItr.setSelectedItem(modeloItr.getElementAt(itr));
-		int tipo = 0;
-		for(int i = 0; i < ListaTiposUsuario.getListaString().length; i ++) {
-			if(ListaTiposUsuario.getListaString()[i].equals(usuario.getTipoUsuario().getNombre())) {
-				itr=i;
-			}
-		}
-		modeloTipoUsuario.setSelectedItem(modeloTipoUsuario.getElementAt(itr));
-		modeloLocalidades.setSelectedItem(modeloLocalidades.getElementAt(localidad));
 		
-	}
+		modeloLocalidades.setSelectedItem(modeloLocalidades.getElementAt(localidad));
 
+	}
+	
 	public static void setAviso(String aviso) {
 		aviso_1.setText(aviso);
 	}
 	
+	public static void setAviso2(String aviso) {
+		aviso_2.setText(aviso);
+	}
+
 	public static JTextField getNombre1Field() {
 		return nombre1Field;
 	}
 
 	public static void setNombre1Field(JTextField nombre1Field) {
-		PanelEditarUsuario.nombre1Field = nombre1Field;
+		PanelEditarMisDatos.nombre1Field = nombre1Field;
 	}
 
 	public static JTextField getNombre2Field() {
@@ -532,7 +655,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setNombre2Field(JTextField nombre2Field) {
-		PanelEditarUsuario.nombre2Field = nombre2Field;
+		PanelEditarMisDatos.nombre2Field = nombre2Field;
 	}
 
 	public static JTextField getApellido1Field() {
@@ -540,7 +663,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setApellido1Field(JTextField apellido1Field) {
-		PanelEditarUsuario.apellido1Field = apellido1Field;
+		PanelEditarMisDatos.apellido1Field = apellido1Field;
 	}
 
 	public static JTextField getApellido2Field() {
@@ -548,7 +671,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setApellido2Field(JTextField apellido2Field) {
-		PanelEditarUsuario.apellido2Field = apellido2Field;
+		PanelEditarMisDatos.apellido2Field = apellido2Field;
 	}
 
 	public static JTextField getCiField() {
@@ -556,7 +679,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setCiField(JTextField ciField) {
-		PanelEditarUsuario.ciField = ciField;
+		PanelEditarMisDatos.ciField = ciField;
 	}
 
 	public static JTextField getPersonalField() {
@@ -564,7 +687,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setPersonalField(JTextField personalField) {
-		PanelEditarUsuario.personalField = personalField;
+		PanelEditarMisDatos.personalField = personalField;
 	}
 
 	public static JTextField getInstitucionalField() {
@@ -572,7 +695,15 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setInstitucionalField(JTextField institucionalField) {
-		PanelEditarUsuario.institucionalField = institucionalField;
+		PanelEditarMisDatos.institucionalField = institucionalField;
+	}
+
+	public static JTextField getTipo_usuario_field() {
+		return tipo_usuario_field;
+	}
+
+	public static void setTipo_usuario_field(JTextField tipo_usuario_field) {
+		PanelEditarMisDatos.tipo_usuario_field = tipo_usuario_field;
 	}
 
 	public static LinkedList<ControlCampo> getListaCampos() {
@@ -580,7 +711,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setListaCampos(LinkedList<ControlCampo> listaCampos) {
-		PanelEditarUsuario.listaCampos = listaCampos;
+		PanelEditarMisDatos.listaCampos = listaCampos;
 	}
 
 	public RestrictedTextField getR_nom1() {
@@ -644,7 +775,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setTelefonoField(JTextField telefonoField) {
-		PanelEditarUsuario.telefonoField = telefonoField;
+		PanelEditarMisDatos.telefonoField = telefonoField;
 	}
 
 	public static JComboBox<String> getDepartam_comboBox() {
@@ -652,7 +783,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setDepartam_comboBox(JComboBox<String> departam_comboBox) {
-		PanelEditarUsuario.departam_comboBox = departam_comboBox;
+		PanelEditarMisDatos.departam_comboBox = departam_comboBox;
 	}
 
 	public static JComboBox<String> getLocalidad_comboBox() {
@@ -660,7 +791,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setLocalidad_comboBox(JComboBox<String> localidad_comboBox) {
-		PanelEditarUsuario.localidad_comboBox = localidad_comboBox;
+		PanelEditarMisDatos.localidad_comboBox = localidad_comboBox;
 	}
 
 	public int getLocalidad() {
@@ -668,7 +799,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public void setLocalidad(int localidad) {
-		PanelEditarUsuario.localidad = localidad;
+		this.localidad = localidad;
 	}
 
 	public static JLabel getAviso_1() {
@@ -676,15 +807,15 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setAviso_1(JLabel aviso_1) {
-		PanelEditarUsuario.aviso_1 = aviso_1;
+		PanelEditarMisDatos.aviso_1 = aviso_1;
 	}
 
-	public static DefaultComboBoxModel<String> getModeloLocalidades() {
+	public static DefaultComboBoxModel getModeloLocalidades() {
 		return modeloLocalidades;
 	}
 
-	public static void setModeloLocalidades(DefaultComboBoxModel<String> modeloLocalidades) {
-		PanelEditarUsuario.modeloLocalidades = modeloLocalidades;
+	public static void setModeloLocalidades(DefaultComboBoxModel modeloLocalidades) {
+		PanelEditarMisDatos.modeloLocalidades = modeloLocalidades;
 	}
 
 	public static JDateChooser getNacimientoDateChooser() {
@@ -692,7 +823,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setNacimientoDateChooser(JDateChooser nacimientoDateChooser) {
-		PanelEditarUsuario.nacimientoDateChooser = nacimientoDateChooser;
+		PanelEditarMisDatos.nacimientoDateChooser = nacimientoDateChooser;
 	}
 	
 	public static JButton getBtn_reg_siguiente() {
@@ -700,7 +831,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setBtn_reg_siguiente(JButton btn_reg_siguiente) {
-		PanelEditarUsuario.btn_reg_siguiente = btn_reg_siguiente;
+		PanelEditarMisDatos.btn_reg_siguiente = btn_reg_siguiente;
 	}
 
 	public static JYearChooser getYearChooser() {
@@ -708,83 +839,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public void setYearChooser(JYearChooser yearChooser) {
-		PanelEditarUsuario.yearChooser = yearChooser;
-	}
-
-	public static JComboBox<String> getTipo_usu_comboBox() {
-		return tipo_usu_comboBox;
-	}
-
-	public void setTipo_usu_comboBox(JComboBox<String> tipo_usu_comboBox) {
-		this.tipo_usu_comboBox = tipo_usu_comboBox;
-	}
-
-	public static DefaultComboBoxModel<String> getModeloTipoUsuario() {
-		return modeloTipoUsuario;
-	}
-
-	public static void setModeloTipoUsuario(DefaultComboBoxModel<String> modeloTipoUsuario) {
-		PanelEditarUsuario.modeloTipoUsuario = modeloTipoUsuario;
-	}
-
-	public static DefaultComboBoxModel<String> getModeloItr() {
-		return modeloItr;
-	}
-
-	public static void setModeloItr(DefaultComboBoxModel<String> modeloItr) {
-		PanelEditarUsuario.modeloItr = modeloItr;
-	}
-
-	public static DefaultComboBoxModel<String> getModeloTipos() {
-		return modeloTipos;
-	}
-
-	public static void setModeloTipos(DefaultComboBoxModel<String> modeloTipos) {
-		PanelEditarUsuario.modeloTipos = modeloTipos;
-	}
-
-	public static DefaultComboBoxModel<String> getModeloDepartamentos() {
-		return modeloDepartamentos;
-	}
-
-	public static void setModeloDepartamentos(DefaultComboBoxModel<String> modeloDepartamentos) {
-		PanelEditarUsuario.modeloDepartamentos = modeloDepartamentos;
-	}
-
-	public static DefaultComboBoxModel<String> getModeloAreas() {
-		return modeloAreas;
-	}
-
-	public static void setModeloAreas(DefaultComboBoxModel<String> modeloAreas) {
-		PanelEditarUsuario.modeloAreas = modeloAreas;
-	}
-
-	public static JLabel getRol_label() {
-		return rol_label;
-	}
-
-	public static void setRol_label(JLabel rol_label) {
-		PanelEditarUsuario.rol_label = rol_label;
-	}
-
-	public static JLabel getArea_label() {
-		return area_label;
-	}
-
-	public static void setArea_label(JLabel area_label) {
-		PanelEditarUsuario.area_label = area_label;
-	}
-
-	public static JLabel getFec_ingreso_label() {
-		return fec_ingreso_label;
-	}
-
-	public static void setFec_ingreso_label(JLabel fec_ingreso_label) {
-		PanelEditarUsuario.fec_ingreso_label = fec_ingreso_label;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+		this.yearChooser = yearChooser;
 	}
 
 	public static JComboBox<String> getItr_comboBox() {
@@ -792,7 +847,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setItr_comboBox(JComboBox<String> itr_comboBox) {
-		PanelEditarUsuario.itr_comboBox = itr_comboBox;
+		PanelEditarMisDatos.itr_comboBox = itr_comboBox;
 	}
 
 	public static JComboBox<String> getRol_comboBox() {
@@ -800,7 +855,7 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setRol_comboBox(JComboBox<String> rol_comboBox) {
-		PanelEditarUsuario.rol_comboBox = rol_comboBox;
+		PanelEditarMisDatos.rol_comboBox = rol_comboBox;
 	}
 
 	public static JComboBox<String> getArea_comboBox() {
@@ -808,15 +863,40 @@ public class PanelEditarUsuario extends JPanel {
 	}
 
 	public static void setArea_comboBox(JComboBox<String> area_comboBox) {
-		PanelEditarUsuario.area_comboBox = area_comboBox;
+		PanelEditarMisDatos.area_comboBox = area_comboBox;
 	}
 
-	public static Usuario getUsuario() {
-		return usuario;
+	public static JLabel getAviso_2() {
+		return aviso_2;
 	}
 
-	public static void setUsuario(Usuario usuario) {
-		PanelEditarUsuario.usuario = usuario;
+	public static void setAviso_2(JLabel aviso_2) {
+		PanelEditarMisDatos.aviso_2 = aviso_2;
 	}
+
+	public static JPasswordField getNewPasswordField() {
+		return newPasswordField;
+	}
+
+	public static void setNewPasswordField(JPasswordField newPasswordField) {
+		PanelEditarMisDatos.newPasswordField = newPasswordField;
+	}
+
+	public static JPasswordField getRepNewPasswordField() {
+		return repNewPasswordField;
+	}
+
+	public static void setRepNewPasswordField(JPasswordField repNewPasswordField) {
+		PanelEditarMisDatos.repNewPasswordField = repNewPasswordField;
+	}
+
+	public static JPasswordField getPasswordField() {
+		return passwordField;
+	}
+
+	public static void setPasswordField(JPasswordField passwordField) {
+		PanelEditarMisDatos.passwordField = passwordField;
+	}
+	
 	
 }

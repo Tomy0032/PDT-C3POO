@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import componentes.PanelEditarMisDatos;
 import componentes.PanelEditarUsuario;
 import interfaces.ControlCampo;
 import interfaz.Registrarse;
@@ -33,8 +34,19 @@ public class Control_longit_min implements DocumentListener,ControlCampo{
 		try{
 			Registrarse.setAviso(aviso);
 		}catch(Exception e) {
-			PanelEditarUsuario.setAviso(aviso);
+			
 		}
+		try{
+			PanelEditarMisDatos.setAviso(aviso);
+		}catch(Exception e) {
+			
+		}
+		try{
+			PanelEditarUsuario.setAviso(aviso);
+		}catch(Exception e) {
+			
+		}
+		
 		
 	}
 	
@@ -43,7 +55,7 @@ public class Control_longit_min implements DocumentListener,ControlCampo{
 		if(!(Registrarse.getListaCampos()==null)) {
 			activador = new ActivadorBoton(Registrarse.getListaCampos());
 		}else {
-			activador = new ActivadorBoton(PanelEditarUsuario.getListaCampos());
+			activador = new ActivadorBoton(PanelEditarMisDatos.getListaCampos());
 		}
 	}
 	

@@ -1,15 +1,8 @@
 package componentes;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+
 import javax.naming.NamingException;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
 
 import com.exception.ServicesException;
 import com.toedter.calendar.JDateChooser;
@@ -25,12 +18,8 @@ import listas.ListaUsuarios;
 import utilidades.GestionCeldas;
 import utilidades.ModeloTabla;
 
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import javax.swing.JList;
 
 import java.util.ArrayList;
 import java.awt.Color;
@@ -40,12 +29,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.JButton;
 
 import javax.swing.*;
 import java.util.LinkedList;
 
-//CREAR LA LISTA DE CONTROLADORES
+
 public class PanelNuevoEvento extends JPanel {
 
 	/**
@@ -55,7 +43,7 @@ public class PanelNuevoEvento extends JPanel {
 	private static JComboBox<String> tipoEventocomboBox;
 	private static JDateChooser dateChooserInicioEvento;
 	private static JSpinner horaInicioSpinner;
-	private static TimeSpinner horaFinSpinner;
+	private static JSpinner horaFinSpinner;
 	private static JComboBox<String> ModalidadEventocomboBox;
 	private static JComboBox<String> ITREventocomboBox;
 	private static JDateChooser dateChooserFinEvento;
@@ -105,7 +93,7 @@ public class PanelNuevoEvento extends JPanel {
 		return horaInicioSpinner;
 	}
 
-	public static TimeSpinner getHoraFinSpinner() {
+	public static JSpinner getHoraFinSpinner() {
 		return horaFinSpinner;
 	}
 
@@ -210,10 +198,10 @@ public class PanelNuevoEvento extends JPanel {
 
 		horaInicioSpinner = new TimeSpinner();
 		horaInicioSpinner.setBounds(335, 76, 62, 20);
-		SpinnerDateModel modeloHora = new SpinnerDateModel();
-		JSpinner.DateEditor editorHora = new JSpinner.DateEditor(horaInicioSpinner, "HH:mm");
-		horaInicioSpinner.setEditor(editorHora);
-		horaInicioSpinner.setModel(modeloHora);
+		JSpinner.DateEditor editorHoraInicio = new JSpinner.DateEditor(horaInicioSpinner, "HH:mm");
+		horaInicioSpinner.setEditor(editorHoraInicio);
+		SpinnerModel modeloHoraInicio = new SpinnerDateModel();
+		horaInicioSpinner.setModel(modeloHoraInicio );
 		add(horaInicioSpinner);
 
 		lblFinalizacinFecha = new JLabel("Fecha Finalizaci\u00F3n ");
@@ -234,7 +222,10 @@ public class PanelNuevoEvento extends JPanel {
 
 		horaFinSpinner = new TimeSpinner();
 		horaFinSpinner.setBounds(335, 107, 62, 20);
-		horaFinSpinner.setFormat("HH:mm");
+		JSpinner.DateEditor editorHoraFin = new JSpinner.DateEditor(horaFinSpinner, "HH:mm");
+		horaFinSpinner.setEditor(editorHoraFin);
+		SpinnerModel modeloHoraFin = new SpinnerDateModel();
+		horaFinSpinner.setModel(modeloHoraFin);
 		add(horaFinSpinner);
 
 		lblModalidad = new JLabel("Modalidad");
@@ -377,7 +368,8 @@ public class PanelNuevoEvento extends JPanel {
 		
 		btnCrearEvento = new JButton("Crear");
 		btnCrearEvento.addActionListener(new ControlBotonCrearEvento());
-		btnCrearEvento.setBounds(170, 402, 85, 21);
+		btnCrearEvento.setBounds(170, 402, 110, 25);
+		btnCrearEvento.setFont(new Font("Tahoma",Font.BOLD,12));
 		btnCrearEvento.setEnabled(false);
 		add(btnCrearEvento);
 		

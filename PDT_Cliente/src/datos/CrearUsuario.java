@@ -34,6 +34,7 @@ import com.services.TipoTutorBeanRemote;
 import com.services.TipoUsuarioBeanRemote;
 import com.services.UsuarioBeanRemote;
 
+import componentes.PanelEditarMisDatos;
 import interfaz.Aplicacion;
 import listas.ListaUsuarios;
 import mail.EmailSenderService;
@@ -166,22 +167,30 @@ public class CrearUsuario {
 		
 	}
 
-	public static boolean editar(String[] datos) throws NamingException {
+	public static boolean editar(Usuario usuario, String[] datos) throws NamingException {
 		
 		LocalidadBeanRemote localidadBean = (LocalidadBeanRemote) InitialContext.doLookup("PDT_EJB/LocalidadBean!com.services.LocalidadBeanRemote"); 
 		DepartamentoBeanRemote departamentoBean = (DepartamentoBeanRemote) InitialContext.doLookup("PDT_EJB/DepartamentoBean!com.services.DepartamentoBeanRemote"); 
 		UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
 		DocumentoBeanRemote documentoBean = (DocumentoBeanRemote) InitialContext.doLookup("PDT_EJB/DocumentoBean!com.services.DocumentoBeanRemote"); 
-		PaisBeanRemote paisBean = (PaisBeanRemote) InitialContext.doLookup("PDT_EJB/PaisBean!com.services.PaisBeanRemote"); 
 		ItrBeanRemote itrBean = (ItrBeanRemote) InitialContext.doLookup("PDT_EJB/ItrBean!com.services.ItrBeanRemote"); 
 		@SuppressWarnings("unused")
 		GeneroBeanRemote generoBean = (GeneroBeanRemote) InitialContext.doLookup("PDT_EJB/GeneroBean!com.services.GeneroBeanRemote"); 
 		GeneracionBeanRemote generacionBean = (GeneracionBeanRemote) InitialContext.doLookup("PDT_EJB/GeneracionBean!com.services.GeneracionBeanRemote"); 
 		TipoTutorBeanRemote tipoTutorBean = (TipoTutorBeanRemote) InitialContext.doLookup("PDT_EJB/TipoTutorBean!com.services.TipoTutorBeanRemote"); 
 		AreaBeanRemote areaBean = (AreaBeanRemote) InitialContext.doLookup("PDT_EJB/AreaBean!com.services.AreaBeanRemote"); 
-		TipoUsuarioBeanRemote tipoUsuarioBean = (TipoUsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/TipoUsuarioBean!com.services.TipoUsuarioBeanRemote"); 
-				
-		Usuario usuario = Aplicacion.getUsuario();
+		TipoUsuarioBeanRemote tipoUsuarioBean = (TipoUsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/TipoUsuarioBean!com.services.TipoUsuarioBeanRemote"); 		
+		
+		TipoUsuario tipoUsuario = new TipoUsuario();
+		try {
+			tipoUsuario = tipoUsuarioBean.findAll(datos[13]).get(0);
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		usuario.setTipoUsuario(tipoUsuario);
+		
+		
 		
 		usuario.setApellido1(datos[0]);
 		
@@ -213,7 +222,10 @@ public class CrearUsuario {
 			usuario.setLocalidad(localidad);
 
 			
-			if(Aplicacion.getTipoUsuario().equals("ESTUDIANTE")) {
+			if(datos[13].equals("ESTUDIANTE")) {
+				
+				usuario.setArea(null);
+				usuario.setTipoTutor(null);
 				
 				BigDecimal ano = new BigDecimal(datos[10]);			
 				try {
@@ -229,7 +241,9 @@ public class CrearUsuario {
 				usuarioBean.update(usuario);
 			
 			}
-			else if(Aplicacion.getTipoUsuario().equals("TUTOR")) {
+			else if(datos[13].equals("TUTOR")) {
+				
+				usuario.setGeneracion(null);
 				
 				TipoTutor tipoTutor = tipoTutorBean.findAll(datos[11]).get(0);
 				Area area = areaBean.findAll(datos[12]).get(0);
@@ -240,26 +254,28 @@ public class CrearUsuario {
 				usuarioBean.update(usuario);
 			
 			}
-			else if(Aplicacion.getTipoUsuario().equals("ANALISTA")) {
+			else if(datos[13].equals("ANALISTA")) {
 				
+				usuario.setGeneracion(null);
+				usuario.setArea(null);
+				usuario.setTipoTutor(null);
 				usuarioBean.update(usuario);
 
 			}
 			
-			JOptionPane.showMessageDialog(new JFrame(), "Datos actualizados correctamente");
 			ListaUsuarios.cargarLista();
+			Aplicacion.setUsuario(usuario.getIdUsuario());
 			Aplicacion.filtros();
+			Aplicacion.setTipoUsuario(usuario.getTipoUsuario().getNombre().toString());
+			Aplicacion.getLblUserType().setText(usuario.getTipoUsuario().getNombre());
+			PanelEditarMisDatos.cargarDatos();
+
+			JOptionPane.showMessageDialog(new JFrame(), "Datos actualizados correctamente");
+			
 			return true;
 			
 		}catch(ServicesException e) {
 			System.out.println(e.getMessage());
-			try {
-				Documento documento = documentoBean.findAll(datos[9]).get(0);
-				documentoBean.drop(documento.getIdDocumento());
-			}
-			catch(ServicesException e1){
-				System.out.println(e1.getMessage());
-			}
 		}
 		
 		return false;
@@ -276,9 +292,18 @@ public class CrearUsuario {
 		
 		try {
 			usuarioBean.update(usuario);
+			Aplicacion.setUsuario2(usuario);
+			PanelEditarMisDatos.cargarDatos();
 			JOptionPane.showMessageDialog(new JFrame(), "Contraseña actualizada correctamente");
-			ListaUsuarios.cargarLista();
-			Aplicacion.filtros();
+			ExecutorService exec = Executors.newSingleThreadExecutor();
+			exec.submit(() ->{
+				
+				try {
+					ListaUsuarios.cargarLista();
+				}catch (NamingException e) {
+					e.printStackTrace();
+				}
+			});			
 			return true;
 		}catch(Exception e) {
 			
