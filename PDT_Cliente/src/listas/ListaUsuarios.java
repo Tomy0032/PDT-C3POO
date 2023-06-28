@@ -8,6 +8,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.entities.Usuario;
+import com.enums.EstadoUsuario;
 import com.exception.ServicesException;
 import com.services.UsuarioBeanRemote;
 
@@ -38,7 +39,9 @@ public class ListaUsuarios {
 	public static void cargarLista() throws NamingException {
 		
 		UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
-		
+		listaAnalistas.clear();
+		listaEstudiantes.clear();
+		listaTutores.clear();
 		
 		try {				
 			lista = usuarioBean.findAll();
@@ -88,7 +91,8 @@ public class ListaUsuarios {
 		
 		for(Usuario t : listaTutores) {
 			
-			s.add(t.getDocumento().getCaracteres() + " - " + t.getNombre1() + " " + t.getApellido1() + " - " + t.getArea().getNombre());
+			if(t.getEstado().equals(EstadoUsuario.ACTIVO))
+				s.add(t.getDocumento().getCaracteres() + " - " + t.getNombre1() + " " + t.getApellido1() + " - " + t.getArea().getNombre());
 			
 		}
 		

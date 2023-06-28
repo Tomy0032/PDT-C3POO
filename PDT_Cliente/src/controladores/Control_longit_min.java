@@ -9,6 +9,7 @@ import javax.swing.event.DocumentListener;
 
 import componentes.PanelEditarMisDatos;
 import componentes.PanelEditarUsuario;
+import componentes.PanelFichaEvento;
 import interfaces.ControlCampo;
 import interfaz.Registrarse;
 
@@ -46,7 +47,6 @@ public class Control_longit_min implements DocumentListener,ControlCampo{
 		}catch(Exception e) {
 			
 		}
-		
 		
 	}
 	

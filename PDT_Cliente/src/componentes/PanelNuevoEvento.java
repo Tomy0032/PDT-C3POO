@@ -61,13 +61,13 @@ public class PanelNuevoEvento extends JPanel {
 	private JLabel lblHoraFinEvento;
 	private JLabel lblEventoITR;
 	private JLabel lblTutoresEvento;
-	private JList tutoresList;
-	private JScrollPane tutoresScrollPane;
-	private String[] listaTutores;
-	private ArrayList<String> arrayTutores = new ArrayList<String>();
-	private DefaultListModel modeloTutores;
+	private static JList tutoresList;
+	private static JScrollPane tutoresScrollPane;
+	private static String[] listaTutores;
+	private static ArrayList<String> arrayTutores = new ArrayList<String>();
+	private static DefaultListModel modeloTutores;
 	private static JTable tutoresTable;
-	private DefaultTableModel modeloTablaTutores;
+	private static DefaultTableModel modeloTablaTutores;
 	private static ArrayList<String> tutoresAgregados = new ArrayList<String>();
 	private static JButton btnCrearEvento;
 	private static JLabel aviso;
@@ -395,7 +395,7 @@ public class PanelNuevoEvento extends JPanel {
 		listaCampos.add(controlLocalizacion);
 	}
 
-	protected void buscarTutor(String texto){
+	public static void buscarTutor(String texto){
 		arrayTutores = null;
 		arrayTutores = new ArrayList();
 		tutoresList.setVisible(false);
@@ -424,7 +424,7 @@ public class PanelNuevoEvento extends JPanel {
 		if(count==19) {
 			count = 25;
 		}
-		tutoresScrollPane.setBounds(170, 217, 344, count);
+		tutoresScrollPane.setBounds(170, 243, 344, count);
 		tutoresList.setVisible(true);
 	}
 

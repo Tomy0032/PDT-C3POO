@@ -442,4 +442,8 @@ public class PanelListadoEventos extends JPanel{
 	public static void setTitulos(String[] titulos) {
 		PanelListadoEventos.titulos = titulos;
 	}
+
+	public static Evento getEvento() {
+		return evento;
+	}
 }

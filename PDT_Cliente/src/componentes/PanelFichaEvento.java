@@ -35,7 +35,9 @@ import com.entities.Usuario;
 import com.exception.ServicesException;
 import com.toedter.calendar.JDateChooser;
 
-import controladores.Control_longit_min_evento;
+import controladores.ControlBotonCrearEvento;
+import controladores.ControlBotonEditarEvento;
+import controladores.Control_longit_min_ficha_evento;
 import interfaces.ControlCampo;
 import listas.ListaItrs;
 import listas.ListaModalidades;
@@ -43,6 +45,9 @@ import listas.ListaTiposEvento;
 import listas.ListaUsuarios;
 import utilidades.GestionCeldas;
 import utilidades.ModeloTabla;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PanelFichaEvento extends JPanel{
 
@@ -57,7 +62,7 @@ public class PanelFichaEvento extends JPanel{
 	private static JTextField tituloEventoField;
 	private static JTextField localizacionEventoField;
 	private static JTable eventoTutores_table;
-	private JTextField tutorField;
+	private static JTextField tutorField;
 	private JLabel lblLocalizacionEvento;
 	private JLabel lblModalidad;
 	private JLabel lblNewLabel;
@@ -68,8 +73,6 @@ public class PanelFichaEvento extends JPanel{
 	private JLabel lblHoraFinEvento;
 	private JLabel lblEventoITR;
 	private JLabel lblTutoresEvento;
-	private JList tutoresList;
-	private JScrollPane tutoresScrollPane;
 	private String[] listaTutores;
 	private ArrayList<String> arrayTutores = new ArrayList<String>();
 	private DefaultListModel modeloTutores;
@@ -92,6 +95,14 @@ public class PanelFichaEvento extends JPanel{
 	private static JTextField itrField;
 	private static JTable tutoresTable2;
 	private static DefaultTableModel modeloTablaTutores2;
+	private static JButton estudiantesBtn;
+	private static JButton editarBtn;
+	private static JScrollPane scrollPane;
+	private TableColumnModel columnModel;
+	private static JButton cancelarEditarBtn;
+	private JList tutoresList;
+	private JScrollPane tutoresScrollPane;
+	private static JButton confirmarEdicionBtn;
 
 	public static LinkedList<ControlCampo> getListaCampos() {
 		return listaCampos;
@@ -370,7 +381,13 @@ public class PanelFichaEvento extends JPanel{
 			}
 		});
 		setLayout(null);
-
+		
+		tutoresScrollPane = new JScrollPane();
+		tutoresScrollPane.setBounds(153, 232, 344, 0);
+		add(tutoresScrollPane);
+		
+		tutoresList = new JList();
+		tutoresScrollPane.setViewportView(tutoresList);
 		
 		lblNewLabel = new JLabel("T\u00EDtulo del evento");
 		lblNewLabel.setBounds(10, 33, 133, 14);
@@ -529,14 +546,39 @@ public class PanelFichaEvento extends JPanel{
 				count+=19;
 			}					
 		}
+				
+		scrollPane = new JScrollPane();
+		scrollPane.setVisible(false);
+		scrollPane.setBounds(153, 238, 344, 77);
+		add(scrollPane);
 		
-		tutoresScrollPane = new JScrollPane();
-		tutoresScrollPane.setBounds(153, 288, 344, -54);
-		add(tutoresScrollPane);
-		tutoresScrollPane.setVisible(false);
+		tutoresTable = new JTable();
+		scrollPane.setViewportView(tutoresTable);
+		tutoresTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int fila = tutoresTable.rowAtPoint(e.getPoint());
+				int columna = tutoresTable.columnAtPoint(e.getPoint());
+				if(columna == 1) {
+					if(fila >= 0) {
+						modeloTablaTutores.removeRow(fila);
+						tutoresAgregados.remove(fila);
+						for(int i = fila+1; i < tutoresAgregados.size(); i++) {
+							tutoresAgregados.set(i-1, tutoresAgregados.get(i));
+						}
+					}
+				}
+			}
+		});
 		
-		tutoresList = new JList();
-		tutoresScrollPane.setViewportView(tutoresList);
+		aviso = new JLabel("");
+		aviso.setVisible(false);
+		aviso.setHorizontalAlignment(SwingConstants.LEFT);
+		aviso.setForeground(Color.RED);
+		aviso.setFont(new Font("Tahoma", Font.BOLD, 10));
+		aviso.setBounds(631, 238, 351, 21);
+		add(aviso);
+		
 		tutoresList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -555,56 +597,8 @@ public class PanelFichaEvento extends JPanel{
 				tutorField.setFocusable(true);
 			}
 		});
+		
 		tutoresList.setModel(modeloTutores);
-		
-		tutoresTable = new JTable();
-		tutoresTable.setVisible(false);
-		tutoresTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int fila = tutoresTable.rowAtPoint(e.getPoint());
-				int columna = tutoresTable.columnAtPoint(e.getPoint());
-				if(columna == 1) {
-					if(fila >= 0) {
-						modeloTablaTutores.removeRow(fila);
-						tutoresAgregados.remove(fila);
-						for(int i = fila+1; i < tutoresAgregados.size(); i++) {
-							tutoresAgregados.set(i-1, tutoresAgregados.get(i));
-						}
-					}
-				}
-			}
-		});
-		tutoresTable.setModel(new ModeloTabla(
-			new Object[][] {
-			},
-			new String[] {
-				"New column", "New column"
-			}
-		));
-		modeloTablaTutores = (ModeloTabla) tutoresTable.getModel();
-		tutoresTable.setRowHeight(25);
-		TableColumnModel columnModel = tutoresTable.getColumnModel();
-		columnModel.getColumn(1).setMaxWidth(25);
-		columnModel.getColumn(1).setCellRenderer(new GestionCeldas("icono"));
-		tutoresTable.setBounds(153, 213, 344, 20);
-		add(tutoresTable);
-		
-		aviso = new JLabel("");
-		aviso.setHorizontalAlignment(SwingConstants.LEFT);
-		aviso.setForeground(Color.RED);
-		aviso.setFont(new Font("Tahoma", Font.BOLD, 10));
-		aviso.setBounds(170, 378, 594, 21);
-		add(aviso);
-		
-		
-		
-		listaCampos = new LinkedList<ControlCampo>();
-		
-		Control_longit_min_evento controlTitulo = new Control_longit_min_evento(tituloEventoField,3);
-		tituloEventoField.getDocument().addDocumentListener(controlTitulo);
-		
-		Control_longit_min_evento controlLocalizacion = new Control_longit_min_evento(localizacionEventoField,3);
 		
 		titulo = new JLabel("FICHA DEL EVENTO");
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -669,10 +663,108 @@ public class PanelFichaEvento extends JPanel{
 		tutoresTable2.setBounds(153, 214, 344, 77);
 		add(tutoresTable2);
 		
+		estudiantesBtn = new JButton("Agregar estudiantes");
+		estudiantesBtn.setBounds(812, 269, 170, 22);
+		add(estudiantesBtn);
+		
+		editarBtn = new JButton("Editar evento");
+		editarBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				editarBtn.setVisible(false);
+				cancelarEditarBtn.setVisible(true);
+				estudiantesBtn.setVisible(false);
+				confirmarEdicionBtn.setVisible(true);
+				aviso.setVisible(true);
+				
+				horaInicioField.setVisible(false);
+				horaFinField.setVisible(false);
+				fechaInicioField.setVisible(false);
+				fechaFinField.setVisible(false);
+				modalidadField.setVisible(false);
+				itrField.setVisible(false);
+				tipoEventoField.setVisible(false);
+				tutoresTable2.setVisible(false);
+				
+				tituloEventoField.setEditable(true);
+				ModalidadEventocomboBox.setVisible(true);
+				ITREventocomboBox.setVisible(true);
+				tipoEventocomboBox.setVisible(true);
+				tutorField.setVisible(true);
+				tutoresTable.setVisible(true);
+				dateChooserFinEvento.setVisible(true);
+				dateChooserInicioEvento.setVisible(true);
+				horaFinSpinner.setVisible(true);
+				horaInicioSpinner.setVisible(true);
+				scrollPane.setVisible(true);		
+				localizacionEventoField.setEditable(true);
+			}
+		});
+		editarBtn.setBounds(631, 270, 170, 21);
+		add(editarBtn);
+		
+		cancelarEditarBtn = new JButton("Cancelar");
+		cancelarEditarBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				editarBtn.setVisible(true);
+				cancelarEditarBtn.setVisible(false);
+				estudiantesBtn.setVisible(true);
+				confirmarEdicionBtn.setVisible(false);
+				aviso.setVisible(false);
+				
+				horaInicioField.setVisible(true);
+				horaFinField.setVisible(true);
+				fechaInicioField.setVisible(true);
+				fechaFinField.setVisible(true);
+				modalidadField.setVisible(true);
+				itrField.setVisible(true);
+				tipoEventoField.setVisible(true);
+				tutoresTable2.setVisible(true);
+				
+				tituloEventoField.setEditable(false);
+				ModalidadEventocomboBox.setVisible(false);
+				ITREventocomboBox.setVisible(false);
+				tipoEventocomboBox.setVisible(false);
+				tutorField.setVisible(false);
+				tutoresTable.setVisible(false);
+				dateChooserFinEvento.setVisible(false);
+				dateChooserInicioEvento.setVisible(false);
+				horaFinSpinner.setVisible(false);
+				horaInicioSpinner.setVisible(false);
+				scrollPane.setVisible(false);
+				localizacionEventoField.setEditable(false);
+			}
+		});
+		cancelarEditarBtn.setVisible(false);
+		cancelarEditarBtn.setBounds(632, 270, 170, 21);
+		add(cancelarEditarBtn);
+		
+		confirmarEdicionBtn = new JButton("Editar");
+		confirmarEdicionBtn.setBounds(812, 269, 170, 22);
+		add(confirmarEdicionBtn);
+		modeloTutores = new DefaultListModel();
+		int count2 = 0;
+		for(int i = 0; i < arrayTutores.size(); i++) {
+			modeloTutores.addElement(arrayTutores.get(i));
+			if(i < 5) {
+				count2+=19;
+			}					
+		}
+		
+		confirmarEdicionBtn.addActionListener(new ControlBotonEditarEvento());
+				
+		listaCampos = new LinkedList<ControlCampo>();
+		
+		Control_longit_min_ficha_evento controlTitulo = new Control_longit_min_ficha_evento(tituloEventoField,3);
+		tituloEventoField.getDocument().addDocumentListener(controlTitulo);
+		
+		Control_longit_min_ficha_evento controlLocalizacion = new Control_longit_min_ficha_evento(localizacionEventoField,3);
 		localizacionEventoField.getDocument().addDocumentListener(controlLocalizacion);
 				
 		listaCampos.add(controlTitulo);
 		listaCampos.add(controlLocalizacion);
+				
 	}
 
 	protected void buscarTutor(String texto){
@@ -701,10 +793,11 @@ public class PanelFichaEvento extends JPanel{
 			}					
 		}
 		tutoresList.setModel(modeloTutores);
+		
 		if(count==19) {
 			count = 25;
 		}
-		tutoresScrollPane.setBounds(170, 217, 344, count);
+		tutoresScrollPane.setBounds(153, 232, 344, count);
 		tutoresList.setVisible(true);
 	}
 
@@ -713,22 +806,34 @@ public class PanelFichaEvento extends JPanel{
 	}
 
 	public static void limpiar() {
-		tituloEventoField.setText("");
-		ITREventocomboBox.setSelectedIndex(0);
-		ModalidadEventocomboBox.setSelectedIndex(0);
-		tipoEventocomboBox.setSelectedIndex(0);
+		editarBtn.setVisible(true);
+		cancelarEditarBtn.setVisible(false);
+		estudiantesBtn.setVisible(true);
+		confirmarEdicionBtn.setVisible(false);
+		aviso.setVisible(false);
 		
-		tutoresTable.setModel(new ModeloTabla(
-				new Object[][] {
-				},
-				new String[] {
-					"New column", "New column"
-				}
-			));
-		tutoresAgregados.clear();
-		dateChooserFinEvento.setDate(null);
-		dateChooserInicioEvento.setDate(null);
-		localizacionEventoField.setText("");
+		horaInicioField.setVisible(true);
+		horaFinField.setVisible(true);
+		fechaInicioField.setVisible(true);
+		fechaFinField.setVisible(true);
+		modalidadField.setVisible(true);
+		itrField.setVisible(true);
+		tipoEventoField.setVisible(true);
+		tutoresTable2.setVisible(true);
+		
+		tituloEventoField.setEditable(false);
+		ModalidadEventocomboBox.setVisible(false);
+		ITREventocomboBox.setVisible(false);
+		tipoEventocomboBox.setVisible(false);
+		tutorField.setVisible(false);
+		tutoresTable.setVisible(false);
+		dateChooserFinEvento.setVisible(false);
+		dateChooserInicioEvento.setVisible(false);
+		horaFinSpinner.setVisible(false);
+		horaInicioSpinner.setVisible(false);
+		scrollPane.setVisible(false);
+		localizacionEventoField.setEditable(false);
+		
 	}
 
 	public static void cargarDatos(Evento evento) {
@@ -782,7 +887,7 @@ public class PanelFichaEvento extends JPanel{
 		itrField.setText(evento.getItr().getNombre());
 		
 		crearModeloTablaTutores(evento);
-		
+			
 	}
 	
 	public static void crearModeloTablaTutores(Evento evento) {
@@ -803,7 +908,28 @@ public class PanelFichaEvento extends JPanel{
 			modeloTablaTutores2.addRow(datos);
 		}
 		
-		
+		tutoresTable.setModel(new ModeloTabla(
+				new Object[][] {
+				},
+				new String[] {
+					"", ""
+				}
+			));
+		modeloTablaTutores = (ModeloTabla) tutoresTable.getModel();
+		tutoresTable.setRowHeight(25);
+		tutoresTable.getTableHeader().setVisible(false);
+		TableColumnModel columnModel = tutoresTable.getColumnModel();
+		columnModel.getColumn(1).setMaxWidth(25);
+		columnModel.getColumn(1).setCellRenderer(new GestionCeldas("icono"));
+		for(Usuario u : evento.getTutores()) {
+			tutoresAgregados.add(u.getDocumento().getCaracteres() + " - " + u.getNombre1() + " " + u.getApellido1() + " - " + u.getArea().getNombre());
+			String[] datos = {
+					u.getDocumento().getCaracteres() + " - " + u.getNombre1() + " " + u.getApellido1() + " - " + u.getArea().getNombre(),
+					"ELIMINAR"
+					};
+			modeloTablaTutores.addRow(datos);
+		}
 		
 	}
+
 }

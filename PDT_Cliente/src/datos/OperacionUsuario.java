@@ -13,6 +13,7 @@ import com.exception.ServicesException;
 import com.services.UsuarioBeanRemote;
 
 import componentes.PanelEditarUsuario;
+import componentes.PanelNuevoEvento;
 import interfaz.Aplicacion;
 import listas.ListaUsuarios;
 import mail.EmailSenderService;
@@ -68,6 +69,7 @@ public class OperacionUsuario {
 			usuario.setEstado(EstadoUsuario.ACTIVO);
 			usuarioBean.update(usuario);
 			ListaUsuarios.cargarLista();
+			PanelNuevoEvento.buscarTutor("");
 			Aplicacion.filtros();			
 		}
 	}
@@ -92,6 +94,7 @@ public class OperacionUsuario {
 			usuario.setEstado(EstadoUsuario.ELIMINADO);
 			usuarioBean.update(usuario);
 			ListaUsuarios.cargarLista();
+			PanelNuevoEvento.buscarTutor("");
 			Aplicacion.filtros();
 		}			
 

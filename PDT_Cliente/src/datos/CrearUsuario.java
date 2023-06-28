@@ -35,6 +35,7 @@ import com.services.TipoUsuarioBeanRemote;
 import com.services.UsuarioBeanRemote;
 
 import componentes.PanelEditarMisDatos;
+import componentes.PanelNuevoEvento;
 import interfaz.Aplicacion;
 import listas.ListaUsuarios;
 import mail.EmailSenderService;
@@ -125,7 +126,6 @@ public class CrearUsuario {
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out.println(e.getMessage());
-					System.out.println(ano);
 				}
 											
 				usuarioBean.create(usuario);
@@ -235,7 +235,6 @@ public class CrearUsuario {
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out.println(e.getMessage());
-					System.out.println(ano);
 				}
 											
 				usuarioBean.update(usuario);
@@ -247,7 +246,7 @@ public class CrearUsuario {
 				
 				TipoTutor tipoTutor = tipoTutorBean.findAll(datos[11]).get(0);
 				Area area = areaBean.findAll(datos[12]).get(0);
-
+								
 				usuario.setTipoTutor(tipoTutor);
 				usuario.setArea(area);
 						
@@ -268,6 +267,7 @@ public class CrearUsuario {
 			Aplicacion.filtros();
 			Aplicacion.setTipoUsuario(usuario.getTipoUsuario().getNombre().toString());
 			Aplicacion.getLblUserType().setText(usuario.getTipoUsuario().getNombre());
+			PanelNuevoEvento.buscarTutor("");
 			PanelEditarMisDatos.cargarDatos();
 
 			JOptionPane.showMessageDialog(new JFrame(), "Datos actualizados correctamente");
@@ -284,9 +284,7 @@ public class CrearUsuario {
 	public static boolean editarPassword(String password) throws NamingException {
 		
 		UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
-		
-		System.out.println(password);
-		
+				
 		Usuario usuario = Aplicacion.getUsuario();
 		usuario.setContrasena(password);
 		
