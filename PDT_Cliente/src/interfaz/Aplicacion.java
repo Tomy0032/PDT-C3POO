@@ -275,8 +275,8 @@ public class Aplicacion extends JFrame implements MouseListener{
 		PanelNuevaConstancia nueva_constancia = new PanelNuevaConstancia();
 		tabbedPaneConstancia.add("Pedir Constancia",nueva_constancia);
 		
-//		PanelListaSolicitudesDeConstancias listaSolicitudes = new PanelListaSolicitudesDeConstancias();
-//		tabbedPaneConstancia.add("Lista solicitudes constancias",listaSolicitudes);
+		PanelListaSolicitudesDeConstancias listaSolicitudes = new PanelListaSolicitudesDeConstancias();
+		tabbedPaneConstancia.add("Lista solicitudes constancias",listaSolicitudes);
 		
 		panel_reclamos = new JPanel();
 		panel_reclamos.setBackground(new Color(64, 0, 64));
