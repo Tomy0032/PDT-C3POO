@@ -1,48 +1,38 @@
 package datos;
 
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;  
 import java.util.Date;  
 import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import com.entities.Modalidad;
+import com.entities.ConvocatoriaAsistencia;
 import com.entities.EstadoEvento;
-import com.entities.Documento;
 import com.entities.Itr;
-import com.entities.Localidad;
 import com.entities.TipoEvento;
 import com.entities.Evento;
 import com.entities.Usuario;
-import com.enums.EstadoUsuario;
 import com.exception.ServicesException;
 import com.services.ModalidadBeanRemote;
-import com.services.DepartamentoBeanRemote;
 import com.services.DocumentoBeanRemote;
 import com.services.EventoBeanRemote;
-import com.services.GeneroBeanRemote;
 import com.services.ItrBeanRemote;
 import com.services.EstadoEventoBeanRemote;
-import com.services.ModalidadBean;
-import com.services.PaisBeanRemote;
-import com.services.TipoTutorBeanRemote;
 import com.services.TipoEventoBeanRemote;
 import com.services.UsuarioBeanRemote;
+import com.services.ConvocatoriaAsistenciaBeanRemote;
+
 
 import componentes.PanelFichaEvento;
 import componentes.PanelListadoEventos;
 import listas.ListaEventos;
 import listas.ListaUsuarios;
-import mail.EmailSenderService;
 
 public class CrearEvento {
 	
@@ -169,6 +159,7 @@ public class CrearEvento {
 			PanelListadoEventos.filtros();
 			PanelFichaEvento.cargarDatos(evento);
 			PanelFichaEvento.limpiar();
+			PanelFichaEvento.crearModeloTablaTutores(evento);
 			
 			JOptionPane.showMessageDialog(new JFrame(), "Evento editado correctamente");
 			
@@ -179,6 +170,70 @@ public class CrearEvento {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public static boolean editarEstudiantes(Evento evento, ArrayList<String> estudiantes) throws NamingException {
+		
+		DocumentoBeanRemote documentoBean = (DocumentoBeanRemote) InitialContext.doLookup("PDT_EJB/DocumentoBean!com.services.DocumentoBeanRemote"); 
+		EventoBeanRemote eventoBean = (EventoBeanRemote) InitialContext.doLookup("PDT_EJB/EventoBean!com.services.EventoBeanRemote"); 
+		ConvocatoriaAsistenciaBeanRemote asistenciaBean = (ConvocatoriaAsistenciaBeanRemote) InitialContext.doLookup("PDT_EJB/ConvocatoriaAsistenciaBean!com.services.ConvocatoriaAsistenciaBeanRemote"); 
+		UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
+
+		List<Usuario> estudiantesList = new LinkedList<Usuario>();
+		
+		for(String s : estudiantes) {
+			s=s.substring(0,8);
+			try {
+				usuario = usuarioBean.findAllForDocument(documentoBean.findAll(s).get(0)).get(0);
+			} catch (ServicesException e) {
+				e.printStackTrace();
+			}
+			estudiantesList.add(usuario);
+		}
+		
+		for(ConvocatoriaAsistencia c : evento.getConvocatoriasAsistencias()) {
+			try {
+				asistenciaBean.drop(c.getIdConvocatoriaAsistencia());
+				eventoBean.removeConvocatoriaAsistencia(evento.getIdEvento(), c.getIdConvocatoriaAsistencia());
+			} catch (ServicesException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		ConvocatoriaAsistencia c = new ConvocatoriaAsistencia();
+		List<ConvocatoriaAsistencia> asistencias = new LinkedList<ConvocatoriaAsistencia>();
+		
+		for(Usuario e : estudiantesList) {
+			c.setEstudiante(e);
+			c.setEvento(evento);
+			try {
+				asistenciaBean.create(c);
+				eventoBean.addConvocatoriaAsistencia(evento.getIdEvento(), c);
+			} catch (ServicesException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				return false;
+			}
+			
+		}
+				
+		ListaEventos.cargarLista();
+		ListaUsuarios.cargarLista();
+		try {
+			PanelListadoEventos.construirTabla(ListaEventos.getListaStringListado(),PanelListadoEventos.getTitulos());
+			PanelListadoEventos.filtros();
+		} catch (NamingException | ServicesException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		PanelFichaEvento.cargarDatos(evento);
+		PanelFichaEvento.limpiar();
+		PanelFichaEvento.crearModeloTablaEstudiantes(evento);
+		
+		JOptionPane.showMessageDialog(new JFrame(), "Estudianes agregados correctamente");
+				
+		return true;
 	}
 	
 }

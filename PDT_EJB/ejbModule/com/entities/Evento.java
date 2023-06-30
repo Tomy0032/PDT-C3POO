@@ -1,7 +1,14 @@
 package com.entities;
 
 import java.io.Serializable;
+
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.*;
+import javax.transaction.Transactional;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.entities.Modalidad;
 import com.entities.TipoEvento;
@@ -69,7 +76,8 @@ public class Evento implements Serializable {
 	private List<Constancia> constancias;
 
 	//bi-directional many-to-one association to ConvocatoriaAsistencia
-	@OneToMany(mappedBy="evento")
+	@OneToMany(mappedBy = "evento")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ConvocatoriaAsistencia> convocatoriasAsistencias;
 
 	//bi-directional many-to-one association to Gestion

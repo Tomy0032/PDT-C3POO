@@ -1,6 +1,8 @@
 package componentes;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -30,15 +32,18 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import com.entities.ConvocatoriaAsistencia;
 import com.entities.Evento;
 import com.entities.Usuario;
 import com.exception.ServicesException;
 import com.toedter.calendar.JDateChooser;
 
+import controladores.ControlBotonAgregarEstudiantesEvento;
 import controladores.ControlBotonCrearEvento;
 import controladores.ControlBotonEditarEvento;
 import controladores.Control_longit_min_ficha_evento;
 import interfaces.ControlCampo;
+import interfaz.Aplicacion;
 import listas.ListaItrs;
 import listas.ListaModalidades;
 import listas.ListaTiposEvento;
@@ -75,14 +80,16 @@ public class PanelFichaEvento extends JPanel{
 	private JLabel lblTutoresEvento;
 	private String[] listaTutores;
 	private ArrayList<String> arrayTutores = new ArrayList<String>();
+	private ArrayList<String> arrayEstudiantes = new ArrayList<String>();
 	private DefaultListModel modeloTutores;
 	private static JTable tutoresTable;
 	private static DefaultTableModel modeloTablaTutores;
 	private static ArrayList<String> tutoresAgregados = new ArrayList<String>();
+	private static ArrayList<String> estudiantesAgregados = new ArrayList<String>();
 	private static JLabel aviso;
 	private static LinkedList<ControlCampo> listaCampos;
 	private JLabel titulo;
-	private JTable tableEstudiantes;
+	private static JTable tableEstudiantes;
 	private static JTextField fechaFinField;
 	private static DefaultComboBoxModel<String> modeloModalidad;
 	private static DefaultComboBoxModel<String> modeloItr;
@@ -103,6 +110,19 @@ public class PanelFichaEvento extends JPanel{
 	private JList tutoresList;
 	private JScrollPane tutoresScrollPane;
 	private static JButton confirmarEdicionBtn;
+	private static DefaultTableModel modeloTableEstudiantes;
+	private static DefaultTableModel modeloTableEstudiantes2;
+	private JScrollPane scrollPaneEstudiantes;
+	private JButton confirmarEstudiantesBtn;
+	private JButton cancelarEstudiantesBtn;
+	private JTextField estudianteField;
+	private static JTable tableEstudiantes2;
+	private static JScrollPane scrollPaneEstudiantes2;
+	private String[] listaEstudiantes;
+	private DefaultListModel modeloEstudiantes;
+	private JScrollPane scrollPane_1;
+	private static JList estudiantesList;
+	private static JScrollPane scrollPaneEstudiantesList;
 
 	public static LinkedList<ControlCampo> getListaCampos() {
 		return listaCampos;
@@ -222,6 +242,270 @@ public class PanelFichaEvento extends JPanel{
 
 	public void setLblFinalizacinFecha(JLabel lblFinalizacinFecha) {
 		this.lblFinalizacinFecha = lblFinalizacinFecha;
+	}
+
+	public ArrayList<String> getArrayEstudiantes() {
+		return arrayEstudiantes;
+	}
+
+	public void setArrayEstudiantes(ArrayList<String> arrayEstudiantes) {
+		this.arrayEstudiantes = arrayEstudiantes;
+	}
+
+	public static ArrayList<String> getEstudiantesAgregados() {
+		return estudiantesAgregados;
+	}
+
+	public static void setEstudiantesAgregados(ArrayList<String> estudiantesAgregados) {
+		PanelFichaEvento.estudiantesAgregados = estudiantesAgregados;
+	}
+
+	public static JTextField getFechaFinField() {
+		return fechaFinField;
+	}
+
+	public static void setFechaFinField(JTextField fechaFinField) {
+		PanelFichaEvento.fechaFinField = fechaFinField;
+	}
+
+	public static DefaultComboBoxModel<String> getModeloModalidad() {
+		return modeloModalidad;
+	}
+
+	public static void setModeloModalidad(DefaultComboBoxModel<String> modeloModalidad) {
+		PanelFichaEvento.modeloModalidad = modeloModalidad;
+	}
+
+	public static DefaultComboBoxModel<String> getModeloItr() {
+		return modeloItr;
+	}
+
+	public static void setModeloItr(DefaultComboBoxModel<String> modeloItr) {
+		PanelFichaEvento.modeloItr = modeloItr;
+	}
+
+	public static DefaultComboBoxModel<String> getModeloTipoEvento() {
+		return modeloTipoEvento;
+	}
+
+	public static void setModeloTipoEvento(DefaultComboBoxModel<String> modeloTipoEvento) {
+		PanelFichaEvento.modeloTipoEvento = modeloTipoEvento;
+	}
+
+	public static JTextField getTipoEventoField() {
+		return tipoEventoField;
+	}
+
+	public static void setTipoEventoField(JTextField tipoEventoField) {
+		PanelFichaEvento.tipoEventoField = tipoEventoField;
+	}
+
+	public static JTextField getFechaInicioField() {
+		return fechaInicioField;
+	}
+
+	public static void setFechaInicioField(JTextField fechaInicioField) {
+		PanelFichaEvento.fechaInicioField = fechaInicioField;
+	}
+
+	public static JTextField getHoraInicioField() {
+		return horaInicioField;
+	}
+
+	public static void setHoraInicioField(JTextField horaInicioField) {
+		PanelFichaEvento.horaInicioField = horaInicioField;
+	}
+
+	public static JTextField getHoraFinField() {
+		return horaFinField;
+	}
+
+	public static void setHoraFinField(JTextField horaFinField) {
+		PanelFichaEvento.horaFinField = horaFinField;
+	}
+
+	public static JTextField getModalidadField() {
+		return modalidadField;
+	}
+
+	public static void setModalidadField(JTextField modalidadField) {
+		PanelFichaEvento.modalidadField = modalidadField;
+	}
+
+	public static JTextField getItrField() {
+		return itrField;
+	}
+
+	public static void setItrField(JTextField itrField) {
+		PanelFichaEvento.itrField = itrField;
+	}
+
+	public static JTable getTutoresTable2() {
+		return tutoresTable2;
+	}
+
+	public static void setTutoresTable2(JTable tutoresTable2) {
+		PanelFichaEvento.tutoresTable2 = tutoresTable2;
+	}
+
+	public static DefaultTableModel getModeloTablaTutores2() {
+		return modeloTablaTutores2;
+	}
+
+	public static void setModeloTablaTutores2(DefaultTableModel modeloTablaTutores2) {
+		PanelFichaEvento.modeloTablaTutores2 = modeloTablaTutores2;
+	}
+
+	public static JButton getEstudiantesBtn() {
+		return estudiantesBtn;
+	}
+
+	public static void setEstudiantesBtn(JButton estudiantesBtn) {
+		PanelFichaEvento.estudiantesBtn = estudiantesBtn;
+	}
+
+	public static JButton getEditarBtn() {
+		return editarBtn;
+	}
+
+	public static void setEditarBtn(JButton editarBtn) {
+		PanelFichaEvento.editarBtn = editarBtn;
+	}
+
+	public static JScrollPane getScrollPane() {
+		return scrollPane;
+	}
+
+	public static void setScrollPane(JScrollPane scrollPane) {
+		PanelFichaEvento.scrollPane = scrollPane;
+	}
+
+	public TableColumnModel getColumnModel() {
+		return columnModel;
+	}
+
+	public void setColumnModel(TableColumnModel columnModel) {
+		this.columnModel = columnModel;
+	}
+
+	public static JButton getCancelarEditarBtn() {
+		return cancelarEditarBtn;
+	}
+
+	public static void setCancelarEditarBtn(JButton cancelarEditarBtn) {
+		PanelFichaEvento.cancelarEditarBtn = cancelarEditarBtn;
+	}
+
+	public static JButton getConfirmarEdicionBtn() {
+		return confirmarEdicionBtn;
+	}
+
+	public static void setConfirmarEdicionBtn(JButton confirmarEdicionBtn) {
+		PanelFichaEvento.confirmarEdicionBtn = confirmarEdicionBtn;
+	}
+
+	public static DefaultTableModel getModeloTableEstudiantes() {
+		return modeloTableEstudiantes;
+	}
+
+	public static void setModeloTableEstudiantes(DefaultTableModel modeloTableEstudiantes) {
+		PanelFichaEvento.modeloTableEstudiantes = modeloTableEstudiantes;
+	}
+
+	public static DefaultTableModel getModeloTableEstudiantes2() {
+		return modeloTableEstudiantes2;
+	}
+
+	public static void setModeloTableEstudiantes2(DefaultTableModel modeloTableEstudiantes2) {
+		PanelFichaEvento.modeloTableEstudiantes2 = modeloTableEstudiantes2;
+	}
+
+	public JScrollPane getScrollPaneEstudiantes() {
+		return scrollPaneEstudiantes;
+	}
+
+	public void setScrollPaneEstudiantes(JScrollPane scrollPaneEstudiantes) {
+		this.scrollPaneEstudiantes = scrollPaneEstudiantes;
+	}
+
+	public JButton getConfirmarEstudiantesBtn() {
+		return confirmarEstudiantesBtn;
+	}
+
+	public void setConfirmarEstudiantesBtn(JButton confirmarEstudiantesBtn) {
+		this.confirmarEstudiantesBtn = confirmarEstudiantesBtn;
+	}
+
+	public JButton getCancelarEstudiantesBtn() {
+		return cancelarEstudiantesBtn;
+	}
+
+	public void setCancelarEstudiantesBtn(JButton cancelarEstudiantesBtn) {
+		this.cancelarEstudiantesBtn = cancelarEstudiantesBtn;
+	}
+
+	public JTextField getEstudianteField() {
+		return estudianteField;
+	}
+
+	public void setEstudianteField(JTextField estudianteField) {
+		this.estudianteField = estudianteField;
+	}
+
+	public static JTable getTableEstudiantes2() {
+		return tableEstudiantes2;
+	}
+
+	public static void setTableEstudiantes2(JTable tableEstudiantes2) {
+		PanelFichaEvento.tableEstudiantes2 = tableEstudiantes2;
+	}
+
+	public static JScrollPane getScrollPaneEstudiantes2() {
+		return scrollPaneEstudiantes2;
+	}
+
+	public static void setScrollPaneEstudiantes2(JScrollPane scrollPaneEstudiantes2) {
+		PanelFichaEvento.scrollPaneEstudiantes2 = scrollPaneEstudiantes2;
+	}
+
+	public String[] getListaEstudiantes() {
+		return listaEstudiantes;
+	}
+
+	public void setListaEstudiantes(String[] listaEstudiantes) {
+		this.listaEstudiantes = listaEstudiantes;
+	}
+
+	public DefaultListModel getModeloEstudiantes() {
+		return modeloEstudiantes;
+	}
+
+	public void setModeloEstudiantes(DefaultListModel modeloEstudiantes) {
+		this.modeloEstudiantes = modeloEstudiantes;
+	}
+
+	public JScrollPane getScrollPane_1() {
+		return scrollPane_1;
+	}
+
+	public void setScrollPane_1(JScrollPane scrollPane_1) {
+		this.scrollPane_1 = scrollPane_1;
+	}
+
+	public static JList getEstudiantesList() {
+		return estudiantesList;
+	}
+
+	public static void setEstudiantesList(JList estudiantesList) {
+		PanelFichaEvento.estudiantesList = estudiantesList;
+	}
+
+	public static JScrollPane getScrollPaneEstudiantesList() {
+		return scrollPaneEstudiantesList;
+	}
+
+	public static void setScrollPaneEstudiantesList(JScrollPane scrollPaneEstudiantesList) {
+		PanelFichaEvento.scrollPaneEstudiantesList = scrollPaneEstudiantesList;
 	}
 
 	public JLabel getLblHoraFinEvento() {
@@ -382,7 +666,34 @@ public class PanelFichaEvento extends JPanel{
 		});
 		setLayout(null);
 		
+		scrollPaneEstudiantesList = new JScrollPane();
+		scrollPaneEstudiantesList.setVisible(false);
+		scrollPaneEstudiantesList.setBounds(638, 51, 344, 1);
+		add(scrollPaneEstudiantesList);
+		
+		estudiantesList = new JList();
+		estudiantesList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				scrollPaneEstudiantesList.setVisible(false);
+				estudianteField.setText("");
+				if(!tutoresAgregados.contains(estudiantesList.getSelectedValue().toString())){
+					estudiantesAgregados.add(estudiantesList.getSelectedValue().toString());
+					Object datos[] = new Object[2];
+					datos[0] = estudiantesList.getSelectedValue().toString();
+					datos[1] = "ELIMINAR";
+					modeloTableEstudiantes2.addRow(datos);
+					estudianteField.setFocusable(true);
+
+				}
+				estudianteField.setFocusable(false);
+				estudianteField.setFocusable(true);
+			}
+		});
+		scrollPaneEstudiantesList.setViewportView(estudiantesList);
+		
 		tutoresScrollPane = new JScrollPane();
+		tutoresScrollPane.setVisible(false);
 		tutoresScrollPane.setBounds(153, 232, 344, 0);
 		add(tutoresScrollPane);
 		
@@ -593,8 +904,8 @@ public class PanelFichaEvento extends JPanel{
 					tutorField.setFocusable(true);
 
 				}
-				tutorField.setFocusable(false);
-				tutorField.setFocusable(true);
+				estudianteField.setFocusable(false);
+				estudianteField.setFocusable(true);
 			}
 		});
 		
@@ -612,10 +923,13 @@ public class PanelFichaEvento extends JPanel{
 		lblEstudiantesEvento.setBounds(556, 36, 72, 14);
 		add(lblEstudiantesEvento);
 		
+		scrollPaneEstudiantes = new JScrollPane();
+		scrollPaneEstudiantes.setBounds(638, 30, 344, 177);
+		add(scrollPaneEstudiantes);
+		
 		tableEstudiantes = new JTable();
+		scrollPaneEstudiantes.setViewportView(tableEstudiantes);
 		tableEstudiantes.setRowHeight(25);
-		tableEstudiantes.setBounds(638, 30, 344, 177);
-		add(tableEstudiantes);
 		
 		tipoEventoField = new JTextField();
 		tipoEventoField.setEditable(false);
@@ -658,12 +972,29 @@ public class PanelFichaEvento extends JPanel{
 		add(itrField);
 		itrField.setColumns(10);
 		
-		tutoresTable2 = new JTable();
-		tutoresTable2.setRowHeight(25);
-		tutoresTable2.setBounds(153, 214, 344, 77);
-		add(tutoresTable2);
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(153, 214, 344, 77);
+		add(scrollPane_1);
 		
-		estudiantesBtn = new JButton("Agregar estudiantes");
+		tutoresTable2 = new JTable();
+		scrollPane_1.setViewportView(tutoresTable2);
+		tutoresTable2.setRowHeight(25);
+		
+		estudiantesBtn = new JButton("Gestionar estudiantes");
+		estudiantesBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				editarBtn.setVisible(false);
+				cancelarEstudiantesBtn.setVisible(true);
+				estudiantesBtn.setVisible(false);
+				confirmarEstudiantesBtn.setVisible(true);
+				
+				scrollPaneEstudiantes.setVisible(false);
+				scrollPaneEstudiantes2.setVisible(true);
+				estudianteField.setVisible(true);
+				
+			}
+		});
 		estudiantesBtn.setBounds(812, 269, 170, 22);
 		add(estudiantesBtn);
 		
@@ -741,6 +1072,7 @@ public class PanelFichaEvento extends JPanel{
 		add(cancelarEditarBtn);
 		
 		confirmarEdicionBtn = new JButton("Editar");
+		confirmarEdicionBtn.setVisible(false);
 		confirmarEdicionBtn.setBounds(812, 269, 170, 22);
 		add(confirmarEdicionBtn);
 		modeloTutores = new DefaultListModel();
@@ -760,10 +1092,85 @@ public class PanelFichaEvento extends JPanel{
 		tituloEventoField.getDocument().addDocumentListener(controlTitulo);
 		
 		Control_longit_min_ficha_evento controlLocalizacion = new Control_longit_min_ficha_evento(localizacionEventoField,3);
+		
+		confirmarEstudiantesBtn = new JButton("Editar");
+		confirmarEstudiantesBtn.setVisible(false);
+		confirmarEstudiantesBtn.setBounds(812, 269, 170, 22);
+		confirmarEstudiantesBtn.addActionListener(new ControlBotonAgregarEstudiantesEvento());
+		add(confirmarEstudiantesBtn);
+		
+		cancelarEstudiantesBtn = new JButton("Cancelar");
+		cancelarEstudiantesBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				estudiantesBtn.setVisible(true);
+				cancelarEstudiantesBtn.setVisible(false);
+				editarBtn.setVisible(true);
+				confirmarEstudiantesBtn.setVisible(false);
+				
+				scrollPaneEstudiantes.setVisible(true);
+				scrollPaneEstudiantes2.setVisible(false);
+				estudianteField.setVisible(false);
+				
+			}
+		});
+		cancelarEstudiantesBtn.setVisible(false);
+		cancelarEstudiantesBtn.setBounds(631, 270, 170, 21);
+		add(cancelarEstudiantesBtn);
+		
+		estudianteField = new JTextField();
+		estudianteField.setVisible(false);
+		estudianteField.setBounds(638, 32, 344, 19);
+		estudianteField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String texto = estudianteField.getText();
+				buscarEstudiante(texto);
+			}
+		});
+
+		estudianteField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				scrollPaneEstudiantesList.setVisible(true);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				scrollPaneEstudiantesList.setVisible(false);
+			}
+		});
+		add(estudianteField);
+		estudianteField.setColumns(10);
+		
+		scrollPaneEstudiantes2 = new JScrollPane();
+		scrollPaneEstudiantes2.setBounds(638, 70, 344, 138);
+		add(scrollPaneEstudiantes2);
+		
+		tableEstudiantes2 = new JTable();
+		tableEstudiantes2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int fila = tableEstudiantes2.rowAtPoint(e.getPoint());
+				int columna = tableEstudiantes2.columnAtPoint(e.getPoint());
+				if(columna == 1) {
+					if(fila >= 0) {
+						modeloTableEstudiantes2.removeRow(fila);
+						estudiantesAgregados.remove(fila);
+						for(int i = fila+1; i < estudiantesAgregados.size(); i++) {
+							estudiantesAgregados.set(i-1, estudiantesAgregados.get(i));
+						}
+					}
+				}
+			}
+		});
+		scrollPaneEstudiantes2.setViewportView(tableEstudiantes2);
 		localizacionEventoField.getDocument().addDocumentListener(controlLocalizacion);
 				
 		listaCampos.add(controlTitulo);
 		listaCampos.add(controlLocalizacion);
+		
+		buscarEstudiante("");
+		buscarTutor("");
 				
 	}
 
@@ -799,6 +1206,40 @@ public class PanelFichaEvento extends JPanel{
 		}
 		tutoresScrollPane.setBounds(153, 232, 344, count);
 		tutoresList.setVisible(true);
+	}
+	
+	protected void buscarEstudiante(String texto){
+		arrayEstudiantes = null;
+		arrayEstudiantes = new ArrayList();
+		estudiantesList.setVisible(false);
+		try {
+			listaEstudiantes = ListaUsuarios.getListaEstudiantesEventoFiltroString(texto);
+			
+			for(int i = 0; i < listaEstudiantes.length; i++) {
+				arrayEstudiantes.add(listaEstudiantes[i]);
+			}
+			
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (ServicesException e) {
+			e.printStackTrace();
+		}
+		
+		modeloEstudiantes = new DefaultListModel();
+		int count = 0;
+		for(int i = 0; i < arrayTutores.size(); i++) {
+			modeloEstudiantes.addElement(arrayEstudiantes.get(i));
+			if(i < 5) {
+				count+=19;
+			}					
+		}
+		estudiantesList.setModel(modeloEstudiantes);
+		
+		if(count==19) {
+			count = 25;
+		}
+		scrollPaneEstudiantesList.setBounds(638, 51, 344, count);
+		estudiantesList.setVisible(true);
 	}
 
 	public static void setAviso(String aviso) {
@@ -837,6 +1278,11 @@ public class PanelFichaEvento extends JPanel{
 	}
 
 	public static void cargarDatos(Evento evento) {
+		
+		if(!evento.getEstado().getNombre().equals("FUTURO")) {
+			editarBtn.setVisible(false);
+			estudiantesBtn.setVisible(false);
+		}
 		
 		tituloEventoField.setText(evento.getNombre());
 		
@@ -887,6 +1333,7 @@ public class PanelFichaEvento extends JPanel{
 		itrField.setText(evento.getItr().getNombre());
 		
 		crearModeloTablaTutores(evento);
+		crearModeloTablaEstudiantes(evento);
 			
 	}
 	
@@ -896,10 +1343,11 @@ public class PanelFichaEvento extends JPanel{
 				new Object[][] {
 				},
 				new String[] {
-					"New column"
+					""
 				}
 			));
 		modeloTablaTutores2 = (ModeloTabla) tutoresTable2.getModel();
+		
 		tutoresTable2.setRowHeight(25);
 		for(Usuario u : evento.getTutores()) {
 			String[] datos = {
@@ -931,5 +1379,59 @@ public class PanelFichaEvento extends JPanel{
 		}
 		
 	}
-
+	
+	public static void crearModeloTablaEstudiantes(Evento evento) {
+		
+		tableEstudiantes.setModel(new ModeloTabla(
+				new Object[][] {
+				},
+				new String[] {
+					""
+				}
+			));
+		modeloTableEstudiantes = (ModeloTabla) tableEstudiantes.getModel();
+		tableEstudiantes.setRowHeight(25);		
+		
+		try {
+			for(ConvocatoriaAsistencia c : evento.getConvocatoriasAsistencias()) {
+				String[] datos = {
+					c.getEstudiante().getDocumento().getCaracteres() + " - " +
+					c.getEstudiante().getNombre1() + " " +
+					c.getEstudiante().getApellido1()
+				};
+				modeloTableEstudiantes.addRow(datos);
+			}
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		tableEstudiantes2.setModel(new ModeloTabla(
+				new Object[][] {
+				},
+				new String[] {
+					"", ""
+				}
+			));
+		modeloTableEstudiantes2 = (ModeloTabla) tableEstudiantes2.getModel();
+		tableEstudiantes2.setRowHeight(25);
+		tableEstudiantes2.getTableHeader().setVisible(false);
+		TableColumnModel columnModel = tableEstudiantes2.getColumnModel();
+		columnModel.getColumn(1).setMaxWidth(25);
+		columnModel.getColumn(1).setCellRenderer(new GestionCeldas("icono"));
+		for(ConvocatoriaAsistencia c : evento.getConvocatoriasAsistencias()) {
+			estudiantesAgregados.add(
+					c.getEstudiante().getDocumento().getCaracteres() + " - " +
+					c.getEstudiante().getNombre1() + " " +
+					c.getEstudiante().getApellido1());
+					
+			String[] datos = {
+					c.getEstudiante().getDocumento().getCaracteres() + " - " +
+					c.getEstudiante().getNombre1() + " " +
+					c.getEstudiante().getApellido1()
+					,
+					"ELIMINAR"
+					};
+			modeloTableEstudiantes2.addRow(datos);
+		}
+		
+	}
 }

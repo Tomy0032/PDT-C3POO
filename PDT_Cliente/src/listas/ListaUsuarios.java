@@ -116,6 +116,39 @@ public class ListaUsuarios {
 		return tipos;
 		
 	}
+	
+	public static String[] getListaEstudiantesEventoString() {
+		
+		ArrayList<String> s = new ArrayList<>();
+		
+		for(Usuario u : listaEstudiantes) {
+			
+			if(u.getEstado().equals(EstadoUsuario.ACTIVO))
+				s.add(u.getDocumento().getCaracteres() + " - " + u.getNombre1() + " " + u.getApellido1());
+			
+		}
+		
+		String[] estudiantes = s.toArray(new String[0]);
+		return estudiantes;
+		
+	}
+	
+	public static String[] getListaEstudiantesEventoFiltroString(String text) throws NamingException, ServicesException {
+		
+		ArrayList<String> s = new ArrayList<>();
+		
+		for(String e : getListaEstudiantesEventoString()) {
+			
+			if(e.toUpperCase().contains(text.toUpperCase())) {
+				s.add(e);
+			}
+		}
+		
+		String[] estudiantes = s.toArray(new String[0]);
+		return estudiantes;
+		
+	}
+
 		
 	public static Object[][] getListaStringListado() throws NamingException, ServicesException {
 		

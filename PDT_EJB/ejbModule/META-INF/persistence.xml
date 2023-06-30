@@ -9,7 +9,9 @@
 			<property name="hibernate.show_sql" value="true"/>
 			<property name="hibernate.hbm2ddl.auto" value="update"/>
 			<property name="hibernate.id.new_generator_mappings" value="true" />
+
 			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver"/>
+
 		</properties>
 	</persistence-unit>
 </persistence>
