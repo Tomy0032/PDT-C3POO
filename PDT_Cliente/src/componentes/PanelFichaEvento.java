@@ -41,9 +41,12 @@ import com.toedter.calendar.JDateChooser;
 import controladores.ControlBotonAgregarEstudiantesEvento;
 import controladores.ControlBotonCrearEvento;
 import controladores.ControlBotonEditarEvento;
+import controladores.ControlBotonEliminarEvento;
 import controladores.Control_longit_min_ficha_evento;
 import interfaces.ControlCampo;
 import interfaz.Aplicacion;
+import interfaz.Asistencia;
+import interfaz.Registrarse;
 import listas.ListaItrs;
 import listas.ListaModalidades;
 import listas.ListaTiposEvento;
@@ -113,9 +116,9 @@ public class PanelFichaEvento extends JPanel{
 	private static DefaultTableModel modeloTableEstudiantes;
 	private static DefaultTableModel modeloTableEstudiantes2;
 	private JScrollPane scrollPaneEstudiantes;
-	private JButton confirmarEstudiantesBtn;
-	private JButton cancelarEstudiantesBtn;
-	private JTextField estudianteField;
+	private static JButton confirmarEstudiantesBtn;
+	private static JButton cancelarEstudiantesBtn;
+	private static JTextField estudianteField;
 	private static JTable tableEstudiantes2;
 	private static JScrollPane scrollPaneEstudiantes2;
 	private String[] listaEstudiantes;
@@ -123,6 +126,8 @@ public class PanelFichaEvento extends JPanel{
 	private JScrollPane scrollPane_1;
 	private static JList estudiantesList;
 	private static JScrollPane scrollPaneEstudiantesList;
+	private JButton btnEliminarEvento;
+	private JButton btnControlarAsistencia;
 
 	public static LinkedList<ControlCampo> getListaCampos() {
 		return listaCampos;
@@ -860,7 +865,7 @@ public class PanelFichaEvento extends JPanel{
 				
 		scrollPane = new JScrollPane();
 		scrollPane.setVisible(false);
-		scrollPane.setBounds(153, 238, 344, 77);
+		scrollPane.setBounds(153, 238, 344, 87);
 		add(scrollPane);
 		
 		tutoresTable = new JTable();
@@ -973,7 +978,7 @@ public class PanelFichaEvento extends JPanel{
 		itrField.setColumns(10);
 		
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(153, 214, 344, 77);
+		scrollPane_1.setBounds(153, 214, 344, 108);
 		add(scrollPane_1);
 		
 		tutoresTable2 = new JTable();
@@ -1006,6 +1011,8 @@ public class PanelFichaEvento extends JPanel{
 				cancelarEditarBtn.setVisible(true);
 				estudiantesBtn.setVisible(false);
 				confirmarEdicionBtn.setVisible(true);
+				btnEliminarEvento.setVisible(false);
+				btnControlarAsistencia.setVisible(false);
 				aviso.setVisible(true);
 				
 				horaInicioField.setVisible(false);
@@ -1042,6 +1049,8 @@ public class PanelFichaEvento extends JPanel{
 				cancelarEditarBtn.setVisible(false);
 				estudiantesBtn.setVisible(true);
 				confirmarEdicionBtn.setVisible(false);
+				btnControlarAsistencia.setVisible(true);
+				btnEliminarEvento.setVisible(true);
 				aviso.setVisible(false);
 				
 				horaInicioField.setVisible(true);
@@ -1093,7 +1102,7 @@ public class PanelFichaEvento extends JPanel{
 		
 		Control_longit_min_ficha_evento controlLocalizacion = new Control_longit_min_ficha_evento(localizacionEventoField,3);
 		
-		confirmarEstudiantesBtn = new JButton("Editar");
+		confirmarEstudiantesBtn = new JButton("Guardar");
 		confirmarEstudiantesBtn.setVisible(false);
 		confirmarEstudiantesBtn.setBounds(812, 269, 170, 22);
 		confirmarEstudiantesBtn.addActionListener(new ControlBotonAgregarEstudiantesEvento());
@@ -1143,6 +1152,7 @@ public class PanelFichaEvento extends JPanel{
 		estudianteField.setColumns(10);
 		
 		scrollPaneEstudiantes2 = new JScrollPane();
+		scrollPaneEstudiantes2.setVisible(false);
 		scrollPaneEstudiantes2.setBounds(638, 70, 344, 138);
 		add(scrollPaneEstudiantes2);
 		
@@ -1164,6 +1174,20 @@ public class PanelFichaEvento extends JPanel{
 			}
 		});
 		scrollPaneEstudiantes2.setViewportView(tableEstudiantes2);
+		
+		btnEliminarEvento = new JButton("Eliminar evento");
+		btnEliminarEvento.setBounds(631, 301, 170, 21);
+		btnEliminarEvento.addActionListener(new ControlBotonEliminarEvento());
+		add(btnEliminarEvento);
+		
+		btnControlarAsistencia = new JButton("Controlar asistencia");
+		btnControlarAsistencia.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Asistencia(PanelListadoEventos.getEvento());
+			}
+		});
+		btnControlarAsistencia.setBounds(812, 301, 170, 21);
+		add(btnControlarAsistencia);
 		localizacionEventoField.getDocument().addDocumentListener(controlLocalizacion);
 				
 		listaCampos.add(controlTitulo);
@@ -1251,6 +1275,9 @@ public class PanelFichaEvento extends JPanel{
 		cancelarEditarBtn.setVisible(false);
 		estudiantesBtn.setVisible(true);
 		confirmarEdicionBtn.setVisible(false);
+		confirmarEstudiantesBtn.setVisible(false);
+		cancelarEstudiantesBtn.setVisible(false);
+
 		aviso.setVisible(false);
 		
 		horaInicioField.setVisible(true);
