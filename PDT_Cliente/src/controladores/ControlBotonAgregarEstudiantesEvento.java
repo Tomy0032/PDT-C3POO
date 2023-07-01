@@ -28,7 +28,7 @@ public class ControlBotonAgregarEstudiantesEvento implements ActionListener {
 	public void actionPerformed(ActionEvent ev) {
 		
 		String info="EDITAR EVENTO\n";
-		info+="¿Desea agregar estudiantes al evento?";	
+		info+="¿Desea editar la lista de estudiantes del evento?";	
 		
 		int confirmado = JOptionPane.showConfirmDialog(null, info, "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 

@@ -21,10 +21,10 @@ public class ConvocatoriaAsistencia implements Serializable {
 	@Column(name="ID_CONVOCATORIA_ASISTENCIA", unique=true, nullable=false, precision=38)
 	private long idConvocatoriaAsistencia;
 
-	@Column(length=2)
+	@Column(length=20)
 	private String asistencia;
 
-	@Column(precision=38)
+	@Column(precision=38, scale = 2)
 	private BigDecimal calificacion;
 
 	//bi-directional many-to-one association to Estudiante

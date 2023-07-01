@@ -10,6 +10,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import java.math.BigDecimal;
 
 import com.entities.Modalidad;
 import com.entities.ConvocatoriaAsistencia;
@@ -228,12 +229,34 @@ public class CrearEvento {
 			e1.printStackTrace();
 		}
 		PanelFichaEvento.cargarDatos(evento);
-		PanelFichaEvento.limpiar();
 		PanelFichaEvento.crearModeloTablaEstudiantes(evento);
-		
-		JOptionPane.showMessageDialog(new JFrame(), "Estudianes agregados correctamente");
+		PanelFichaEvento.limpiar();
+		JOptionPane.showMessageDialog(new JFrame(), "Lista de estudianes modificados correctamente");
 				
 		return true;
+	}
+
+	public static void asistencia(List<String[]> lista, Evento evento) throws NamingException, ServicesException {
+		
+		ConvocatoriaAsistenciaBeanRemote asistenciaBean = (ConvocatoriaAsistenciaBeanRemote) InitialContext.doLookup("PDT_EJB/ConvocatoriaAsistenciaBean!com.services.ConvocatoriaAsistenciaBeanRemote"); 
+
+		Usuario usuario = new Usuario();
+		int i = 0;
+		
+		for(ConvocatoriaAsistencia ca : evento.getConvocatoriasAsistencias()) {
+			
+			ca.setAsistencia(lista.get(i)[1]);
+			ca.setCalificacion(new BigDecimal(lista.get(i)[2]));
+			System.out.println(ca.getCalificacion());
+			
+			asistenciaBean.update(ca);
+			
+			i++;
+			
+		}
+		
+		JOptionPane.showMessageDialog(new JFrame(), "Asistencia cargada correctamente");
+		
 	}
 	
 }

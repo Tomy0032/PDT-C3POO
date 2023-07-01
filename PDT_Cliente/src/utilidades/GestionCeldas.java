@@ -5,9 +5,13 @@ import java.awt.Component;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.DefaultCellEditor;
+
+import java.text.DecimalFormat;
 
 public class GestionCeldas extends DefaultTableCellRenderer{
 	
@@ -43,7 +47,10 @@ public class GestionCeldas extends DefaultTableCellRenderer{
         Color colorFondo = null;
         Color colorFondoPorDefecto=new Color( 158, 206, 221);
         Color colorFondoSeleccion=new Color( 0, 174 , 239);
-    	
+                
+        JComboBox<String> asistencia = new JComboBox<>();
+        DecimalFormat numberFormat = new DecimalFormat("#.##");
+            	
         if (selected) {                
             this.setBackground(colorFondoPorDefecto );   
         }
@@ -106,6 +113,69 @@ public class GestionCeldas extends DefaultTableCellRenderer{
             this.setBackground( (selected)? colorFondo :Color.WHITE);
             this.setFont(bold);            
             return this;   
+        }
+        
+        if( tipo.equals("nota"))
+        {           
+        	if (focused) {
+     			colorFondo=colorFondoSeleccion;
+     		}else{
+     			colorFondo=colorFondoPorDefecto;
+     		}
+            this.setHorizontalAlignment( JLabel.CENTER );
+            if(value.getClass().equals(String.class)) {
+            	this.setValue(Double.parseDouble((String) value));
+            }else {
+            	if((Double) value > 5) {
+	            	this.setValue(5.00);
+	            }
+            	else if((Double) value < 0) {
+            		this.setValue(0.00);
+            	}
+            	else {
+	            	this.setValue(numberFormat.format(value));
+	            }
+            }
+            
+            
+            this.setFont(bold);            
+            return this;   
+        }
+        
+        if( value.equals("ASISTENCIA"))
+        {
+        	System.out.println(value.getClass());
+            this.setEnabled(true);
+            asistencia.addItem("ASISTENCIA");
+            return asistencia;
+            
+        }
+        
+        if( value.equals("MEDIA ASISTENCIA"))
+        {
+
+            this.setEnabled(true);
+            asistencia.addItem("MEDIA ASISTENCIA");
+            return asistencia;
+            
+        }
+        
+        if( value.equals("AUSENCIA"))
+        {
+
+            this.setEnabled(true);
+            asistencia.addItem("AUSENCIA");
+            return asistencia;
+            
+        }
+        
+        if( value.equals("AUSENCIA JUSTIFICADA"))
+        {
+
+            this.setEnabled(true);
+            asistencia.addItem("AUSENCIA JUSTIFICADA");
+            return asistencia;
+            
         }
 		
 		return this;
