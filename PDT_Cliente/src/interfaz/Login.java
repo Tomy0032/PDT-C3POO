@@ -120,7 +120,7 @@ public class Login extends JFrame{
 				if(verificacion.get(0) == "si") {
 					try {
 						new Aplicacion(Long.parseLong(verificacion.get(2)));
-					} catch (NumberFormatException | NamingException | ServicesException e) {
+					} catch (NumberFormatException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}					

@@ -29,6 +29,7 @@ import com.toedter.calendar.JDateChooser;
 import datos.OperacionUsuario;
 import interfaz.Aplicacion;
 import listas.ListaAreas;
+import listas.ListaEstadosEvento;
 import listas.ListaEventos;
 import listas.ListaItrs;
 import listas.ListaModalidades;
@@ -74,7 +75,7 @@ public class PanelListadoEventos extends JPanel{
 	private static HashMap<Integer,Long> ids = new HashMap<Integer,Long>();
 	private static String fecha;
 	
-	public static JComboBox<?> getComboBox() {
+	public static JComboBox<?> getTipoComboBox() {
 		return tipo_comboBox;
 	}
 
@@ -82,15 +83,15 @@ public class PanelListadoEventos extends JPanel{
 		return dateChooser;
 	}
 
-	public static JComboBox<String> getComboBox_1() {
+	public static JComboBox<String> getModalidadComboBox() {
 		return modalidad_comboBox;
 	}
 
-	public static JComboBox<?> getComboBox_2() {
+	public static JComboBox<?> getItrComboBox() {
 		return itr_comboBox;
 	}
 
-	public static JComboBox<?> getComboBox_3() {
+	public static JComboBox<String> getEstadoComboBox() {
 		return estado_comboBox;
 	}
 
@@ -183,10 +184,8 @@ public class PanelListadoEventos extends JPanel{
 
 		estado_comboBox = new JComboBox<String>();
 		estado_comboBox.setBounds(1010, 81, 130, 25);
-		estado_comboBox.addItem("TODOS");
-		estado_comboBox.addItem("FINALIZADO");
-		estado_comboBox.addItem("CORRIENTE");
-		estado_comboBox.addItem("FUTURO");
+		ComboBoxModel<String> modeloEstado = new DefaultComboBoxModel<>(getEstados());
+		estado_comboBox.setModel(new DefaultComboBoxModel<>(getEstados()));
 		add(estado_comboBox);
 		
 		JLabel lblTitulo = new JLabel("LISTADO DE EVENTOS");
@@ -321,6 +320,25 @@ public class PanelListadoEventos extends JPanel{
 
 			if (i == 0) {
 				lista[i] = "TODAS";
+			} else {
+				lista[i] = list[i - 1];
+			}
+
+		}
+
+		return lista;
+
+	}
+	
+	public static String[] getEstados() {
+
+		String[] list = ListaEstadosEvento.getListaString();
+		String[] lista = new String[list.length + 1];
+
+		for (int i = 0; i < lista.length; i++) {
+
+			if (i == 0) {
+				lista[i] = "TODOS";
 			} else {
 				lista[i] = list[i - 1];
 			}

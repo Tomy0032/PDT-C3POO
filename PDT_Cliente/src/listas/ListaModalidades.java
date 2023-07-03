@@ -7,6 +7,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import com.services.ModalidadBeanRemote;
+import com.entities.EstadoEvento;
 import com.entities.Modalidad;
 import com.exception.ServicesException;
 
@@ -65,6 +66,28 @@ public class ListaModalidades {
 
 	public static void setLista(List<Modalidad> lista) {
 		ListaModalidades.lista = lista;
+	}
+
+	public static Object[][] getListaStringListado() {
+		ArrayList<Object> linea = null;
+		ArrayList<Object[]> contenedor = new ArrayList<>();
+		
+		for(Modalidad m : lista) {
+			
+			linea = new ArrayList<>();
+			linea.add(m.getNombre());	
+			if(m.getEstado().toString().equals("ACTIVO")) {
+				linea.add(true);
+			}else {
+				linea.add(false);
+			}
+			linea.add(m.getEstado().toString());
+			contenedor.add(linea.toArray(new Object[0]));
+		}
+		
+		Object[][] modalidades = (Object[][]) contenedor.toArray(new Object[0][]);
+				
+		return modalidades;
 	}
 	
 }

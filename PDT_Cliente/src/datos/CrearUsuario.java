@@ -35,6 +35,7 @@ import com.services.TipoUsuarioBeanRemote;
 import com.services.UsuarioBeanRemote;
 
 import componentes.PanelEditarMisDatos;
+import componentes.PanelListadoUsuarios;
 import componentes.PanelNuevoEvento;
 import interfaz.Aplicacion;
 import listas.ListaUsuarios;
@@ -264,7 +265,7 @@ public class CrearUsuario {
 			
 			ListaUsuarios.cargarLista();
 			Aplicacion.setUsuario(usuario.getIdUsuario());
-			Aplicacion.filtros();
+			PanelListadoUsuarios.filtros();
 			Aplicacion.setTipoUsuario(usuario.getTipoUsuario().getNombre().toString());
 			Aplicacion.getLblUserType().setText(usuario.getTipoUsuario().getNombre());
 			PanelNuevoEvento.buscarTutor("");

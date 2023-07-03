@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -50,6 +51,8 @@ public class GestionCeldas extends DefaultTableCellRenderer{
                 
         JComboBox<String> asistencia = new JComboBox<>();
         DecimalFormat numberFormat = new DecimalFormat("#.##");
+        
+        JCheckBox check = new JCheckBox();
             	
         if (selected) {                
             this.setBackground(colorFondoPorDefecto );   
@@ -113,6 +116,37 @@ public class GestionCeldas extends DefaultTableCellRenderer{
             this.setBackground( (selected)? colorFondo :Color.WHITE);
             this.setFont(bold);            
             return this;   
+        }
+        
+        if( tipo.equals("check"))
+        {           
+        	
+        	this.setHorizontalAlignment( JLabel.CENTER );
+        	
+        	this.setValue((boolean) true);
+        	
+        	if(value.getClass().equals(String.class)) {
+        		
+        		if(value.equals("ACTIVO")) {
+        			
+        			this.setValue((boolean)true);
+        		}else {
+        			this.setValue((boolean)false);
+        		}
+        		if((boolean) value ) {
+        			check.setSelected(true);
+        		}else {
+        			check.setSelected(false);
+        		}
+        	}
+        	else {
+        		if((boolean) value ) {
+        			check.setSelected(true);
+        		}else {
+        			check.setSelected(false);
+        		}
+        	}
+            return check;   
         }
         
         if( tipo.equals("nota"))

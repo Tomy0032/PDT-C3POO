@@ -8,6 +8,7 @@ import javax.naming.NamingException;
 
 import com.services.EstadoEventoBeanRemote;
 import com.entities.EstadoEvento;
+import com.entities.Usuario;
 import com.exception.ServicesException;
 
 public class ListaEstadosEvento {
@@ -65,6 +66,29 @@ public class ListaEstadosEvento {
 
 	public static void setLista(List<EstadoEvento> lista) {
 		ListaEstadosEvento.lista = lista;
+	}
+
+	public static Object[][] getListaStringListado() {
+		ArrayList<Object> linea = null;
+		ArrayList<Object[]> contenedor = new ArrayList<>();
+		
+		for(EstadoEvento e : lista) {
+			
+			linea = new ArrayList<>();
+			linea.add(e.getNombre());	
+			if(e.getEstado().toString().equals("ACTIVO")) {
+				linea.add(true);
+			}else {
+				linea.add(false);
+			}
+			linea.add(e.getEstado().toString());
+			contenedor.add(linea.toArray(new Object[0]));
+		}
+		
+		Object[][] estados = (Object[][]) contenedor.toArray(new Object[0][]);
+				
+		return estados;
+
 	}
 	
 }

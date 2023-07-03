@@ -13,6 +13,7 @@ import com.exception.ServicesException;
 import com.services.UsuarioBeanRemote;
 
 import componentes.PanelEditarUsuario;
+import componentes.PanelListadoUsuarios;
 import componentes.PanelNuevoEvento;
 import interfaz.Aplicacion;
 import listas.ListaUsuarios;
@@ -26,11 +27,11 @@ public class OperacionUsuario {
 		
 		UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
 
-		Usuario usuario = usuarioBean.findAllForUsername(Aplicacion.getTablaUsuarios().getValueAt(fila, Utilidades.USUARIO).toString()).get(0);
+		Usuario usuario = usuarioBean.findAllForUsername(PanelListadoUsuarios.getTablaUsuarios().getValueAt(fila, Utilidades.USUARIO).toString()).get(0);
 		
 		String info="INFO USUARIO\n";
 		info+="Documento: "+usuario.getDocumento().getCaracteres()+"\n";
-		info+="Tipo de usuario: "+Aplicacion.getTablaUsuarios().getValueAt(fila, Utilidades.TIPO).toString()+"\n";
+		info+="Tipo de usuario: "+PanelListadoUsuarios.getTablaUsuarios().getValueAt(fila, Utilidades.TIPO).toString()+"\n";
 		info+="Nombre de usuario: "+usuario.getNombreUsuario()+"\n";
 		info+="Nombre completo: "+usuario.getNombre1();
 		if(!(usuario.getNombre2() == null)) {
@@ -54,7 +55,7 @@ public class OperacionUsuario {
 		
 		UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
 
-		Usuario usuario = usuarioBean.findAllForUsername(Aplicacion.getTablaUsuarios().getValueAt(fila, Utilidades.USUARIO).toString()).get(0);
+		Usuario usuario = usuarioBean.findAllForUsername(PanelListadoUsuarios.getTablaUsuarios().getValueAt(fila, Utilidades.USUARIO).toString()).get(0);
 		
 		String info="ACTIVAR USUARIO\n";
 		info+="¿Activar usuario "+usuario.getNombreUsuario()+"?";		
@@ -70,7 +71,7 @@ public class OperacionUsuario {
 			usuarioBean.update(usuario);
 			ListaUsuarios.cargarLista();
 			PanelNuevoEvento.buscarTutor("");
-			Aplicacion.filtros();			
+			PanelListadoUsuarios.filtros();			
 		}
 	}
 	
@@ -79,7 +80,7 @@ public class OperacionUsuario {
 		
 		UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
 
-		Usuario usuario = usuarioBean.findAllForUsername(Aplicacion.getTablaUsuarios().getValueAt(fila, Utilidades.USUARIO).toString()).get(0);
+		Usuario usuario = usuarioBean.findAllForUsername(PanelListadoUsuarios.getTablaUsuarios().getValueAt(fila, Utilidades.USUARIO).toString()).get(0);
 		
 		String info="ELIMINAR USUARIO\n";
 		info+="¿Eliminar usuario "+usuario.getNombreUsuario()+"?";	
@@ -95,7 +96,7 @@ public class OperacionUsuario {
 			usuarioBean.update(usuario);
 			ListaUsuarios.cargarLista();
 			PanelNuevoEvento.buscarTutor("");
-			Aplicacion.filtros();
+			PanelListadoUsuarios.filtros();
 		}			
 
 	}
@@ -105,7 +106,7 @@ public class OperacionUsuario {
 		
 		UsuarioBeanRemote usuarioBean = (UsuarioBeanRemote) InitialContext.doLookup("PDT_EJB/UsuarioBean!com.services.UsuarioBeanRemote"); 
 
-		Usuario usuario = usuarioBean.findAllForUsername(Aplicacion.getTablaUsuarios().getValueAt(fila, Utilidades.USUARIO).toString()).get(0);
+		Usuario usuario = usuarioBean.findAllForUsername(PanelListadoUsuarios.getTablaUsuarios().getValueAt(fila, Utilidades.USUARIO).toString()).get(0);
 		PanelEditarUsuario.setUsuario(usuario);
 		PanelEditarUsuario.estasblecerDadtos();
 		

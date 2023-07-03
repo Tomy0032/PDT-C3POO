@@ -1,5 +1,6 @@
 package controladores;
 import componentes.PanelEditarUsuario;
+import componentes.PanelListadoUsuarios;
 import interfaz.Aplicacion;
 import interfaz.Registrarse;
 
@@ -48,15 +49,15 @@ public class VisibilidadCampos {
 	}
 
 	public static void cambiarVisibilidadListadoUsuarios() {
-		String tipo = Aplicacion.getCombo_filtro_tipoUsu().getSelectedItem().toString();
+		String tipo = PanelListadoUsuarios.getCombo_filtro_tipoUsu().getSelectedItem().toString();
 		switch(tipo) {
 			case "ESTUDIANTE":
-				Aplicacion.getLbl_generacion().setVisible(true);
-				Aplicacion.getCombo_filtro_Generac().setVisible(true);
+				PanelListadoUsuarios.getLbl_generacion().setVisible(true);
+				PanelListadoUsuarios.getCombo_filtro_Generac().setVisible(true);
 				break;
 			default:
-				Aplicacion.getLbl_generacion().setVisible(false);
-				Aplicacion.getCombo_filtro_Generac().setVisible(false);
+				PanelListadoUsuarios.getLbl_generacion().setVisible(false);
+				PanelListadoUsuarios.getCombo_filtro_Generac().setVisible(false);
 				break;
 		}
 	}
